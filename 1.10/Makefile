@@ -3,8 +3,8 @@
 NS = wodby
 VERSION ?= 1.10
 
-REPO = drupal-nginx
-NAME = drupal-nginx
+REPO = nginx
+NAME = nginx
 
 .PHONY: build test push shell run start stop logs rm release
 

@@ -55,5 +55,11 @@ http {
         ~^/(?<no_slash>.*)$ $no_slash;
     }
 
+    {{ if getenv "NGINX_BACKEND_HOST" }}
+    upstream backend {
+        server {{ getenv "NGINX_BACKEND_HOST" }}:{{ getenv "NGINX_BACKEND_PORT" "9000" }};
+    }
+    {{ end }}
+
     include conf.d/*.conf;
 }

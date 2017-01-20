@@ -105,8 +105,8 @@ RUN addgroup -S -g 82 www-data && \
 WORKDIR /var/www/html
 EXPOSE 80
 
+COPY templates/* /etc/gotpl/
 COPY docker-entrypoint.sh /
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx"]
-
-COPY ./templates/* /etc/gotpl/

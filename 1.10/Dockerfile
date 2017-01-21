@@ -50,8 +50,6 @@ RUN addgroup -S -g 82 www-data && \
     cd /tmp/nginx-${NGINX_VER} && \
     ./configure --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx \
         --conf-path=/etc/nginx/nginx.conf \
-        --error-log-path=/var/log/nginx/error.log \
-        --http-log-path=/var/log/nginx/access.log \
         --pid-path=/var/run/nginx/nginx.pid \
         --lock-path=/var/run/nginx/nginx.lock \
         --http-client-body-temp-path=/var/lib/nginx/tmp/client_body \

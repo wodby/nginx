@@ -1,11 +1,11 @@
 user                                    nginx;
 daemon                                  off;
 worker_processes                        {{ getenv "NGINX_WORKER_PROCESSES" "1" }};
-error_log                               /proc/self/fd/2;
+error_log                               {{ getenv "NGINX_ERROR_LOG" "/proc/self/fd/2" }} {{ getenv "NGINX_ERROR_LOG_LEVEL" "error" }};
 
 events {
     worker_connections                  {{ getenv "NGINX_WORKER_CONNECTIONS" "1024" }};
-    multi_accept                        on;
+    multi_accept                        {{ getenv "NGINX_MULTI_ACCEPT" "on" }};
 }
 
 http {
@@ -16,7 +16,7 @@ http {
     fastcgi_intercept_errors            on;
     fastcgi_read_timeout                {{ getenv "NGINX_FASTCGI_READ_TIMEOUT" "900" }};
     include                             fastcgi_params;
-    access_log                          /proc/self/fd/2;
+    access_log                          {{ getenv "NGINX_ACCESS_LOG" "/proc/self/fd/2" }};
     port_in_redirect                    off;
     send_timeout                        {{ getenv "NGINX_SEND_TIMEOUT" "600" }};
     sendfile                            {{ getenv "NGINX_SENDFILE" "on" }};
@@ -29,7 +29,7 @@ http {
     tcp_nodelay                         on;
     tcp_nopush                          on;
     server_tokens                       off;
-    upload_progress uploads             1m;
+    upload_progress                     uploads 1m;
 
     gzip                                {{ getenv "NGINX_GZIP" "on" }};
     gzip_buffers                        16 8k;

@@ -11,10 +11,10 @@ events {
 http {
     include                             /etc/nginx/mime.types;
     default_type                        application/octet-stream;
-    fastcgi_buffers                     {{ getenv "NGINX_" "8 16k" }};
-    fastcgi_buffer_size                 {{ getenv "NGINX_" "32k" }};
+    fastcgi_buffers                     {{ getenv "NGINX_FASTCGI_BUFFERS" "8 16k" }};
+    fastcgi_buffer_size                 {{ getenv "NGINX_FASTCGI_BUFFER_SIZE" "32k" }};
     fastcgi_intercept_errors            on;
-    fastcgi_read_timeout                {{ getenv "NGINX_" "900" }};
+    fastcgi_read_timeout                {{ getenv "NGINX_FASTCGI_READ_TIMEOUT" "900" }};
     include                             fastcgi_params;
     access_log                          /proc/self/fd/2;
     port_in_redirect                    off;

@@ -3,7 +3,7 @@
 set -ex
 
 host=localhost
-port=8888
+port=8001
 
 make start -e ENV='-e DEBUG=1' PORTS="-p ${port}:80"
 

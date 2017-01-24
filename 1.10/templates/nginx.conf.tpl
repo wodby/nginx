@@ -35,7 +35,7 @@ http {
     gzip                                on;
     gzip_buffers                        {{ getenv "NGINX_GZIP_BUFFERS" "16 8k" }};
     gzip_comp_level                     {{ getenv "NGINX_GZIP_COMP_LEVEL" "2" }};
-    gzip_http_version                   1.1
+    gzip_http_version                   1.1;
     gzip_min_length                     {{ getenv "NGINX_GZIP_MIN_LENGTH" "20" }};
     gzip_types                          text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/x-icon application/vnd.ms-fontobject font/opentype application/x-font-ttf;
     gzip_vary                           on;

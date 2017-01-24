@@ -4,7 +4,7 @@ NS = wodby
 VERSION ?= 1.10
 
 REPO = nginx
-NAME = nginx
+NAME = nginx-1.10
 
 .PHONY: build test push shell run start stop logs rm release
 

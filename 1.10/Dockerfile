@@ -1,5 +1,4 @@
 FROM alpine:3.5
-MAINTAINER Wodby <hello@wodby.com>
 
 ENV NGINX_VER 1.10.2
 ENV NGINX_UP_VER 0.9.1

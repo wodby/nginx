@@ -2,19 +2,34 @@
 
 set -ex
 
-host=localhost
-port=8001
+waitForNginx() {
+    done=''
 
-make start -e ENV='-e DEBUG=1' PORTS="-p ${port}:80"
+    for i in {30..0}; do
+        if curl -s "${1}:${2}" &> /dev/null ; then
+            done=1
+            break
+        fi
+        echo 'Nginx start process in progress...'
+        sleep 1
+    done
 
-for i in {30..0}; do
-    if curl -s "${host}:${port}" &> /dev/null ; then
-        break
+    if [[ ! "${done}" ]]; then
+        echo "Failed to start Nginx" >&2
+        exit 1
     fi
-    echo 'Nginx start process in progress...'
-    sleep 1
-done
+}
 
-curl -s ${host}:${port} | grep 'Welcome to nginx!'
+checkNginxResponse() {
+    curl -s "${1}:${2}" | grep -c 'Welcome to nginx!'
+}
 
-make stop rm
+runTests() {
+    host=localhost
+    port=8080
+
+    waitForNginx "${host}" "${port}"
+    checkNginxResponse "${host}" "${port}"
+}
+
+runTests

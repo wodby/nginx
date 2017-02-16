@@ -7,11 +7,10 @@ env:
   matrix:
     - VERSION=1.10
 
-install:
+script:
   - cd ./$VERSION
   - make
-
-script: make test
+  - make test
 
 after_success: |
   if [ "$TRAVIS_PULL_REQUEST" == "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ -n "$TRAVIS_TAG" ]); then
@@ -24,6 +23,10 @@ after_success: |
 
     if [ "$VERSION" == "1.10" ]; then
       make VERSION=latest release
+    fi
+
+    if [ "$VERSION" == "1.10" ]; then
+      make VERSION=stable release
     fi
   fi
 

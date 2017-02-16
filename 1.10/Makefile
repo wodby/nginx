@@ -12,7 +12,7 @@ build:
 	docker build -t $(NS)/$(REPO):$(VERSION) ./
 
 test:
-	docker run -d --rm --name $(NAME) -e DEBUG=1 -p 8080:80 $(REPO):$(VERSION)
+	docker run -d --name $(NAME) -e DEBUG=1 -p 8080:80 $(REPO):$(VERSION)
 	./test.sh
 	make clean
 

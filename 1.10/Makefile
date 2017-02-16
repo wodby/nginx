@@ -1,15 +1,14 @@
 -include env_make
 
-NS = wodby
 VERSION ?= 1.10
 
-REPO = nginx
+REPO = wodby/nginx
 NAME = nginx-1.10
 
 .PHONY: build test push shell run start stop logs clean release
 
 build:
-	docker build -t $(NS)/$(REPO):$(VERSION) ./
+	docker build -t $(REPO):$(VERSION) ./
 
 test:
 	docker run -d --name $(NAME) -e DEBUG=1 -p 8080:80 $(REPO):$(VERSION)

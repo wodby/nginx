@@ -9,8 +9,7 @@ env:
 
 script:
   - cd ./$VERSION
-  - make
-  - make test
+  - make && make test
 
 after_success: |
   if [ "$TRAVIS_PULL_REQUEST" == "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ -n "$TRAVIS_TAG" ]); then

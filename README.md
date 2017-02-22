@@ -42,6 +42,6 @@
 | NGINX_GZIP_VARY                       | String | on              | |
 | NGINX_GZIP_PROXIED                    | String | any             | |
 | NGINX_GZIP_DISABLE                    | String | msie6           | |
-| NGINX_BACKEND_PORT                    | String | default         | |
-| NGINX_SERVER_NAME                     | Int    | 9000            | |
+| NGINX_SERVER_NAME                     | String | default         | |
+| NGINX_BACKEND_PORT                    | Int    | 9000            | |
 | NGINX_BACKEND_HOST                    | String |                 | |

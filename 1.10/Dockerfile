@@ -7,7 +7,7 @@ ENV NGINX_NXS_VER 0.54
 ENV NGINX_LUA_VER 0.10.7
 ENV LUAJIT_LIB /usr/lib/
 ENV LUAJIT_INC /usr/include/luajit-2.1/
-ENV GOTLP_VER 0.1.5
+ENV GOTPL_VER 0.1.5
 
     # Create user and groups
     # Based on http://git.alpinelinux.org/cgit/aports/tree/main/nginx-initscripts/nginx-initscripts.pre-install
@@ -35,8 +35,8 @@ RUN addgroup -S -g 82 www-data && \
         luajit \
         luajit-dev && \
 
-    # Download and install Gotlp
-    wget -qO- https://github.com/wodby/gotpl/releases/download/${GOTLP_VER}/gotpl-alpine-linux-amd64-${GOTLP_VER}.tar.gz | tar xz -C /usr/local/bin && \
+    # Download and install Gotpl
+    wget -qO- https://github.com/wodby/gotpl/releases/download/${GOTPL_VER}/gotpl-alpine-linux-amd64-${GOTPL_VER}.tar.gz | tar xz -C /usr/local/bin && \
 
     # Download nginx and its modules source code
     wget -qO- http://nginx.org/download/nginx-${NGINX_VER}.tar.gz | tar xz -C /tmp/ && \

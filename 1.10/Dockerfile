@@ -94,6 +94,9 @@ RUN addgroup -S -g 82 www-data && \
     chmod -R 777 /var/lib/nginx/tmp && \
     mkdir -p /etc/nginx/pki && \
     chmod 400 /etc/nginx/pki && \
+    
+    # Remove default vhost config, it will be recreated in entrypoint via gotpl
+    rm /etc/nginx/conf.d/default-vhost.conf && \
 
     # Cleanup
     apk del *-dev build-base autoconf libtool && \

@@ -67,7 +67,7 @@ Examples:
 
 ```bash
 # Wait for Nginx to start
-docker exec -ti [ID] make check-ready -f /usr/local/bin/Makefile
+docker exec -ti [ID] make check-ready -f /usr/local/bin/actions.mk
 ```
 
 You can skip -f option if you use run instead of exec.

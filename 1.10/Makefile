@@ -11,9 +11,7 @@ build:
 	docker build -t $(REPO):$(VERSION) ./
 
 test:
-	docker run -d --name $(NAME) -e DEBUG=1 -p 8080:80 $(REPO):$(VERSION)
-	./test.sh
-	make clean
+	./test.sh $(NAME) $(REPO):$(VERSION)
 
 push:
 	docker push $(REPO):$(VERSION)

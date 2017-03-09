@@ -27,4 +27,8 @@ execTpl 'default-vhost.conf.tpl' '/etc/nginx/conf.d/default-vhost.conf'
 
 execInitScripts
 
-exec "$@"
+if [[ "${1}" == 'make' ]]; then
+    exec "$@" -f /usr/local/bin/actions.mk
+else
+    exec "$@"
+fi

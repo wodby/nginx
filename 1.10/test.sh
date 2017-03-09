@@ -1,35 +1,28 @@
 #!/usr/bin/env bash
 
-set -ex
+set -e
 
-waitForNginx() {
-    done=''
+[[ ! -z ${DEBUG} ]] && set -x
 
-    for i in {30..0}; do
-        if curl -s "${1}:${2}" &> /dev/null ; then
-            done=1
-            break
-        fi
-        echo 'Nginx start process in progress...'
-        sleep 1
-    done
+export NGINX_HOST='nginx'
 
-    if [[ ! "${done}" ]]; then
-        echo "Failed to start Nginx" >&2
-        exit 1
-    fi
+NAME="${1}"
+IMAGE="${2}"
+
+cid="$(
+	docker run -d \
+		--name "${NAME}" \
+		"${IMAGE}"
+)"
+trap "docker rm -vf $cid > /dev/null" EXIT
+
+nginx() {
+	docker run --rm -i \
+	    --link "${NAME}":"${NGINX_HOST}" \
+	    "$IMAGE" \
+	    "$@" \
+	    host="${NGINX_HOST}"
 }
 
-checkNginxResponse() {
-    curl -s "${1}:${2}" | grep -c 'Welcome to nginx!'
-}
-
-runTests() {
-    host=localhost
-    port=8080
-
-    waitForNginx "${host}" "${port}"
-    checkNginxResponse "${host}" "${port}"
-}
-
-runTests
+nginx make check-ready
+nginx curl -s "${NGINX_HOST}" | grep 'Welcome to nginx!'

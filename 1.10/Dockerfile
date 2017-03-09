@@ -11,29 +11,33 @@ ENV GOTPL_VER 0.1.5
 
     # Create user and groups
     # Based on http://git.alpinelinux.org/cgit/aports/tree/main/nginx-initscripts/nginx-initscripts.pre-install
-RUN addgroup -S -g 82 www-data && \
+RUN set -e && \
+    addgroup -S -g 82 www-data && \
     adduser -S -u 82 -s /bin/bash -D -G www-data www-data && \
 
     addgroup -S nginx && \
     adduser -S -D -H -h /var/lib/nginx -s /sbin/nologin -G nginx -g nginx nginx && \
     addgroup nginx www-data && \
 
-    # Prepare build tools for compiling some applications from source code
     apk --update add \
         bash \
         ca-certificates \
-        wget \
-        pcre \
-        build-base \
-        autoconf \
-        libtool \
+        curl \
         geoip \
-        libressl-dev \
-        pcre-dev \
-        zlib-dev \
-        geoip-dev\
         luajit \
-        luajit-dev && \
+        make \
+        pcre \
+        wget \
+
+        # Temporarily packages to compilation
+        autoconf \
+        build-base \
+        geoip-dev\
+        libressl-dev \
+        libtool \
+        luajit-dev \
+        pcre-dev \
+        zlib-dev && \
 
     # Download and install Gotpl
     wget -qO- https://github.com/wodby/gotpl/releases/download/${GOTPL_VER}/gotpl-alpine-linux-amd64-${GOTPL_VER}.tar.gz | tar xz -C /usr/local/bin && \
@@ -98,6 +102,8 @@ RUN addgroup -S -g 82 www-data && \
     # Cleanup
     apk del *-dev build-base autoconf libtool && \
     rm -rf /var/cache/apk/* /tmp/*
+
+COPY scripts /usr/local/bin
 
 WORKDIR /var/www/html
 EXPOSE 80

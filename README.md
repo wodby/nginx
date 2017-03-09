@@ -4,6 +4,8 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 
+[![Wodby Slack](https://www.google.com/s2/favicons?domain=www.slack.com) Join us on Slack](https://slack.wodby.com/)
+
 ## Supported tags and respective `Dockerfile` links
 
 - [`1.10`, `latest` (*1.10/Dockerfile*)](https://github.com/wodby/nginx/tree/master/1.10/Dockerfile)
@@ -45,3 +47,31 @@
 | NGINX_SERVER_NAME                     | String | default         | |
 | NGINX_BACKEND_PORT                    | Int    | 9000            | |
 | NGINX_BACKEND_HOST                    | String |                 | |
+
+## Actions
+
+Usage:
+```
+make COMMAND [params ...]
+
+commands:
+    check-ready [host=<nginx> max_try=<10> wait_seconds=<5>]
+ 
+default params values:
+    host localhost
+    max_try 30
+    wait_seconds 1
+```
+
+Examples:
+
+```bash
+# Wait for Nginx to start
+docker exec -ti [ID] make check-ready -f /usr/local/bin/Makefile
+```
+
+You can skip -f option if you use run instead of exec.
+
+## Using in Production
+
+Deploy Nginx to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).

@@ -28,6 +28,7 @@ RUN set -e && \
         luajit \
         make \
         pcre \
+        su-exec \
         wget \
 
         # Temporarily packages to compilation

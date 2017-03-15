@@ -22,10 +22,7 @@ function execInitScripts {
 }
 
 fixPermissions() {
-    # Fix permissions if not RO volume.
-    if ! grep "\s${HTML_DIR}\s.*\sro[\s,]" /proc/mounts &> /dev/null; then
-        chown -f www-data:www-data "${HTML_DIR}"
-    fi
+    chown www-data:www-data "${HTML_DIR}"
 }
 
 execTpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'

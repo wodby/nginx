@@ -22,7 +22,7 @@ function execInitScripts {
 }
 
 fixPermissions() {
-    chown www-data:www-data "${HTML_DIR}"
+    chown -f www-data:www-data "${HTML_DIR}"
 }
 
 execTpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'

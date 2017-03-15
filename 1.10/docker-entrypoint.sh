@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ -n $DEBUG ]]; then
+if [[ -n "${DEBUG}" ]]; then
   set -x
 fi
 
@@ -21,14 +21,19 @@ function execInitScripts {
     shopt -u nullglob
 }
 
+fixPermissions() {
+    chown www-data:www-data "${HTML_DIR}"
+}
+
 execTpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'
 execTpl 'fastcgi_params.tpl' '/etc/nginx/fastcgi_params'
 execTpl 'default-vhost.conf.tpl' '/etc/nginx/conf.d/default-vhost.conf'
 
+fixPermissions
 execInitScripts
 
 if [[ "${1}" == 'make' ]]; then
-    exec "$@" -f /usr/local/bin/actions.mk
+    su-exec www-data "${@}" -f /usr/local/bin/actions.mk
 else
-    exec "$@"
+    exec $@
 fi

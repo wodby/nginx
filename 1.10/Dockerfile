@@ -8,6 +8,7 @@ ENV NGINX_LUA_VER 0.10.7
 ENV LUAJIT_LIB /usr/lib/
 ENV LUAJIT_INC /usr/include/luajit-2.1/
 ENV GOTPL_VER 0.1.5
+ENV HTML_DIR /var/www/html
 
     # Create user and groups
     # Based on http://git.alpinelinux.org/cgit/aports/tree/main/nginx-initscripts/nginx-initscripts.pre-install
@@ -105,7 +106,7 @@ RUN set -e && \
 
 COPY scripts /usr/local/bin
 
-WORKDIR /var/www/html
+WORKDIR $HTML_DIR
 EXPOSE 80
 
 COPY templates/* /etc/gotpl/

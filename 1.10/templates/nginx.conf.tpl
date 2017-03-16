@@ -11,7 +11,7 @@ events {
 http {
     include                             /etc/nginx/mime.types;
     default_type                        application/octet-stream;
-    fastcgi_buffers                     {{ getenv "NGINX_FASTCGI_BUFFERS" "8 16k" }};
+    fastcgi_buffers                     {{ getenv "NGINX_FASTCGI_BUFFERS" "16 16k" }};
     fastcgi_buffer_size                 {{ getenv "NGINX_FASTCGI_BUFFER_SIZE" "32k" }};
     fastcgi_intercept_errors            {{ getenv "NGINX_FASTCGI_INTERCEPT_ERRORS" "on" }};
     fastcgi_read_timeout                {{ getenv "NGINX_FASTCGI_READ_TIMEOUT" "900" }};
@@ -23,6 +23,9 @@ http {
     client_body_timeout                 {{ getenv "NGINX_CLIENT_BODY_TIMEOUT" "600" }};
     client_header_timeout               {{ getenv "NGINX_CLIENT_HEADER_TIMEOUT" "600" }};
     client_max_body_size                {{ getenv "NGINX_CLIENT_MAX_BODY_SIZE" "256M" }};
+    client_body_buffer_size             {{ getenv "NGINX_CLIENT_BODY_BUFFER_SIZE" "16K" }};
+    client_header_buffer_size           {{ getenv "NGINX_CLIENT_HEADER_BUFFER_SIZE" "4K" }};
+    large_client_header_buffers         {{ getenv "NGINX_LARGE_CLIENT_HEADER_BUFFERS" "8 16K" }};
     keepalive_timeout                   {{ getenv "NGINX_KEEPALIVE_TIMEOUT" "60" }};
     keepalive_requests                  {{ getenv "NGINX_KEEPALIVE_REQUESTS" "100" }};
     reset_timedout_connection           {{ getenv "NGINX_RESET_TIMEOUT_CONNECTION" "off" }};

@@ -11,7 +11,7 @@ events {
 http {
     include                             /etc/nginx/mime.types;
     default_type                        application/octet-stream;
-    fastcgi_buffers                     {{ getenv "NGINX_FASTCGI_BUFFERS" "16 16k" }};
+    fastcgi_buffers                     {{ getenv "NGINX_FASTCGI_BUFFERS" "16 32k" }};
     fastcgi_buffer_size                 {{ getenv "NGINX_FASTCGI_BUFFER_SIZE" "32k" }};
     fastcgi_intercept_errors            {{ getenv "NGINX_FASTCGI_INTERCEPT_ERRORS" "on" }};
     fastcgi_read_timeout                {{ getenv "NGINX_FASTCGI_READ_TIMEOUT" "900" }};

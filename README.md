@@ -19,7 +19,7 @@
 | NGINX_ERROR_LOG_LEVEL                 | String | error           | |
 | NGINX_WORKER_CONNECTIONS              | Int    | 1024            | |
 | NGINX_MULTI_ACCEPT                    | String | on              | |
-| NGINX_FASTCGI_BUFFERS                 | String | 8 16k           | |
+| NGINX_FASTCGI_BUFFERS                 | String | 16 32k          | |
 | NGINX_FASTCGI_BUFFER_SIZE             | String | 32k             | |
 | NGINX_FASTCGI_INTERCEPT_ERRORS        | String | on              | |
 | NGINX_FASTCGI_READ_TIMEOUT            | Int    | 900             | |

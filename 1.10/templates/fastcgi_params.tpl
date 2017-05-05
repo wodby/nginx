@@ -21,5 +21,7 @@ fastcgi_param HTTPS $fastcgi_https if_not_empty;
 
 fastcgi_param HTTP_MOD_REWRITE On;
 
+fastcgi_param QUERY_STRING $query_string;
+
 ## Fix HTTPoxy vulnerability https://httpoxy.org/#mitigate-nginx.
 fastcgi_param HTTP_PROXY '';

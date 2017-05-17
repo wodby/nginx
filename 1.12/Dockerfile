@@ -1,18 +1,11 @@
 FROM alpine:3.5
 
-ENV NGINX_VER 1.10.2
+ENV NGINX_VER 1.12.0
 ENV NGINX_UP_VER 0.9.1
-ENV NGINX_NDK_VER 0.3.0
-ENV NGINX_NXS_VER 0.54
-ENV NGINX_LUA_VER 0.10.7
-ENV LUAJIT_LIB /usr/lib/
-ENV LUAJIT_INC /usr/include/luajit-2.1/
 ENV GOTPL_VER 0.1.5
 ENV HTML_DIR /var/www/html
 
-    # Create user and groups
-    # Based on http://git.alpinelinux.org/cgit/aports/tree/main/nginx-initscripts/nginx-initscripts.pre-install
-RUN set -e && \
+RUN set -ex && \
     addgroup -S -g 82 www-data && \
     adduser -S -u 82 -s /bin/bash -D -G www-data www-data && \
 
@@ -25,7 +18,6 @@ RUN set -e && \
         ca-certificates \
         curl \
         geoip \
-        luajit \
         make \
         pcre \
         su-exec \
@@ -37,19 +29,13 @@ RUN set -e && \
         geoip-dev\
         libressl-dev \
         libtool \
-        luajit-dev \
         pcre-dev \
         zlib-dev && \
 
-    # Download and install Gotpl
     wget -qO- https://github.com/wodby/gotpl/releases/download/${GOTPL_VER}/gotpl-alpine-linux-amd64-${GOTPL_VER}.tar.gz | tar xz -C /usr/local/bin && \
 
-    # Download nginx and its modules source code
     wget -qO- http://nginx.org/download/nginx-${NGINX_VER}.tar.gz | tar xz -C /tmp/ && \
-    wget -qO- https://github.com/simpl/ngx_devel_kit/archive/v${NGINX_NDK_VER}.tar.gz | tar xz -C /tmp/ && \
     wget -qO- https://github.com/masterzen/nginx-upload-progress-module/archive/v${NGINX_UP_VER}.tar.gz | tar xz -C /tmp/ && \
-    wget -qO- https://github.com/nbs-system/naxsi/archive/${NGINX_NXS_VER}.tar.gz | tar xz -C /tmp/ && \
-    wget -qO- https://github.com/openresty/lua-nginx-module/archive/v${NGINX_LUA_VER}.tar.gz | tar xz -C /tmp/ && \
 
     # Make and install nginx with module
     cd /tmp/nginx-${NGINX_VER} && \
@@ -87,10 +73,8 @@ RUN set -e && \
         --with-stream_ssl_module \
         --with-http_geoip_module \
         --with-ld-opt="-Wl,-rpath,/usr/lib/" \
-        --add-module=/tmp/ngx_devel_kit-${NGINX_NDK_VER}/ \
-        --add-module=/tmp/nginx-upload-progress-module-${NGINX_UP_VER}/ \
-        --add-module=/tmp/naxsi-${NGINX_NXS_VER}/naxsi_src/ \
-        --add-module=/tmp/lua-nginx-module-${NGINX_LUA_VER}/ && \
+        --add-module=/tmp/nginx-upload-progress-module-${NGINX_UP_VER}/ && \
+
     make -j2 && \
     make install && \
 

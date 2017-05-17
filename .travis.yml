@@ -5,10 +5,11 @@ services:
 
 env:
   global:
-    - STABLE_VERSION=1.10
-    - LATEST_VERSION=1.10
+    - STABLE_VERSION=1.12
+    - LATEST_VERSION=1.12
   matrix:
     - VERSION=1.10
+    - VERSION=1.12
 
 script:
   - cd ./$VERSION

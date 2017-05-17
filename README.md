@@ -3,14 +3,13 @@
 [![Build Status](https://travis-ci.org/wodby/nginx.svg?branch=master)](https://travis-ci.org/wodby/nginx)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
-
-[![Wodby Slack](https://www.google.com/s2/favicons?domain=www.slack.com) Join us on Slack](https://slack.wodby.com/)
+[![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
 
 ## Supported tags and respective `Dockerfile` links
 
 - [`1.10`, `latest` (*1.10/Dockerfile*)](https://github.com/wodby/nginx/tree/master/1.10/Dockerfile)
 
-## Environment Variables Available for Customization
+## Environment variables available for customization
 
 | Environment Variable | Type | Default Value | Description |
 | -------------------- | -----| ------------- | ----------- |
@@ -59,7 +58,7 @@ commands:
  
 default params values:
     host localhost
-    max_try 30
+    max_try 1
     wait_seconds 1
 ```
 
@@ -67,11 +66,11 @@ Examples:
 
 ```bash
 # Wait for Nginx to start
-docker exec -ti [ID] make check-ready -f /usr/local/bin/actions.mk
+docker exec -ti [ID] make check-ready max_try=10 wait_seconds=1 -f /usr/local/bin/actions.mk
 ```
 
 You can skip -f option if you use run instead of exec.
 
-## Using in Production
+## Using in production
 
 Deploy Nginx to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).

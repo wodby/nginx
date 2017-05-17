@@ -6,10 +6,11 @@ services:
 env:
   global:
     - STABLE_VERSION=1.12
-    - LATEST_VERSION=1.12
+    - LATEST_VERSION=1.13
   matrix:
     - VERSION=1.10
     - VERSION=1.12
+    - VERSION=1.13
 
 script:
   - cd ./$VERSION

@@ -1,6 +1,6 @@
 user                                    nginx;
 daemon                                  off;
-worker_processes                        {{ getenv "NGINX_WORKER_PROCESSES" "1" }};
+worker_processes                        {{ getenv "NGINX_WORKER_PROCESSES" "auto" }};
 error_log                               {{ getenv "NGINX_ERROR_LOG" "/proc/self/fd/2" }} {{ getenv "NGINX_ERROR_LOG_LEVEL" "error" }};
 
 events {

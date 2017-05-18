@@ -15,7 +15,7 @@
 
 | Environment Variable | Type | Default Value | Description |
 | -------------------- | -----| ------------- | ----------- |
-| NGINX_WORKER_PROCESSES                | Int    | 1               | |
+| NGINX_WORKER_PROCESSES                | Int    | auto            | |
 | NGINX_ERROR_LOG                       | String | /proc/self/fd/2 | |
 | NGINX_ERROR_LOG_LEVEL                 | String | error           | |
 | NGINX_WORKER_CONNECTIONS              | Int    | 1024            | |

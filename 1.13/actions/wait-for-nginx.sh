@@ -2,7 +2,9 @@
 
 set -e
 
-[[ ! -z "${DEBUG}" ]] && set -x
+if [[ -n "${DEBUG}" ]]; then
+    set -x
+fi
 
 started=0
 host=$1

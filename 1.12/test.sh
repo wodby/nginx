@@ -2,7 +2,9 @@
 
 set -e
 
-[[ ! -z "${DEBUG}" ]] && set -x
+if [[ -n "${DEBUG}" ]]; then
+    set -x
+fi
 
 name=$1
 image=$2

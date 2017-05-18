@@ -100,7 +100,7 @@ RUN set -ex && \
     apk del *-dev build-base autoconf libtool && \
     rm -rf /var/cache/apk/* /tmp/*
 
-COPY scripts /usr/local/bin
+COPY actions /usr/local/bin
 
 WORKDIR $HTML_DIR
 EXPOSE 80

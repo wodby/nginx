@@ -8,7 +8,7 @@
 ## Supported tags and respective `Dockerfile` links
 
 - [`1.13-2.2.0`, `1.13`, `latest` (*1.13/Dockerfile*)](https://github.com/wodby/nginx/tree/master/1.13/Dockerfile)
-- [`1.12-2.2.0`, `1.12`, (*1.12/Dockerfile*)](https://github.com/wodby/nginx/tree/master/1.12/Dockerfile)
+- [`1.12-2.2.0`, `1.12`, `stable` (*1.12/Dockerfile*)](https://github.com/wodby/nginx/tree/master/1.12/Dockerfile)
 - [`1.10-2.2.0`, `1.10`, (*1.10/Dockerfile*)](https://github.com/wodby/nginx/tree/master/1.10/Dockerfile)
 
 ## Environment variables available for customization
@@ -56,22 +56,21 @@ Usage:
 make COMMAND [params ...]
 
 commands:
-    check-ready [host=<nginx> max_try=<10> wait_seconds=<5>]
+    check-ready [host max_try wait_seconds delay_seconds]
  
 default params values:
     host localhost
     max_try 1
     wait_seconds 1
+    delay_seconds 0
 ```
 
 Examples:
 
 ```bash
 # Wait for Nginx to start
-docker exec -ti [ID] make check-ready max_try=10 wait_seconds=1 -f /usr/local/bin/actions.mk
+docker exec -ti [ID] make check-ready max_try=10 -f /usr/local/bin/actions.mk
 ```
-
-You can skip -f option if you use run instead of exec.
 
 ## Using in production
 

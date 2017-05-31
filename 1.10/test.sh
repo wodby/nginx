@@ -16,5 +16,5 @@ nginx() {
 	docker run --rm -i --link "${name}":"nginx" "$image" "$@" host="nginx"
 }
 
-nginx make check-ready wait_seconds=1 max_try=10
+nginx make check-ready max_try=10
 nginx curl -s "nginx" | grep 'Welcome to nginx!'

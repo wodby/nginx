@@ -64,5 +64,5 @@ http {
     }
     {{ end }}
 
-    include conf.d/*.conf;
+    include {{ getenv "NGINX_CONF_INCLUDE" "conf.d/*.conf" }};
 }

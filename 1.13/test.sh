@@ -13,8 +13,8 @@ cid="$(docker run -d --name "${name}" "${image}")"
 trap "docker rm -vf $cid > /dev/null" EXIT
 
 nginx() {
-	docker run --rm -i --link "${name}":"nginx" "$image" "$@" host="nginx"
+	docker run --rm -i --link "${name}":"nginx" "$image" "$@"
 }
 
-nginx make check-ready max_try=10
+nginx make check-ready max_try=10 host="nginx"
 nginx curl -s "nginx" | grep 'Welcome to nginx!'

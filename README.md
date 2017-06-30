@@ -55,8 +55,8 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 
 ## Installed Nginx Modules
 
-* [1.13](https://github.com/wodby/nginx/tree/master/1.13/tests/nginx_modules)
-* [1.12](https://github.com/wodby/nginx/tree/master/1.12/tests/nginx_modules)
+* [1.13](https://raw.githubusercontent.com/wodby/nginx/master/1.13/tests/nginx_modules)
+* [1.12](https://raw.githubusercontent.com/wodby/nginx/master/1.12/tests/nginx_modules)
 
 ## Actions
 

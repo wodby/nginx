@@ -20,14 +20,12 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 
 | Variable | Default Value | Description |
 | -------- | ------------- | ----------- |
-| NGINX_ACCESS_LOG               | /proc/self/fd/1       | |
 | NGINX_BACKEND_HOST             |                       | |
 | NGINX_BACKEND_PORT             | 9000                  | |
 | NGINX_CLIENT_BODY_TIMEOUT      | 600                   | |
 | NGINX_CLIENT_HEADER_TIMEOUT    | 600                   | |
 | NGINX_CLIENT_MAX_BODY_SIZE     | 256M                  | |
 | NGINX_CONF_INCLUDE             | conf.d/*.conf         | |
-| NGINX_ERROR_LOG                | /proc/self/fd/2       | |    
 | NGINX_ERROR_LOG_LEVEL          | error                 | |
 | NGINX_FASTCGI_BUFFERS          | 16 32k                | |
 | NGINX_FASTCGI_BUFFER_SIZE      | 32k                   | |

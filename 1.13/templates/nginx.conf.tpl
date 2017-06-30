@@ -1,7 +1,7 @@
 user                                    nginx;
 daemon                                  off;
 worker_processes                        {{ getenv "NGINX_WORKER_PROCESSES" "auto" }};
-error_log                               {{ getenv "NGINX_ERROR_LOG" "/proc/self/fd/2" }} {{ getenv "NGINX_ERROR_LOG_LEVEL" "error" }};
+error_log                               /proc/self/fd/2 {{ getenv "NGINX_ERROR_LOG_LEVEL" "error" }};
 
 events {
     worker_connections                  {{ getenv "NGINX_WORKER_CONNECTIONS" "1024" }};
@@ -16,7 +16,7 @@ http {
     fastcgi_intercept_errors            {{ getenv "NGINX_FASTCGI_INTERCEPT_ERRORS" "on" }};
     fastcgi_read_timeout                {{ getenv "NGINX_FASTCGI_READ_TIMEOUT" "900" }};
     include                             fastcgi_params;
-    access_log                          {{ getenv "NGINX_ACCESS_LOG" "/proc/self/fd/1" }};
+    access_log                          /proc/self/fd/1
     port_in_redirect                    off;
     send_timeout                        {{ getenv "NGINX_SEND_TIMEOUT" "600" }};
     sendfile                            {{ getenv "NGINX_SENDFILE" "on" }};

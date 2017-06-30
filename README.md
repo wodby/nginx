@@ -53,27 +53,10 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 | NGINX_WORKER_CONNECTIONS       | 1024                  | |
 | NGINX_WORKER_PROCESSES         | auto                  | |
 
-## Nginx Modules
+## Installed Nginx Modules
 
-```
-http_ssl_module 
-http_realip_module 
-http_addition_module 
-http_sub_module 
-http_dav_module 
-http_flv_module 
-http_mp4_module 
-http_gunzip_module 
-http_gzip_static_module 
-http_random_index_module 
-http_secure_link_module 
-http_stub_status_module 
-http_auth_request_module 
-mail_ssl_module 
-http_v2_module 
-stream_ssl_module 
-http_geoip_module 
-```
+* [1.13](https://github.com/wodby/nginx/tree/master/1.13/tests/nginx_modules)
+* [1.12](https://github.com/wodby/nginx/tree/master/1.12/tests/nginx_modules)
 
 ## Actions
 

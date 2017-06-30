@@ -12,9 +12,4 @@ image=$2
 cid="$(docker run -d --name "${name}" "${image}")"
 trap "docker rm -vf $cid > /dev/null" EXIT
 
-nginx() {
-	docker run --rm -i --link "${name}":"nginx" "$image" "$@"
-}
-
-nginx make check-ready max_try=10 host="nginx"
-nginx curl -s "nginx" | grep 'Welcome to nginx!'
+docker run --rm -i -v ${PWD}/tests:/tests --link "${name}":"nginx" "$image" su-exec www-data /tests/tests.sh

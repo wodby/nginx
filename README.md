@@ -1,20 +1,26 @@
-# Nginx docker container image
+# Nginx Docker Container Images
 
 [![Build Status](https://travis-ci.org/wodby/nginx.svg?branch=master)](https://travis-ci.org/wodby/nginx)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 [![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
 
-## Supported tags and respective `Dockerfile` links
+## Docker Images
 
-- [`1.13-2.2.0`, `1.13`, `latest` (*1.13/Dockerfile*)](https://github.com/wodby/nginx/tree/master/1.13/Dockerfile)
-- [`1.12-2.2.0`, `1.12`, `stable` (*1.12/Dockerfile*)](https://github.com/wodby/nginx/tree/master/1.12/Dockerfile)
+Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and published on [Docker Hub](https://hub.docker.com/r/wodby/nginx). 
 
-## Environment variables available for customization
+## Versions
 
-| Environment Variable | Default Value | Description |
-| -------------------- | ------------- | ----------- |
-| NGINX_ACCESS_LOG               | /proc/self/fd/2       | |
+| Nginx | Alpine Linux |
+| ----- | ------------ |
+| [1.13](https://github.com/wodby/nginx/tree/master/1.13/Dockerfile) | 3.6 |  
+| [1.12](https://github.com/wodby/nginx/tree/master/1.12/Dockerfile) | 3.6 |  
+
+## Environment Variables
+
+| Variable | Default Value | Description |
+| -------- | ------------- | ----------- |
+| NGINX_ACCESS_LOG               | /proc/self/fd/1       | |
 | NGINX_BACKEND_HOST             |                       | |
 | NGINX_BACKEND_PORT             | 9000                  | |
 | NGINX_CLIENT_BODY_TIMEOUT      | 600                   | |
@@ -49,6 +55,28 @@
 | NGINX_WORKER_CONNECTIONS       | 1024                  | |
 | NGINX_WORKER_PROCESSES         | auto                  | |
 
+## Nginx Modules
+
+```
+http_ssl_module 
+http_realip_module 
+http_addition_module 
+http_sub_module 
+http_dav_module 
+http_flv_module 
+http_mp4_module 
+http_gunzip_module 
+http_gzip_static_module 
+http_random_index_module 
+http_secure_link_module 
+http_stub_status_module 
+http_auth_request_module 
+mail_ssl_module 
+http_v2_module 
+stream_ssl_module 
+http_geoip_module 
+```
+
 ## Actions
 
 Usage:
@@ -64,14 +92,3 @@ default params values:
     wait_seconds 1
     delay_seconds 0
 ```
-
-Examples:
-
-```bash
-# Wait for Nginx to start
-docker exec -ti [ID] make check-ready max_try=10 -f /usr/local/bin/actions.mk
-```
-
-## Deployment
-
-Deploy Nginx to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://wodby.com).

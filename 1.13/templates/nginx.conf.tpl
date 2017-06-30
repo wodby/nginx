@@ -16,7 +16,7 @@ http {
     fastcgi_intercept_errors            {{ getenv "NGINX_FASTCGI_INTERCEPT_ERRORS" "on" }};
     fastcgi_read_timeout                {{ getenv "NGINX_FASTCGI_READ_TIMEOUT" "900" }};
     include                             fastcgi_params;
-    access_log                          /proc/self/fd/1
+    access_log                          /proc/self/fd/1;
     port_in_redirect                    off;
     send_timeout                        {{ getenv "NGINX_SEND_TIMEOUT" "600" }};
     sendfile                            {{ getenv "NGINX_SENDFILE" "on" }};

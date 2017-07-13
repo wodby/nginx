@@ -13,8 +13,8 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 
 | Nginx | Alpine Linux |
 | ----- | ------------ |
-| [1.13.2](https://github.com/wodby/nginx/tree/master/1.13/Dockerfile) | 3.6 |  
-| [1.12.0](https://github.com/wodby/nginx/tree/master/1.12/Dockerfile) | 3.6 |  
+| [1.13.3](https://github.com/wodby/nginx/tree/master/1.13/Dockerfile) | 3.6 |  
+| [1.12.1](https://github.com/wodby/nginx/tree/master/1.12/Dockerfile) | 3.6 |  
 
 ## Environment Variables
 

@@ -1,9 +1,9 @@
 FROM alpine:3.6
 
-ENV NGINX_VER 1.13.3
-ENV NGINX_UP_VER 0.9.1
-ENV GOTPL_VER 0.1.5
-ENV HTML_DIR /var/www/html
+ENV NGINX_VER="1.13.3" \
+    NGINX_UP_VER="0.9.1" \
+    GOTPL_VER="0.1.5" \
+    HTML_DIR="/var/www/html"
 
 RUN set -ex && \
     addgroup -S -g 82 www-data && \

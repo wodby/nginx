@@ -7,7 +7,7 @@ server {
         index  index.html index.htm;
     }
 
-    location = .healthz {
+    location = /.healthz {
         access_log off;
         return 200;
     }

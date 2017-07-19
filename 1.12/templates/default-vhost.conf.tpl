@@ -6,4 +6,9 @@ server {
         root   html;
         index  index.html index.htm;
     }
+
+    location = .healthz {
+        access_log off;
+        return 200;
+    }
 }

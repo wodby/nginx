@@ -15,7 +15,7 @@ delay_seconds=$4
 sleep "${delay_seconds}"
 
 for i in $(seq 1 "${max_try}"); do
-    if curl -s "${host}" &> /dev/null; then
+    if curl -s "${host}/.healthz" &> /dev/null; then
         started=1
         break
     fi

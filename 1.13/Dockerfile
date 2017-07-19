@@ -2,7 +2,11 @@ FROM alpine:3.6
 
 ENV NGINX_VER="1.13.3" \
     NGINX_UP_VER="0.9.1" \
-    GOTPL_VER="0.1.5" \
+    GOTPL_VER="0.1.5"
+
+ENV GOTPL_URL="https://github.com/wodby/gotpl/releases/download/${GOTPL_VER}/gotpl-alpine-linux-amd64-${GOTPL_VER}.tar.gz" \
+    NGINX_URL="http://nginx.org/download/nginx-${NGINX_VER}.tar.gz" \
+    NGINX_UP_URL="https://github.com/masterzen/nginx-upload-progress-module/archive/v${NGINX_UP_VER}.tar.gz" \
     HTML_DIR="/var/www/html"
 
 RUN set -ex && \
@@ -13,7 +17,7 @@ RUN set -ex && \
     adduser -S -D -H -h /var/lib/nginx -s /sbin/nologin -G nginx -g nginx nginx && \
     addgroup nginx www-data && \
 
-    apk --update add \
+    apk add --update --no-cache --virtual .nginx-rundeps \
         bash \
         ca-certificates \
         curl \
@@ -21,9 +25,9 @@ RUN set -ex && \
         make \
         pcre \
         su-exec \
-        wget \
+        wget && \
 
-        # Temporarily packages to compilation
+    apk add --update --no-cache --virtual .build-deps \
         autoconf \
         build-base \
         geoip-dev\
@@ -32,12 +36,11 @@ RUN set -ex && \
         pcre-dev \
         zlib-dev && \
 
-    wget -qO- https://github.com/wodby/gotpl/releases/download/${GOTPL_VER}/gotpl-alpine-linux-amd64-${GOTPL_VER}.tar.gz | tar xz -C /usr/local/bin && \
+    wget -qO- ${GOTPL_URL} | tar xz -C /usr/local/bin && \
+    wget -qO- ${NGINX_URL} | tar xz -C /tmp/ && \
+    wget -qO- ${NGINX_UP_URL} | tar xz -C /tmp/ && \
 
-    wget -qO- http://nginx.org/download/nginx-${NGINX_VER}.tar.gz | tar xz -C /tmp/ && \
-    wget -qO- https://github.com/masterzen/nginx-upload-progress-module/archive/v${NGINX_UP_VER}.tar.gz | tar xz -C /tmp/ && \
-
-    # Make and install nginx with module
+    # Make and install nginx with modules.
     cd /tmp/nginx-${NGINX_VER} && \
     ./configure --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx \
         --conf-path=/etc/nginx/nginx.conf \
@@ -86,8 +89,8 @@ RUN set -ex && \
     chmod 400 /etc/nginx/pki && \
 
     # Cleanup
-    apk del *-dev build-base autoconf libtool && \
-    rm -rf /var/cache/apk/* /tmp/*
+    apk del .build-deps && \
+    rm -rf /tmp/*
 
 COPY actions /usr/local/bin
 

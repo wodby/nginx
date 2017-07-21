@@ -41,6 +41,7 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 | NGINX_GZIP_VARY                | on                    | |
 | NGINX_KEEPALIVE_REQUESTS       | 100                   | |
 | NGINX_KEEPALIVE_TIMEOUT        | 60                    | |
+| NGINX_LOC_HEALTHZ_ACCESS_LOG   | off                   | |
 | NGINX_MULTI_ACCEPT             | on                    | |
 | NGINX_RESET_TIMEOUT_CONNECTION | off                   | |
 | NGINX_SEND_TIMEOUT             | 600                   | |

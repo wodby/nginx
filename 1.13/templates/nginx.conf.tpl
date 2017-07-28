@@ -60,7 +60,7 @@ http {
 
     {{ if getenv "NGINX_BACKEND_HOST" }}
     upstream backend {
-        server {{ getenv "NGINX_BACKEND_HOST" }}:{{ getenv "NGINX_BACKEND_PORT" "9000" }};
+        server {{ getenv "NGINX_BACKEND_HOST" }}:{{ getenv "NGINX_BACKEND_PORT" "9000" }} fail_timeout={{ getenv "NGINX_BACKEND_FAIL_TIMEOUT" "10" }};
     }
     {{ end }}
 

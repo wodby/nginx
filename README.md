@@ -20,6 +20,7 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 
 | Variable | Default Value | Description |
 | -------- | ------------- | ----------- |
+| NGINX_BACKEND_FAIL_TIMEOUT     | 10                    | |
 | NGINX_BACKEND_HOST             |                       | |
 | NGINX_BACKEND_PORT             | 9000                  | |
 | NGINX_CLIENT_BODY_TIMEOUT      | 600                   | |

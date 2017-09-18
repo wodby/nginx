@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-ENV NGINX_VER="1.13.4" \
+ENV NGINX_VER="1.13.5" \
     NGINX_UP_VER="0.9.1" \
     GOTPL_VER="0.1.5"
 

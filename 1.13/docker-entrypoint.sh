@@ -25,10 +25,9 @@ fixPermissions() {
     chown www-data:www-data "${HTML_DIR}"
 }
 
-execTpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'
-execTpl 'fastcgi_params.tpl' '/etc/nginx/fastcgi_params'
 execTpl 'default-vhost.conf.tpl' '/etc/nginx/conf.d/default-vhost.conf'
 execTpl 'healthz.conf.tpl' '/etc/nginx/healthz.conf'
+execTpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'
 
 fixPermissions
 execInitScripts

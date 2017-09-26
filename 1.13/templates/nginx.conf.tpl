@@ -18,7 +18,7 @@ http {
     sendfile                            {{ getenv "NGINX_SENDFILE" "on" }};
     client_body_timeout                 {{ getenv "NGINX_CLIENT_BODY_TIMEOUT" "60s" }};
     client_header_timeout               {{ getenv "NGINX_CLIENT_HEADER_TIMEOUT" "60s" }};
-    client_max_body_size                {{ getenv "NGINX_CLIENT_MAX_BODY_SIZE" "1m" }};
+    client_max_body_size                {{ getenv "NGINX_CLIENT_MAX_BODY_SIZE" "32m" }};
     client_body_buffer_size             {{ getenv "NGINX_CLIENT_BODY_BUFFER_SIZE" "16k" }};
     client_header_buffer_size           {{ getenv "NGINX_CLIENT_HEADER_BUFFER_SIZE" "4k" }};
     large_client_header_buffers         {{ getenv "NGINX_LARGE_CLIENT_HEADER_BUFFERS" "8 16K" }};

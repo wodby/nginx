@@ -24,7 +24,7 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 | NGINX_CLIENT_BODY_TIMEOUT         | 60s           |             |
 | NGINX_CLIENT_HEADER_BUFFER_SIZE   | 4k            |             |
 | NGINX_CLIENT_HEADER_TIMEOUT       | 60s           |             |
-| NGINX_CLIENT_MAX_BODY_SIZE        | 1m            |             |
+| NGINX_CLIENT_MAX_BODY_SIZE        | 32m           |             |
 | NGINX_CONF_INCLUDE                | conf.d/*.conf |             |
 | NGINX_ENABLE_HEALTHZ_LOGS         |               |             |
 | NGINX_ERROR_LOG_LEVEL             | error         |             |

@@ -20,13 +20,13 @@ http {
     client_header_timeout               {{ getenv "NGINX_CLIENT_HEADER_TIMEOUT" "60s" }};
     client_max_body_size                {{ getenv "NGINX_CLIENT_MAX_BODY_SIZE" "1m" }};
     client_body_buffer_size             {{ getenv "NGINX_CLIENT_BODY_BUFFER_SIZE" "16k" }};
-    client_header_buffer_size           {{ getenv "NGINX_CLIENT_HEADER_BUFFER_SIZE" "1k" }};
-    large_client_header_buffers         {{ getenv "NGINX_LARGE_CLIENT_HEADER_BUFFERS" "4 8K" }};
+    client_header_buffer_size           {{ getenv "NGINX_CLIENT_HEADER_BUFFER_SIZE" "4k" }};
+    large_client_header_buffers         {{ getenv "NGINX_LARGE_CLIENT_HEADER_BUFFERS" "8 16K" }};
     keepalive_timeout                   {{ getenv "NGINX_KEEPALIVE_TIMEOUT" "75s" }};
     keepalive_requests                  {{ getenv "NGINX_KEEPALIVE_REQUESTS" "100" }};
     reset_timedout_connection           {{ getenv "NGINX_RESET_TIMEDOUT_CONNECTION" "off" }};
     tcp_nodelay                         {{ getenv "NGINX_TCP_NODELAY" "on" }};
-    tcp_nopush                          {{ getenv "NGINX_TCP_NOPUSH" "off" }};
+    tcp_nopush                          {{ getenv "NGINX_TCP_NOPUSH" "on" }};
     server_tokens                       {{ getenv "NGINX_SERVER_TOKENS" "off" }};
 
     upload_progress                     {{ getenv "NGINX_UPLOAD_PROGRESS" "uploads 1m" }};
@@ -37,8 +37,8 @@ http {
     gzip_http_version                   {{ getenv "NGINX_GZIP_HTTP_VERSION" "1.1" }};
     gzip_min_length                     {{ getenv "NGINX_GZIP_MIN_LENGTH" "20" }};
     gzip_types                          text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/x-icon application/vnd.ms-fontobject font/opentype application/x-font-ttf;
-    gzip_vary                           {{ getenv "NGINX_GZIP_VARY" "off" }};
-    gzip_proxied                        {{ getenv "NGINX_GZIP_PROXIED" "off" }};
+    gzip_vary                           {{ getenv "NGINX_GZIP_VARY" "on" }};
+    gzip_proxied                        {{ getenv "NGINX_GZIP_PROXIED" "any" }};
     gzip_disable                        {{ getenv "NGINX_GZIP_DISABLE" "msie6" }};
 
     add_header                          X-XSS-Protection '1; mode=block';

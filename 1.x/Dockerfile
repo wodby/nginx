@@ -10,9 +10,12 @@ ENV NGINX_URL="http://nginx.org/download/nginx-${NGINX_VER}.tar.gz" \
     HTML_DIR="/var/www/html"
 
 RUN set -ex && \
+    addgroup -S -g 82 www-data && \
+    adduser -S -u 82 -s /bin/bash -D -G www-data www-data && \
 
     addgroup -S nginx && \
     adduser -S -D -H -h /var/lib/nginx -s /sbin/nologin -G nginx -g nginx nginx && \
+    addgroup nginx www-data && \
 
     apk add --update --no-cache --virtual .nginx-rundeps \
         geoip \

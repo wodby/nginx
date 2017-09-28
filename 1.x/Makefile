@@ -1,14 +1,17 @@
 -include env_make
 
-VERSION ?= 1.12
+VERSION ?= 1.13
+NGINX_VER ?= 1.13.5
 
 REPO = wodby/nginx
-NAME = nginx-1.12
+NAME = nginx-$(NGINX_VER)
 
 .PHONY: build test push shell run start stop logs clean release
 
+default: build
+
 build:
-	docker build -t $(REPO):$(VERSION) ./
+	docker build -t $(REPO):$(VERSION) --build-arg NGINX_VER=$(NGINX_VER) ./
 
 test:
 	./test.sh $(NAME) $(REPO):$(VERSION)
@@ -34,7 +37,4 @@ logs:
 clean:
 	-docker rm -f $(NAME)
 
-release: build
-	make push -e VERSION=$(VERSION)
-
-default: build
+release: build push

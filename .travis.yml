@@ -5,31 +5,26 @@ services:
 
 env:
   global:
-    - STABLE_VERSION=1.12
     - LATEST_VERSION=1.13
   matrix:
-    - VERSION=1.12
-    - VERSION=1.13
+    - LINE=1.x VERSION=1.13 NGINX_VER=1.13.5
+    - LINE=1.x VERSION=1.12 NGINX_VER=1.12.1
 
 script:
-  - cd ./$VERSION
-  - make && make test
+  - cd ./$LINE
+  - make VERSION=$VERSION NGINX_VER=$NGINX_VER && make test VERSION=$VERSION NGINX_VER=$NGINX_VER
 
 after_success: |
   if [ "$TRAVIS_PULL_REQUEST" == "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ -n "$TRAVIS_TAG" ]); then
     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    make release
+    make release VERSION=$VERSION NGINX_VER=$NGINX_VER
 
     if [ -n "$TRAVIS_TAG" ]; then
-      make VERSION="$VERSION-$TRAVIS_TAG" release
+      make release VERSION="$VERSION-$TRAVIS_TAG" NGINX_VER=$NGINX_VER
     fi
 
     if [ "$VERSION" == "$LATEST_VERSION" ]; then
-      make VERSION=latest release
-    fi
-
-    if [ "$VERSION" == "$STABLE_VERSION" ]; then
-      make VERSION=stable release
+      make release VERSION=latest NGINX_VER=$NGINX_VER
     fi
   fi
 

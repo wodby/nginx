@@ -1,31 +1,24 @@
-FROM alpine:3.6
+FROM wodby/alpine:3.6
 
-ENV NGINX_VER="1.12.1" \
-    NGINX_UP_VER="0.9.1" \
-    GOTPL_VER="0.1.5"
+ARG NGINX_VER
 
-ENV GOTPL_URL="https://github.com/wodby/gotpl/releases/download/${GOTPL_VER}/gotpl-alpine-linux-amd64-${GOTPL_VER}.tar.gz" \
-    NGINX_URL="http://nginx.org/download/nginx-${NGINX_VER}.tar.gz" \
+ENV NGINX_VER="${NGINX_VER}" \
+    NGINX_UP_VER="0.9.1"
+
+ENV NGINX_URL="http://nginx.org/download/nginx-${NGINX_VER}.tar.gz" \
     NGINX_UP_URL="https://github.com/masterzen/nginx-upload-progress-module/archive/v${NGINX_UP_VER}.tar.gz" \
     HTML_DIR="/var/www/html"
 
 RUN set -ex && \
-    addgroup -S -g 82 www-data && \
-    adduser -S -u 82 -s /bin/bash -D -G www-data www-data && \
 
     addgroup -S nginx && \
     adduser -S -D -H -h /var/lib/nginx -s /sbin/nologin -G nginx -g nginx nginx && \
-    addgroup nginx www-data && \
 
     apk add --update --no-cache --virtual .nginx-rundeps \
-        bash \
-        ca-certificates \
-        curl \
         geoip \
         make \
         pcre \
-        su-exec \
-        wget && \
+        sudo && \
 
     apk add --update --no-cache --virtual .build-deps \
         autoconf \
@@ -36,11 +29,10 @@ RUN set -ex && \
         pcre-dev \
         zlib-dev && \
 
-    wget -qO- ${GOTPL_URL} | tar xz -C /usr/local/bin && \
     wget -qO- ${NGINX_URL} | tar xz -C /tmp/ && \
     wget -qO- ${NGINX_UP_URL} | tar xz -C /tmp/ && \
 
-    # Make and install nginx with modules.
+    # Install nginx with modules.
     cd /tmp/nginx-${NGINX_VER} && \
     ./configure --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx \
         --conf-path=/etc/nginx/nginx.conf \
@@ -81,24 +73,32 @@ RUN set -ex && \
     make -j2 && \
     make install && \
 
-    mkdir /etc/nginx/conf.d && \
-    mkdir -p /var/lib/nginx/tmp && \
-    chmod 755 /var/lib/nginx && \
+    # Configure sudoers
+    { \
+        echo -n 'nginx ALL=(root) NOPASSWD: ' ; \
+        echo -n '/usr/local/bin/fix-permissions.sh, ' ; \
+        echo '/usr/sbin/nginx' ; \
+    } | tee /etc/sudoers.d/nginx && \
+
+    mkdir -p /etc/nginx/conf.d /var/lib/nginx/tmp /etc/nginx/pki && \
     chmod -R 777 /var/lib/nginx/tmp && \
-    mkdir -p /etc/nginx/pki && \
+    chmod 755 /var/lib/nginx && \
     chmod 400 /etc/nginx/pki && \
+
+    chown -R nginx:nginx /etc/nginx && \
 
     # Cleanup
     apk del .build-deps && \
     rm -rf /tmp/*
 
+USER nginx
+
 COPY actions /usr/local/bin
+COPY templates /etc/gotpl/
+COPY docker-entrypoint.sh /
 
 WORKDIR $HTML_DIR
 EXPOSE 80
 
-COPY templates/* /etc/gotpl/
-COPY docker-entrypoint.sh /
-
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["nginx"]
+CMD ["sudo", "nginx"]

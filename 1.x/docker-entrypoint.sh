@@ -21,7 +21,10 @@ function exec_init_scripts {
 
 sudo fix-permissions.sh www-data www-data "${HTML_DIR}"
 
-exec_tpl 'default-vhost.conf.tpl' '/etc/nginx/conf.d/default-vhost.conf'
+if [[ -f "/etc/gotpl/default-vhost.conf.tpl" ]]; then
+    exec_tpl 'default-vhost.conf.tpl' '/etc/nginx/conf.d/default-vhost.conf'
+fi
+
 exec_tpl 'healthz.conf.tpl' '/etc/nginx/healthz.conf'
 exec_tpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'
 

@@ -19,7 +19,7 @@ function exec_init_scripts {
     shopt -u nullglob
 }
 
-sudo fix-permissions.sh www-data www-data "${HTML_DIR}"
+sudo fix-permissions.sh nginx nginx "${HTML_DIR}"
 
 if [[ -f "/etc/gotpl/default-vhost.conf.tpl" ]]; then
     exec_tpl 'default-vhost.conf.tpl' '/etc/nginx/conf.d/default-vhost.conf'

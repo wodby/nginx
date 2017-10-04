@@ -1,4 +1,4 @@
-user                                    nginx;
+user                                    {{ getenv "NGINX_USER" "nginx" }};
 daemon                                  off;
 worker_processes                        {{ getenv "NGINX_WORKER_PROCESSES" "auto" }};
 error_log                               /proc/self/fd/2 {{ getenv "NGINX_ERROR_LOG_LEVEL" "error" }};

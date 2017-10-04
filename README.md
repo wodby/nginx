@@ -47,6 +47,7 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 | NGINX_TCP_NODELAY                 | on            |             |
 | NGINX_TCP_NOPUSH                  | on            |             |
 | NGINX_UPLOAD_PROGRESS             | uploads 1m    |             |
+| NGINX_USER                        | nginx         |             |
 | NGINX_WORKER_CONNECTIONS          | 1024          |             |
 | NGINX_WORKER_PROCESSES            | auto          |             |
 

@@ -1,7 +1,7 @@
 -include env_make
 
-VERSION ?= 1.13
 NGINX_VER ?= 1.13.5
+TAG ?= $(NGINX_VER)
 
 REPO = wodby/nginx
 NAME = nginx-$(NGINX_VER)
@@ -11,22 +11,22 @@ NAME = nginx-$(NGINX_VER)
 default: build
 
 build:
-	docker build -t $(REPO):$(VERSION) --build-arg NGINX_VER=$(NGINX_VER) ./
+	docker build -t $(REPO):$(TAG) --build-arg NGINX_VER=$(NGINX_VER) ./
 
 test:
-	./test.sh $(NAME) $(REPO):$(VERSION)
+	./test.sh $(NAME) $(REPO):$(TAG)
 
 push:
-	docker push $(REPO):$(VERSION)
+	docker push $(REPO):$(TAG)
 
 shell:
-	docker run --rm --name $(NAME) -i -t $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(VERSION) /bin/bash
+	docker run --rm --name $(NAME) -i -t $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(TAG) /bin/bash
 
 run:
-	docker run --rm --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(VERSION) $(CMD)
+	docker run --rm --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(TAG) $(CMD)
 
 start:
-	docker run -d --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(VERSION)
+	docker run -d --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(TAG)
 
 stop:
 	docker stop $(NAME)

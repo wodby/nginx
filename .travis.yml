@@ -7,8 +7,8 @@ env:
   global:
     - LATEST_NGINX_VER=1.13.5
   matrix:
-    - LINE=1.x NGINX_VER=1.13.5
-    - LINE=1.x NGINX_VER=1.12.1
+    - LINE=1 NGINX_VER=1.13.5
+    - LINE=1 NGINX_VER=1.12.1
 
 script:
   - cd ./$LINE

@@ -11,10 +11,10 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 
 ## Versions
 
-| Nginx (Dockerfile)                                                | Alpine Linux |
-| ----------------------------------------------------------------- | ------------ |
-| [1.13.5](https://github.com/wodby/nginx/tree/master/1/Dockerfile) | 3.6          |
-| [1.12.1](https://github.com/wodby/nginx/tree/master/1/Dockerfile) | 3.6          |
+| Nginx (Dockerfile)                                              | Alpine Linux |
+| --------------------------------------------------------------- | ------------ |
+| [1.13.5](https://github.com/wodby/nginx/tree/master/Dockerfile) | 3.6          |
+| [1.12.1](https://github.com/wodby/nginx/tree/master/Dockerfile) | 3.6          |
 
 ## Environment Variables
 
@@ -53,8 +53,8 @@ Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and publishe
 
 ## Installed Nginx Modules
 
-* [1.13](https://raw.githubusercontent.com/wodby/nginx/master/1/tests/nginx_modules)
-* [1.12](https://raw.githubusercontent.com/wodby/nginx/master/1/tests/nginx_modules)
+* [1.13](https://raw.githubusercontent.com/wodby/nginx/master/tests/nginx_modules)
+* [1.12](https://raw.githubusercontent.com/wodby/nginx/master/tests/nginx_modules)
 
 ## Actions
 

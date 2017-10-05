@@ -12,12 +12,10 @@
 * [Travis CI builds](https://travis-ci.org/wodby/nginx) 
 * [Docker Hub](https://hub.docker.com/r/wodby/nginx)
 
-## Versions
-
-| Nginx (Dockerfile)                                              | Alpine Linux |
-| --------------------------------------------------------------- | ------------ |
-| [1.13.5](https://github.com/wodby/nginx/tree/master/Dockerfile) | 3.6          |
-| [1.12.1](https://github.com/wodby/nginx/tree/master/Dockerfile) | 3.6          |
+| Image tag (Dockerfile)                                          | Nginx  | Alpine |
+| --------------------------------------------------------------- | ------ | ------ |
+| [1.13.5](https://github.com/wodby/nginx/tree/master/Dockerfile) | 1.13.5 | 3.6    |
+| [1.12.1](https://github.com/wodby/nginx/tree/master/Dockerfile) | 1.12.1 | 3.6    |
 
 ## Environment Variables
 

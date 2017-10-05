@@ -7,7 +7,10 @@
 
 ## Docker Images
 
-Images are built via [Travis CI](https://travis-ci.org/wodby/nginx) and published on [Docker Hub](https://hub.docker.com/r/wodby/nginx). 
+* All images are based on Alpine Linux
+* Base image: [wodby/alpine](https://github.com/wodby/alpine)
+* [Travis CI builds](https://travis-ci.org/wodby/nginx) 
+* [Docker Hub](https://hub.docker.com/r/wodby/nginx)
 
 ## Versions
 

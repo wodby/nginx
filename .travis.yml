@@ -7,22 +7,22 @@ env:
   global:
     - LATEST_NGINX_VER=1.13.5
   matrix:
-    - LINE=1 NGINX_VER=1.13.5
-    - LINE=1 NGINX_VER=1.12.1
+    - NGINX_VER=1.13.5
+    - NGINX_VER=1.12.1
 
 script:
   - make && make test
 
 after_success: |
-  if [ "$TRAVIS_PULL_REQUEST" == "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ -n "$TRAVIS_TAG" ]); then
-    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
+    docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
     make release
 
-    if [ -n "$TRAVIS_TAG" ]; then
-      make release TAG="$NGINX_VER-$TRAVIS_TAG"
+    if [[ -n "${TRAVIS_TAG}" ]]; then
+      make release TAG="${NGINX_VER}-${TRAVIS_TAG}"
     fi
 
-    if [ "$NGINX_VER" == "$LATEST_NGINX_VER" ]; then
-      make release TAG=latest
+    if [[ "${NGINX_VER}" == "${LATEST_NGINX_VER}" ]]; then
+      make release TAG="latest"
     fi
   fi

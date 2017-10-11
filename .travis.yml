@@ -1,4 +1,4 @@
-language: python
+language: bash
 
 services:
   - docker
@@ -20,9 +20,7 @@ after_success: |
 
     if [[ -n "${TRAVIS_TAG}" ]]; then
       make release TAG="${NGINX_VER}-${TRAVIS_TAG}"
-    fi
-
-    if [[ "${NGINX_VER}" == "${LATEST_NGINX_VER}" ]]; then
+    elif [[ "${NGINX_VER}" == "${LATEST_NGINX_VER}" ]]; then
       make release TAG="latest"
     fi
   fi

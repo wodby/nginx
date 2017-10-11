@@ -5,9 +5,9 @@ services:
 
 env:
   global:
-    - LATEST_NGINX_VER=1.13.5
+    - LATEST_NGINX_VER=1.13.6
   matrix:
-    - NGINX_VER=1.13.5
+    - NGINX_VER=1.13.6
     - NGINX_VER=1.12.1
 
 script:

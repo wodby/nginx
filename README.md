@@ -12,11 +12,11 @@
 * [Travis CI builds](https://travis-ci.org/wodby/nginx) 
 * [Docker Hub](https://hub.docker.com/r/wodby/nginx)
 
-For better reliability we release images with stability tags (`wodby/nginx:1.13.5-X.X.X`) which correspond to git tags. We **strongly recommend** using images only with stability tags. Below listed basic tags:
+For better reliability we release images with stability tags (`wodby/nginx:1.13.6-X.X.X`) which correspond to git tags. We **strongly recommend** using images only with stability tags. Below listed basic tags:
 
 | Image tag (Dockerfile)                                                   | Nginx  | Alpine |
 | ------------------------------------------------------------------------ | ------ | ------ |
-| [1.13.5 (latest)](https://github.com/wodby/nginx/tree/master/Dockerfile) | 1.13.5 | 3.6    |
+| [1.13.6 (latest)](https://github.com/wodby/nginx/tree/master/Dockerfile) | 1.13.6 | 3.6    |
 | [1.12.1](https://github.com/wodby/nginx/tree/master/Dockerfile)          | 1.12.1 | 3.6    |
 
 ## Environment Variables

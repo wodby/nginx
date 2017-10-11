@@ -1,6 +1,6 @@
 -include env_make
 
-NGINX_VER ?= 1.13.5
+NGINX_VER ?= 1.13.6
 TAG ?= $(NGINX_VER)
 
 REPO = wodby/nginx

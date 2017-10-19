@@ -12,17 +12,15 @@ http {
     include                     /etc/nginx/mime.types;
     default_type                application/octet-stream;
 
-    {{ if getenv "NGINX_LOG_FORMAT_SHOW_REAL_IP" }}
-    log_format                  combined '$http_x_real_ip - $remote_user [$time_local] '
-                                         '"$request" $status $body_bytes_sent '
-                                         '"$http_referer" "$http_user_agent"';
+    log_format                  real_ip '$http_x_real_ip - $remote_user [$time_local] '
+                                        '"$request" $status $body_bytes_sent '
+                                        '"$http_referer" "$http_user_agent"';
+
+    {{ if getenv "NGINX_LOG_FORMAT_OVERRIDE" }}
+    log_format                  combined '{{ getenv "NGINX_LOG_FORMAT_OVERRIDE" }}';
     {{ end }}
 
-    {{ if getenv "NGINX_LOG_FORMAT" }}
-    log_format                  combined {{ getenv "NGINX_LOG_FORMAT" }};
-    {{ end }}
-
-    access_log                  /proc/self/fd/1 combined;
+    access_log                  /proc/self/fd/1 {{ if getenv "NGINX_LOG_FORMAT_SHOW_REAL_IP" }}real_ip{{ else }}combined{{ end }};
 
     send_timeout                {{ getenv "NGINX_SEND_TIMEOUT" "60s" }};
     sendfile                    {{ getenv "NGINX_SENDFILE" "on" }};

@@ -39,6 +39,7 @@ For better reliability we release images with stability tags (`wodby/nginx:1.13.
 | NGINX_GZIP_MIN_LENGTH             | 20            |             |
 | NGINX_GZIP_PROXIED                | any           |             |
 | NGINX_GZIP_VARY                   | on            |             |
+| NGINX_NO_DEFAULT_HEADERS          |               |             |
 | NGINX_KEEPALIVE_REQUESTS          | 100           |             |
 | NGINX_KEEPALIVE_TIMEOUT           | 75s           |             |
 | NGINX_LARGE_CLIENT_HEADER_BUFFERS | 8 16k         |             |

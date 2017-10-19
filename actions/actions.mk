@@ -4,7 +4,7 @@ host ?= localhost
 max_try ?= 1
 wait_seconds ?= 1
 delay_seconds ?= 0
-command = curl -s "${host}/.healthz" &> /dev/null
+command = curl -s -o /dev/null -I -w '%{http_code}' ${host}/.healthz | grep -q 204
 service = Nginx
 
 default: check-ready

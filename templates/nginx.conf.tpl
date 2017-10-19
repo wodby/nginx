@@ -19,7 +19,7 @@ http {
     {{ end }}
 
     {{ if getenv "NGINX_LOG_FORMAT" }}
-    log_format                  combined {{ getenv "NGINX_LOG_FORMAT" }}
+    log_format                  combined {{ getenv "NGINX_LOG_FORMAT" }};
     {{ end }}
 
     access_log                  /proc/self/fd/1 combined;

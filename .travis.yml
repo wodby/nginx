@@ -8,7 +8,7 @@ env:
     - LATEST_NGINX_VER=1.13.6
   matrix:
     - NGINX_VER=1.13.6
-    - NGINX_VER=1.12.1
+    - NGINX_VER=1.12.2
 
 script:
   - make && make test

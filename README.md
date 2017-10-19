@@ -43,6 +43,8 @@ For better reliability we release images with stability tags (`wodby/nginx:1.13.
 | NGINX_KEEPALIVE_REQUESTS          | 100           |             |
 | NGINX_KEEPALIVE_TIMEOUT           | 75s           |             |
 | NGINX_LARGE_CLIENT_HEADER_BUFFERS | 8 16k         |             |
+| NGINX_LOG_FORMAT                  |               |             |
+| NGINX_LOG_FORMAT_SHOW_REAL_IP     |               |             |
 | NGINX_MULTI_ACCEPT                | on            |             |
 | NGINX_RESET_TIMEDOUT_CONNECTION   | off           |             |
 | NGINX_SEND_TIMEOUT                | 60s           |             |

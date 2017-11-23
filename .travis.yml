@@ -5,7 +5,7 @@ services:
 
 env:
   global:
-    - LATEST_MINOR_VER=1.13
+    - LATEST_VER=1.13
   matrix:
     - MINOR_VER=1.13 NGINX_VER=1.13.7
     - MINOR_VER=1.12 NGINX_VER=1.12.2
@@ -22,7 +22,7 @@ after_success: |
 
     if [[ -n "${TRAVIS_TAG}" ]]; then
       make release TAG="${NGINX_VER}-${TRAVIS_TAG}"
-    elif [[ "${MINOR_VER}" == "${LATEST_MINOR_VER}" ]]; then
+    elif [[ "${MINOR_VER}" == "${LATEST_VER}" ]]; then
       make release TAG="latest"
     fi
   fi

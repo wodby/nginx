@@ -3,6 +3,10 @@
 NGINX_VER ?= 1.13.7
 TAG ?= $(NGINX_VER)
 
+ifneq ($(STABILITY_TAG),)
+    override TAG := $(TAG)-$(STABILITY_TAG)
+endif
+
 REPO = wodby/nginx
 NAME = nginx-$(NGINX_VER)
 

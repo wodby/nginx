@@ -5,10 +5,10 @@ services:
 
 env:
   global:
-    - LATEST_VER=1.13
+    - LATEST_TAG=1.13
   matrix:
-    - NGINX_VER=1.13.7 MINOR_VER=1.13 MAJOR_VER=1
-    - NGINX_VER=1.12.2 MINOR_VER=1.12
+    - TAG=1.13
+    - TAG=1.12 NGINX_VER=1.12.2
 
 script:
   - make && make test
@@ -17,14 +17,13 @@ after_success: |
   if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
     docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
-    make release
-    make release TAG="${MINOR_VER}"
-
-    [[ -n "${MAJOR_VER}" ]] && make release TAG="${MAJOR_VER}"
-
     if [[ -n "${TRAVIS_TAG}" ]]; then
-      make release STABILITY_TAG="${TRAVIS_TAG}"
-    elif [[ "${MINOR_VER}" == "${LATEST_VER}" ]]; then
+      export STABILITY_TAG="${TRAVIS_TAG}"
+    fi
+
+    make release
+
+    if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
       make release TAG="latest"
     fi
   fi
@@ -32,4 +31,4 @@ after_success: |
 notifications:
   on_failure: never
   slack:
-    secure: IkVBJcw2HJ66tEg1HC5Nw1tSFgyiACTojg1CKQ3BzRmyEOsR8knDhA5d1k14RiZtR8iwGAFQzj0rLumEmoQ8PqfemwL4Fjgdxt/UB7VfzxJZ/PYva5pZ4LWIelpPmXEyzRrBCHJpPi7EOfi08Ut545MObbUSs8N+UplwSPjhgQ4Qmu8df4fh9V9dUBl6dkEGZRZTq56wLUct1OGmhpmPIPNZBF28WKDymepPe4+mem8OGePtC/YtFi2Gtq7n5PNeEZ8WgBhFdkFoM9ka43UmBajbbd8BKvp/Gp5tUO4zNjAHu8hGlsdKBwvnSGGJH2O6e1ToVwBQTf9RyXj7W1I59Wbz+ln535R4oSf3HK6gt02083fKZ7s0qAI3hNRB+Qzlzq/czCmJZPXIECgUoono0ZHwyke0cPBVvjMAXKMBZYwCUT/CKBjbh8r5uKBUH2bI9tfM4FWBkpE+2Z/yy2TbzeiUDFZwIzARt6cnRQG9m5e1eY2wDt/vg/SDPcn1gjmj+4qyxMjixAk6NoIsQbtSver6B3KcKzepThhxB9toqYhp20k3hz5MWeOVKnMmuxKeGiHTDH+8NQpqW70WyTOutppSjRmsTTBvObQfE2SUzJL2ifZEcicRgNSElsyYqctZxzhzlxYKtALecNZVpVQU0eFVcJt4vH2VkYqTMnb7eNc=
+    secure: "IkVBJcw2HJ66tEg1HC5Nw1tSFgyiACTojg1CKQ3BzRmyEOsR8knDhA5d1k14RiZtR8iwGAFQzj0rLumEmoQ8PqfemwL4Fjgdxt/UB7VfzxJZ/PYva5pZ4LWIelpPmXEyzRrBCHJpPi7EOfi08Ut545MObbUSs8N+UplwSPjhgQ4Qmu8df4fh9V9dUBl6dkEGZRZTq56wLUct1OGmhpmPIPNZBF28WKDymepPe4+mem8OGePtC/YtFi2Gtq7n5PNeEZ8WgBhFdkFoM9ka43UmBajbbd8BKvp/Gp5tUO4zNjAHu8hGlsdKBwvnSGGJH2O6e1ToVwBQTf9RyXj7W1I59Wbz+ln535R4oSf3HK6gt02083fKZ7s0qAI3hNRB+Qzlzq/czCmJZPXIECgUoono0ZHwyke0cPBVvjMAXKMBZYwCUT/CKBjbh8r5uKBUH2bI9tfM4FWBkpE+2Z/yy2TbzeiUDFZwIzARt6cnRQG9m5e1eY2wDt/vg/SDPcn1gjmj+4qyxMjixAk6NoIsQbtSver6B3KcKzepThhxB9toqYhp20k3hz5MWeOVKnMmuxKeGiHTDH+8NQpqW70WyTOutppSjRmsTTBvObQfE2SUzJL2ifZEcicRgNSElsyYqctZxzhzlxYKtALecNZVpVQU0eFVcJt4vH2VkYqTMnb7eNc="

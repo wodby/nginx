@@ -3,12 +3,14 @@
 NGINX_VER ?= 1.13.7
 TAG ?= $(NGINX_VER)
 
-ifneq ($(STABILITY_TAG),)
-    override TAG := $(TAG)-$(STABILITY_TAG)
-endif
-
 REPO = wodby/nginx
 NAME = nginx-$(NGINX_VER)
+
+ifneq ($(STABILITY_TAG),)
+ifneq ($(TAG),latest)
+    override TAG := $(TAG)-$(STABILITY_TAG)
+endif
+endif
 
 .PHONY: build test push shell run start stop logs clean release
 

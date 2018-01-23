@@ -21,41 +21,41 @@ For better reliability we additionally release images with stability tags (`wodb
 
 ## Environment Variables
 
-| Variable                          | Default Value | Description |
-| --------------------------------- | ------------- | ----------- |
-| NGINX_CLIENT_BODY_BUFFER_SIZE     | 16k           |             |
-| NGINX_CLIENT_BODY_TIMEOUT         | 60s           |             |
-| NGINX_CLIENT_HEADER_BUFFER_SIZE   | 4k            |             |
-| NGINX_CLIENT_HEADER_TIMEOUT       | 60s           |             |
-| NGINX_CLIENT_MAX_BODY_SIZE        | 32m           |             |
-| NGINX_CONF_INCLUDE                | conf.d/*.conf |             |
-| NGINX_ENABLE_HEALTHZ_LOGS         |               |             |
-| NGINX_ERROR_LOG_LEVEL             | error         |             |
-| NGINX_GZIP                        | on            |             |
-| NGINX_GZIP_BUFFERS                | 16 8k         |             |
-| NGINX_GZIP_COMP_LEVEL             | 1             |             |
-| NGINX_GZIP_DISABLE                | msie6         |             |
-| NGINX_GZIP_HTTP_VERSION           | 1.1           |             |
-| NGINX_GZIP_MIN_LENGTH             | 20            |             |
-| NGINX_GZIP_PROXIED                | any           |             |
-| NGINX_GZIP_VARY                   | on            |             |
-| NGINX_NO_DEFAULT_HEADERS          |               |             |
-| NGINX_KEEPALIVE_REQUESTS          | 100           |             |
-| NGINX_KEEPALIVE_TIMEOUT           | 75s           |             |
-| NGINX_LARGE_CLIENT_HEADER_BUFFERS | 8 16k         |             |
-| NGINX_LOG_FORMAT_OVERRIDE         |               |             |
-| NGINX_LOG_FORMAT_SHOW_REAL_IP     |               |             |
-| NGINX_MULTI_ACCEPT                | on            |             |
-| NGINX_RESET_TIMEDOUT_CONNECTION   | off           |             |
-| NGINX_SEND_TIMEOUT                | 60s           |             |
-| NGINX_SENDFILE                    | on            |             |
-| NGINX_SERVER_TOKENS               | off           |             |
-| NGINX_TCP_NODELAY                 | on            |             |
-| NGINX_TCP_NOPUSH                  | on            |             |
-| NGINX_UPLOAD_PROGRESS             | uploads 1m    |             |
-| NGINX_USER                        | nginx         |             |
-| NGINX_WORKER_CONNECTIONS          | 1024          |             |
-| NGINX_WORKER_PROCESSES            | auto          |             |
+| Variable                            | Default Value   | Description |
+| ----------------------------------- | --------------- | ----------- |
+| `NGINX_CLIENT_BODY_BUFFER_SIZE`     | `16k`           |             |
+| `NGINX_CLIENT_BODY_TIMEOUT`         | `60s`           |             |
+| `NGINX_CLIENT_HEADER_BUFFER_SIZE`   | `4k`            |             |
+| `NGINX_CLIENT_HEADER_TIMEOUT`       | `60s`           |             |
+| `NGINX_CLIENT_MAX_BODY_SIZE`        | `32m`           |             |
+| `NGINX_CONF_INCLUDE`                | `conf.d/*.conf` |             |
+| `NGINX_ENABLE_HEALTHZ_LOGS`         |                 |             |
+| `NGINX_ERROR_LOG_LEVEL`             | `error`         |             |
+| `NGINX_GZIP`                        | `on`            |             |
+| `NGINX_GZIP_BUFFERS`                | `16 8k`         |             |
+| `NGINX_GZIP_COMP_LEVEL`             | `1`             |             |
+| `NGINX_GZIP_DISABLE`                | `msie6`         |             |
+| `NGINX_GZIP_HTTP_VERSION`           | `1.1`           |             |
+| `NGINX_GZIP_MIN_LENGTH`             | `20`            |             |
+| `NGINX_GZIP_PROXIED`                | `any`           |             |
+| `NGINX_GZIP_VARY`                   | `on`            |             |
+| `NGINX_NO_DEFAULT_HEADERS`          |                 |             |
+| `NGINX_KEEPALIVE_REQUESTS`          | `100`           |             |
+| `NGINX_KEEPALIVE_TIMEOUT`           | `75s`           |             |
+| `NGINX_LARGE_CLIENT_HEADER_BUFFERS` | `8 16k`         |             |
+| `NGINX_LOG_FORMAT_OVERRIDE`         |                 |             |
+| `NGINX_LOG_FORMAT_SHOW_REAL_IP`     |                 |             |
+| `NGINX_MULTI_ACCEPT`                | `on`            |             |
+| `NGINX_RESET_TIMEDOUT_CONNECTION`   | `off`           |             |
+| `NGINX_SEND_TIMEOUT`                | `60s`           |             |
+| `NGINX_SENDFILE`                    | `on`            |             |
+| `NGINX_SERVER_TOKENS`               | `off`           |             |
+| `NGINX_TCP_NODELAY`                 | `on`            |             |
+| `NGINX_TCP_NOPUSH`                  | `on`            |             |
+| `NGINX_UPLOAD_PROGRESS`             | `uploads 1m`    |             |
+| `NGINX_USER`                        | `nginx`         |             |
+| `NGINX_WORKER_CONNECTIONS`          | `1024`          |             |
+| `NGINX_WORKER_PROCESSES`            | `auto`          |             |
 
 ## Installed Nginx Modules
 

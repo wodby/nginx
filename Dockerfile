@@ -1,4 +1,4 @@
-FROM wodby/alpine:3.6-1.0.0
+FROM wodby/alpine:3.7-1.1.1
 
 ARG NGINX_VER
 
@@ -9,17 +9,17 @@ ENV NGINX_URL="http://nginx.org/download/nginx-${NGINX_VER}.tar.gz" \
     NGINX_UP_URL="https://github.com/masterzen/nginx-upload-progress-module/archive/v${NGINX_UP_VER}.tar.gz" \
     HTML_DIR="/var/www/html"
 
-RUN set -ex && \
-
-    addgroup -S nginx && \
-    adduser -S -D -H -h /var/lib/nginx -s /sbin/nologin -G nginx -g nginx nginx && \
-
+RUN set -ex; \
+    \
+    addgroup -S nginx; \
+    adduser -S -D -H -h /var/lib/nginx -s /sbin/nologin -G nginx -g nginx nginx; \
+    \
     apk add --update --no-cache --virtual .nginx-rundeps \
         geoip \
         make \
         pcre \
-        sudo && \
-
+        sudo; \
+    \
     apk add --update --no-cache --virtual .build-deps \
         autoconf \
         build-base \
@@ -27,13 +27,13 @@ RUN set -ex && \
         libressl-dev \
         libtool \
         pcre-dev \
-        zlib-dev && \
-
-    wget -qO- ${NGINX_URL} | tar xz -C /tmp/ && \
-    wget -qO- ${NGINX_UP_URL} | tar xz -C /tmp/ && \
-
+        zlib-dev; \
+    \
+    wget -qO- ${NGINX_URL} | tar xz -C /tmp/; \
+    wget -qO- ${NGINX_UP_URL} | tar xz -C /tmp/; \
+    \
     # Install nginx with modules.
-    cd /tmp/nginx-${NGINX_VER} && \
+    cd /tmp/nginx-${NGINX_VER}; \
     ./configure --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx \
         --conf-path=/etc/nginx/nginx.conf \
         --pid-path=/var/run/nginx/nginx.pid \
@@ -68,28 +68,28 @@ RUN set -ex && \
         --with-stream_ssl_module \
         --with-http_geoip_module \
         --with-ld-opt="-Wl,-rpath,/usr/lib/" \
-        --add-module=/tmp/nginx-upload-progress-module-${NGINX_UP_VER}/ && \
-
-    make -j2 && \
-    make install && \
-
+        --add-module=/tmp/nginx-upload-progress-module-${NGINX_UP_VER}/; \
+    \
+    make -j2; \
+    make install; \
+    \
     # Configure sudoers
     { \
         echo -n 'nginx ALL=(root) NOPASSWD: ' ; \
         echo -n '/usr/local/bin/fix-permissions.sh, ' ; \
         echo '/usr/sbin/nginx' ; \
-    } | tee /etc/sudoers.d/nginx && \
-
-    mkdir -p /etc/nginx/conf.d /var/lib/nginx/tmp /etc/nginx/pki && \
-    chmod -R 777 /var/lib/nginx/tmp && \
-    chmod 755 /var/lib/nginx && \
-    chmod 400 /etc/nginx/pki && \
-
-    chown -R nginx:nginx /etc/nginx && \
-
+    } | tee /etc/sudoers.d/nginx; \
+    \
+    mkdir -p /etc/nginx/conf.d /var/lib/nginx/tmp /etc/nginx/pki; \
+    chmod -R 777 /var/lib/nginx/tmp; \
+    chmod 755 /var/lib/nginx; \
+    chmod 400 /etc/nginx/pki; \
+    \
+    chown -R nginx:nginx /etc/nginx; \
+    \
     # Cleanup
-    apk del .build-deps && \
-    rm -rf /tmp/* && \
+    apk del .build-deps; \
+    rm -rf /tmp/*; \
     rm -rf /var/cache/apk/*
 
 USER nginx

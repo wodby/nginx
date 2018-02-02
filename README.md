@@ -3,9 +3,13 @@
 [![Build Status](https://travis-ci.org/wodby/nginx.svg?branch=master)](https://travis-ci.org/wodby/nginx)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
-[![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
+[![Docker Layers](https://images.microbadger.com/badges/image/wodby/nginx.svg)](https://microbadger.com/images/wodby/nginx)
 
 ## Docker Images
+
+!!! For better reliability we release images with stability tags (`wodby/nginx:1.13-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 
+
+Overview:
 
 * All images are based on Alpine Linux
 * Base image: [wodby/alpine](https://github.com/wodby/alpine)
@@ -16,8 +20,6 @@ Supported tags and respective `Dockerfile` links:
 
 * `1.13`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 * `1.12` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-
-For better reliability we additionally release images with stability tags (`wodby/nginx:1.13-X.X.X`) which correspond to git tags. We **strongly recommend** using images only with stability tags. 
 
 ## Environment Variables
 
@@ -61,6 +63,12 @@ For better reliability we additionally release images with stability tags (`wodb
 
 * [1.13](https://raw.githubusercontent.com/wodby/nginx/master/tests/nginx_modules)
 * [1.12](https://raw.githubusercontent.com/wodby/nginx/master/tests/nginx_modules)
+
+## Images based on `wodby/nginx`
+
+* [wodby/php-nginx](https://github.com/wodby/php-nginx)
+* [wodby/gitlab-nginx](https://github.com/wodby/gitlab-nginx)
+* [wodby/cachet-nginx](https://github.com/wodby/cachet-nginx)
 
 ## Actions
 

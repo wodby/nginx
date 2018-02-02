@@ -73,10 +73,14 @@ RUN set -ex; \
     make -j2; \
     make install; \
     \
+    # Script to fix volumes permissions via sudo.
+    echo "chown nginx:nginx ${HTML_DIR}" > /usr/local/bin/fix-volumes-permissions.sh; \
+    chmod +x /usr/local/bin/fix-volumes-permissions.sh; \
+    \
     # Configure sudoers
     { \
         echo -n 'nginx ALL=(root) NOPASSWD: ' ; \
-        echo -n '/usr/local/bin/fix-permissions.sh, ' ; \
+        echo -n '/usr/local/bin/fix-volumes-permissions.sh, ' ; \
         echo '/usr/sbin/nginx' ; \
     } | tee /etc/sudoers.d/nginx; \
     \

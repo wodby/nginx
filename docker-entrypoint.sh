@@ -16,6 +16,8 @@ exec_tpl 'default-vhost.conf.tpl' '/etc/nginx/conf.d/default-vhost.conf'
 exec_tpl 'healthz.conf.tpl' '/etc/nginx/healthz.conf'
 exec_tpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'
 
+sudo fix-volumes-permissions.sh
+
 exec-init-scripts.sh
 
 if [[ "${1}" == 'make' ]]; then

@@ -1,7 +1,8 @@
 -include env_make
 
 NGINX_VER ?= 1.13.8
-TAG ?= $(NGINX_VER)
+# Remove minor version
+TAG ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 REPO = wodby/nginx
 NAME = nginx-$(NGINX_VER)

@@ -68,7 +68,6 @@ Supported tags and respective `Dockerfile` links:
 
 * [wodby/php-nginx](https://github.com/wodby/php-nginx)
 * [wodby/gitlab-nginx](https://github.com/wodby/gitlab-nginx)
-* [wodby/cachet-nginx](https://github.com/wodby/cachet-nginx)
 
 ## Actions
 

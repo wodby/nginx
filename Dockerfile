@@ -78,24 +78,22 @@ RUN set -ex; \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install; \
     \
-    # Script to fix volumes permissions via sudo.
-    echo "chown nginx:nginx ${HTML_DIR}" > /usr/local/bin/fix-volumes-permissions.sh; \
-    chmod +x /usr/local/bin/fix-volumes-permissions.sh; \
+    mkdir -p \
+        "${HTML_DIR}" \
+        /etc/nginx/conf.d \
+        /var/lib/nginx/tmp \
+        /etc/nginx/pki; \
     \
-    # Configure sudoers
-    { \
-        echo -n 'nginx ALL=(root) NOPASSWD: ' ; \
-        echo -n '/usr/local/bin/fix-volumes-permissions.sh, ' ; \
-        echo '/usr/sbin/nginx' ; \
-    } | tee /etc/sudoers.d/nginx; \
+    chown -R nginx:nginx \
+        "${HTML_DIR}" \
+        /etc/nginx \
+        /var/lib/nginx; \
     \
-    mkdir -p /etc/nginx/conf.d /var/lib/nginx/tmp /etc/nginx/pki; \
-    chown -R nginx:nginx /etc/nginx /var/lib/nginx; \
     chmod 755 /var/lib/nginx; \
     chmod 400 /etc/nginx/pki; \
     \
     # Cleanup
-    apk del .nginx-build-deps; \
+    apk del --purge .nginx-build-deps; \
     rm -rf /tmp/*; \
     rm -rf /var/cache/apk/*
 

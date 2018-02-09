@@ -1,11 +1,12 @@
 -include env_make
 
 NGINX_VER ?= 1.13.8
-# Remove minor version
-TAG ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
+
+NGINX_MINOR_VER ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
+TAG ?= $(NGINX_MINOR_VER)
 
 REPO = wodby/nginx
-NAME = nginx-$(NGINX_VER)
+NAME = nginx-$(NGINX_MINOR_VER)
 
 ifneq ($(STABILITY_TAG),)
     ifneq ($(TAG),latest)

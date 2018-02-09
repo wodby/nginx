@@ -9,7 +9,7 @@ ENV NGINX_VER="${NGINX_VER}" \
 RUN set -ex; \
     \
     addgroup -S nginx; \
-    adduser -S -D -H -h /etc/nginx -s /bin/bash -G nginx nginx; \
+    adduser -S -D -H -h /var/cache/nginx -s /sbin/nologin -G nginx nginx; \
     \
     apk add --update --no-cache -t .nginx-rundeps \
         geoip \

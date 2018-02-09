@@ -7,13 +7,13 @@ env:
   global:
     - LATEST_TAG=1.13
   matrix:
-    - TAG=1.13 NGINX_VER=1.13.8
+    - TAG=1.13 NGINX_VER=1.13.8 EXTRA_TAG=1
     - TAG=1.12 NGINX_VER=1.12.2
 
-script:
-  - make && make test
+script: |
+  make
+  make test
 
-after_success: |
   if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
     docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
@@ -22,6 +22,10 @@ after_success: |
     fi
 
     make release
+
+    if [[ -n "${EXTRA_TAG}" ]]; then
+      make release TAG="${EXTRA_TAG}"
+    fi
 
     if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
       make release TAG="latest"

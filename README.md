@@ -18,7 +18,7 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-* `1.13`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+* `1`, `1.13`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 * `1.12` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 
 ## Environment Variables

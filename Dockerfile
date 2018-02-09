@@ -92,6 +92,8 @@ RUN set -ex; \
     chmod 755 /var/lib/nginx; \
     chmod 400 /etc/nginx/pki; \
     \
+    echo 'nginx ALL=(root) NOPASSWD: /usr/sbin/nginx' > /etc/sudoers.d/nginx; \
+    \
     # Cleanup
     apk del --purge .nginx-build-deps; \
     rm -rf /tmp/*; \

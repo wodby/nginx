@@ -24,7 +24,7 @@ Supported tags and respective `Dockerfile` links:
 ## Environment Variables
 
 | Variable                            | Default Value          | Description |
-| ----------------------------------- | ---------------        | ----------- |
+| ----------------------------------- | ---------------------- | ----------- |
 | `NGINX_CLIENT_BODY_BUFFER_SIZE`     | `16k`                  |             |
 | `NGINX_CLIENT_BODY_TIMEOUT`         | `60s`                  |             |
 | `NGINX_CLIENT_HEADER_BUFFER_SIZE`   | `4k`                   |             |
@@ -71,13 +71,15 @@ Supported tags and respective `Dockerfile` links:
 * [wodby/php-nginx](https://github.com/wodby/php-nginx)
 * [wodby/gitlab-nginx](https://github.com/wodby/gitlab-nginx)
 
-## Actions
+## Orchestration actions
 
 Usage:
 ```
 make COMMAND [params ...]
 
 commands:
+    git-clone [url branch]
+    git-checkout [target is_hash]
     check-ready [host max_try wait_seconds delay_seconds]
  
 default params values:
@@ -85,4 +87,6 @@ default params values:
     max_try 1
     wait_seconds 1
     delay_seconds 0
+    is_hash 0
+    branch ""    
 ```

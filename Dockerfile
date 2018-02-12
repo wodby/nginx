@@ -4,15 +4,23 @@ ARG NGINX_VER
 
 ENV NGINX_VER="${NGINX_VER}" \
     NGINX_UP_VER="0.9.1" \
-    HTML_DIR="/var/www/html"
+    HTML_DIR="/var/www/html" \
+    GIT_USER_EMAIL="wodby@example.com" \
+    GIT_USER_NAME="wodby"
 
 RUN set -ex; \
     \
     addgroup -S nginx; \
     adduser -S -D -H -h /var/cache/nginx -s /sbin/nologin -G nginx nginx; \
     \
+	addgroup -g 1000 -S wodby; \
+	adduser -u 1000 -D -S -s /bin/bash -G wodby wodby; \
+	sed -i '/^wodby/s/!/*/' /etc/shadow; \
+	echo "PS1='\w\$ '" >> /home/wodby/.bashrc; \
+    \
     apk add --update --no-cache -t .nginx-rundeps \
         geoip \
+        git \
         make \
         pcre \
         sudo; \
@@ -82,24 +90,34 @@ RUN set -ex; \
         "${HTML_DIR}" \
         /etc/nginx/conf.d \
         /var/lib/nginx/tmp \
-        /etc/nginx/pki; \
+        /etc/nginx/pki \
+        /home/wodby/.ssh; \
     \
-    chown -R nginx:nginx \
-        "${HTML_DIR}" \
+    chown -R wodby:wodby \
         /etc/nginx \
-        /var/lib/nginx; \
+        /var/lib/nginx \
+        "${HTML_DIR}" \
+        /home/wodby/.ssh; \
     \
     chmod 755 /var/lib/nginx; \
     chmod 400 /etc/nginx/pki; \
     \
-    echo 'nginx ALL=(root) NOPASSWD: /usr/sbin/nginx' > /etc/sudoers.d/nginx; \
+    # Script to fix volumes permissions via sudo.
+    echo "chown wodby:wodby ${HTML_DIR}" > /usr/local/bin/fix-volumes-permissions.sh; \
+    chmod +x /usr/local/bin/fix-volumes-permissions.sh; \
+    \
+    { \
+        echo -n 'wodby ALL=(root) NOPASSWD:SETENV: ' ; \
+        echo -n '/usr/local/bin/fix-volumes-permissions.sh, ' ; \
+        echo '/usr/sbin/nginx' ; \
+    } | tee /etc/sudoers.d/wodby; \
     \
     # Cleanup
     apk del --purge .nginx-build-deps; \
     rm -rf /tmp/*; \
     rm -rf /var/cache/apk/*
 
-USER nginx
+USER wodby
 
 COPY actions /usr/local/bin
 COPY templates /etc/gotpl/

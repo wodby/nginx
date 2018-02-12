@@ -5,6 +5,7 @@ ARG NGINX_VER
 ENV NGINX_VER="${NGINX_VER}" \
     NGINX_UP_VER="0.9.1" \
     HTML_DIR="/var/www/html" \
+    FILES_DIR="/mnt/files" \
     GIT_USER_EMAIL="wodby@example.com" \
     GIT_USER_NAME="wodby"
 
@@ -88,22 +89,24 @@ RUN set -ex; \
     \
     mkdir -p \
         "${HTML_DIR}" \
+        "${FILES_DIR}" \
         /etc/nginx/conf.d \
         /var/lib/nginx/tmp \
         /etc/nginx/pki \
         /home/wodby/.ssh; \
     \
     chown -R wodby:wodby \
+        "${HTML_DIR}" \
+        "${FILES_DIR}" \
         /etc/nginx \
         /var/lib/nginx \
-        "${HTML_DIR}" \
         /home/wodby/.ssh; \
     \
     chmod 755 /var/lib/nginx; \
     chmod 400 /etc/nginx/pki; \
     \
     # Script to fix volumes permissions via sudo.
-    echo "chown wodby:wodby ${HTML_DIR}" > /usr/local/bin/fix-volumes-permissions.sh; \
+    echo "chown wodby:wodby ${HTML_DIR} ${FILES_DIR}" > /usr/local/bin/fix-volumes-permissions.sh; \
     chmod +x /usr/local/bin/fix-volumes-permissions.sh; \
     \
     { \

@@ -11,12 +11,14 @@ env:
     - TAG=1.12 NGINX_VER=1.12.2
 
 script:
-  - |
-    make
-    make test
+    - make
+    - make test
+
+after_success: |
+    set -e
 
     if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
-      docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+      docker login -u "test" -p "${DOCKER_PASSWORD}"
 
       if [[ -n "${TRAVIS_TAG}" ]]; then
         export STABILITY_TAG="${TRAVIS_TAG}"

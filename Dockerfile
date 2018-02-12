@@ -4,7 +4,7 @@ ARG NGINX_VER
 
 ENV NGINX_VER="${NGINX_VER}" \
     NGINX_UP_VER="0.9.1" \
-    HTML_DIR="/var/www/html" \
+    APP_ROOT="/var/www/html" \
     FILES_DIR="/mnt/files" \
     GIT_USER_EMAIL="wodby@example.com" \
     GIT_USER_NAME="wodby"
@@ -23,6 +23,7 @@ RUN set -ex; \
         geoip \
         git \
         make \
+        openssh-client \
         pcre \
         sudo; \
     \
@@ -88,7 +89,7 @@ RUN set -ex; \
     make install; \
     \
     mkdir -p \
-        "${HTML_DIR}" \
+        "${APP_ROOT}" \
         "${FILES_DIR}" \
         /etc/nginx/conf.d \
         /var/lib/nginx/tmp \
@@ -96,7 +97,7 @@ RUN set -ex; \
         /home/wodby/.ssh; \
     \
     chown -R wodby:wodby \
-        "${HTML_DIR}" \
+        "${APP_ROOT}" \
         "${FILES_DIR}" \
         /etc/nginx \
         /var/lib/nginx \
@@ -106,7 +107,7 @@ RUN set -ex; \
     chmod 400 /etc/nginx/pki; \
     \
     # Script to fix volumes permissions via sudo.
-    echo "chown wodby:wodby ${HTML_DIR} ${FILES_DIR}" > /usr/local/bin/fix-volumes-permissions.sh; \
+    echo "chown wodby:wodby ${APP_ROOT} ${FILES_DIR}" > /usr/local/bin/fix-volumes-permissions.sh; \
     chmod +x /usr/local/bin/fix-volumes-permissions.sh; \
     \
     { \
@@ -126,7 +127,7 @@ COPY actions /usr/local/bin
 COPY templates /etc/gotpl/
 COPY docker-entrypoint.sh /
 
-WORKDIR $HTML_DIR
+WORKDIR $APP_ROOT
 EXPOSE 80
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

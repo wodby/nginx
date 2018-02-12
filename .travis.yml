@@ -11,8 +11,7 @@ env:
     - TAG=1.12 NGINX_VER=1.12.2
 
 script:
-    - make
-    - make test
+    - make && make test
 
 after_success: |
     set -e

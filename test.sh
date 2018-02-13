@@ -29,3 +29,8 @@ run_action nginx git-checkout target=develop
 echo "OK"
 
 docker-compose -f test/docker-compose.yml down
+
+cid="$(docker run -d -e NGINX_HTTP2=1 --name "nginx" "${IMAGE}")"
+trap "docker rm -vf $cid > /dev/null" EXIT
+
+docker run --rm -i -e DEBUG=1 -e NGINX_HTTP2=1 --link "nginx":"nginx" "${IMAGE}" make check-ready host=nginx

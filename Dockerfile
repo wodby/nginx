@@ -23,6 +23,7 @@ RUN set -ex; \
         geoip \
         git \
         make \
+        nghttp2 \
         openssh-client \
         pcre \
         sudo; \

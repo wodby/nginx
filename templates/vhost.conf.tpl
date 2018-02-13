@@ -1,5 +1,5 @@
 server {
-    listen       80;
+    listen       80{{ if getenv "NGINX_HTTP2" }} http2{{ end }};
     server_name  {{ getenv "NGINX_SERVER_NAME" "default" }};
 
     location / {

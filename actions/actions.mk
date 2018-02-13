@@ -11,7 +11,9 @@ host ?= localhost
 max_try ?= 1
 wait_seconds ?= 1
 delay_seconds ?= 0
-command = curl -s -o /dev/null -I -w '%{http_code}' ${host}/.healthz | grep -q 204
+command_http = curl -s -o /dev/null -I -w '%{http_code}' ${host}/.healthz | grep -q 204
+# TODO: find a better way to parse headers
+command_http2 = nghttp -v http://${host}/.healthz | grep -qE 'recv.+?:status: 204$$'
 service = Nginx
 is_hash ?= 0
 branch = ""
@@ -27,7 +29,11 @@ git-checkout:
 	git-checkout.sh $(target) $(is_hash)
 
 check-ready:
-	wait-for.sh "$(command)" $(service) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
+    ifeq ($(NGINX_HTTP2),)
+		wait-for.sh "$(command_http)" $(service) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
+    else
+		wait-for.sh "$(command_http2)" $(service) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
+    endif
 
 check-live:
 	@echo "OK"

@@ -41,6 +41,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_GZIP_MIN_LENGTH`             | `20`                   |             |
 | `NGINX_GZIP_PROXIED`                | `any`                  |             |
 | `NGINX_GZIP_VARY`                   | `on`                   |             |
+| `NGINX_HTTP2`                       |                        |             |
 | `NGINX_INDEX_FILE`                  | `index.html index.htm` |             |
 | `NGINX_NO_DEFAULT_HEADERS`          |                        |             |
 | `NGINX_KEEPALIVE_REQUESTS`          | `100`                  |             |

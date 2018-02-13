@@ -1,4 +1,4 @@
-FROM wodby/alpine:3.6-1.2.0
+FROM wodby/alpine:3.7-1.2.0
 
 ARG NGINX_VER
 

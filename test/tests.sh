@@ -6,6 +6,14 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
+echo "It works!" > /var/www/html/index.html
+
+echo -n "Checking Nginx response... "
+curl -s localhost | grep -q "It works!"
+echo "OK"
+
+rm /var/www/html/index.html
+
 echo -n "Checking Nginx version... "
 2>&1 nginx -v | grep -q "nginx/${NGINX_VER}"
 echo "OK"

@@ -22,7 +22,7 @@ build:
 	docker build -t $(REPO):$(TAG) --build-arg NGINX_VER=$(NGINX_VER) ./
 
 test:
-	IMAGE=$(REPO):$(TAG) ./test.sh
+	cd ./test && IMAGE=$(REPO):$(TAG) ./run
 
 push:
 	docker push $(REPO):$(TAG)

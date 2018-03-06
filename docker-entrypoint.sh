@@ -35,7 +35,7 @@ process_templates() {
     exec_tpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'
 }
 
-sudo fix-volumes-permissions.sh
+sudo init_volumes
 
 init_git
 init_ssh_client

@@ -7,7 +7,7 @@ env:
   global:
     - LATEST_TAG=1.13
   matrix:
-    - TAG=1.13 NGINX_VER=1.13.9 EXTRA_TAG=1
+    - TAG=1.13 NGINX_VER=1.13.10 EXTRA_TAG=1
     - TAG=1.12 NGINX_VER=1.12.2
 
 script:

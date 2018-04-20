@@ -31,6 +31,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_CLIENT_HEADER_TIMEOUT`       | `60s`                  |             |
 | `NGINX_CLIENT_MAX_BODY_SIZE`        | `32m`                  |             |
 | `NGINX_CONF_INCLUDE`                | `conf.d/*.conf`        |             |
+| `NGINX_DISABLE_CACHING`             |                        |             |
 | `NGINX_ENABLE_HEALTHZ_LOGS`         |                        |             |
 | `NGINX_ERROR_LOG_LEVEL`             | `error`                |             |
 | `NGINX_GZIP`                        | `on`                   |             |

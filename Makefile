@@ -1,6 +1,6 @@
 -include env_make
 
-NGINX_VER ?= 1.13.10
+NGINX_VER ?= 1.14.0
 
 NGINX_MINOR_VER ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 TAG ?= $(NGINX_MINOR_VER)
@@ -22,7 +22,7 @@ build:
 	docker build -t $(REPO):$(TAG) --build-arg NGINX_VER=$(NGINX_VER) ./
 
 test:
-	cd ./test && IMAGE=$(REPO):$(TAG) ./run
+	cd ./test && IMAGE=$(REPO):$(TAG) ./run.sh
 
 push:
 	docker push $(REPO):$(TAG)

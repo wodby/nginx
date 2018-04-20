@@ -7,7 +7,7 @@
 
 ## Docker Images
 
-!!! For better reliability we release images with stability tags (`wodby/nginx:1.13-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 
+!!! For better reliability we release images with stability tags (`wodby/nginx:1.14-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 
 
 Overview:
 
@@ -18,8 +18,8 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-* `1`, `1.13`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-* `1.12` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+* `1`, `1.14`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+* `1.13` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 
 ## Environment Variables
 

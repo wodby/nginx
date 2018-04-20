@@ -16,7 +16,7 @@ run_action() {
 
 run_action check-ready max_try=10
 
-docker-compose exec nginx tests
+docker-compose exec nginx tests.sh
 
 # Git actions
 echo -n "Running git actions... "

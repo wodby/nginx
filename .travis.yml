@@ -5,13 +5,13 @@ services:
 
 env:
   global:
-    - LATEST_TAG=1.13
+    - LATEST_TAG=1.14
   matrix:
-    - TAG=1.13 NGINX_VER=1.13.10 EXTRA_TAG=1
-    - TAG=1.12 NGINX_VER=1.12.2
+    - TAG=1.14 NGINX_VER=1.14.0 EXTRA_TAG=1
+    - TAG=1.13 NGINX_VER=1.13.12
 
 script:
   - make && make test
 
 after_success:
-  - bash "${TRAVIS_BUILD_DIR}/travis_release"
+  - . "${TRAVIS_BUILD_DIR}/release.sh"

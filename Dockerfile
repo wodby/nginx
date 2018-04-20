@@ -41,7 +41,7 @@ RUN set -ex; \
     \
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -o /tmp/nginx.tar.gz; \
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz.asc"  -o /tmp/nginx.tar.gz.asc; \
-    GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 gpg-verify.sh /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; \
+    GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 gpg_verify /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; \
     \
     tar zxf /tmp/nginx.tar.gz -C /tmp; \
     \

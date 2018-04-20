@@ -41,7 +41,7 @@ init_git
 init_ssh_client
 process_templates
 
-exec-init-scripts.sh
+exec_init_scripts
 
 if [[ "${1}" == 'make' ]]; then
     exec "${@}" -f /usr/local/bin/actions.mk

@@ -30,9 +30,9 @@ git-checkout:
 
 check-ready:
     ifeq ($(NGINX_HTTP2),)
-		wait-for.sh "$(command_http)" $(service) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
+		wait_for "$(command_http)" $(service) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
     else
-		wait-for.sh "$(command_http2)" $(service) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
+		wait_for "$(command_http2)" $(service) $(host) $(max_try) $(wait_seconds) $(delay_seconds)
     endif
 
 check-live:

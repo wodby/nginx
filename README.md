@@ -58,6 +58,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_SERVER_ROOT`                 | `/var/www/html`        |             |
 | `NGINX_TCP_NODELAY`                 | `on`                   |             |
 | `NGINX_TCP_NOPUSH`                  | `on`                   |             |
+| `NGINX_UNDERSCORES_IN_HEADERS`      | `off`                  |             |
 | `NGINX_UPLOAD_PROGRESS`             | `uploads 1m`           |             |
 | `NGINX_USER`                        | `nginx`                |             |
 | `NGINX_WORKER_CONNECTIONS`          | `1024`                 |             |

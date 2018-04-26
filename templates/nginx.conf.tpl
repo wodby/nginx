@@ -36,6 +36,7 @@ http {
     tcp_nodelay                 {{ getenv "NGINX_TCP_NODELAY" "on" }};
     tcp_nopush                  {{ getenv "NGINX_TCP_NOPUSH" "on" }};
     server_tokens               {{ getenv "NGINX_SERVER_TOKENS" "off" }};
+    underscores_in_headers      {{ getenv "NGINX_UNDERSCORES_IN_HEADERS" "off" }};
 
     upload_progress             {{ getenv "NGINX_UPLOAD_PROGRESS" "uploads 1m" }};
 

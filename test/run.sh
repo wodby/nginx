@@ -6,7 +6,7 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
-git_url=git@bitbucket.org:wodby/php-git-test.git
+git_url=https://github.com/wodby/blank.git
 
 docker-compose up -d
 

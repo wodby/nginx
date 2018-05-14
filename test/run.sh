@@ -6,7 +6,7 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
-git_url=https://github.com/wodby/blank.git
+git_url=https://github.com/wodby/nginx.git
 
 docker-compose up -d
 

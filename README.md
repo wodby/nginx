@@ -18,7 +18,8 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-* `1`, `1.14`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+* `1.15`, `1`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+* `1.14` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 * `1.13` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 
 ## Environment Variables
@@ -64,10 +65,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_WORKER_CONNECTIONS`          | `1024`                 |             |
 | `NGINX_WORKER_PROCESSES`            | `auto`                 |             |
 
-## Installed Nginx Modules
-
-* [1.13](https://raw.githubusercontent.com/wodby/nginx/master/tests/nginx_modules)
-* [1.12](https://raw.githubusercontent.com/wodby/nginx/master/tests/nginx_modules)
+## [Installed Nginx Modules]((https://raw.githubusercontent.com/wodby/nginx/master/tests/nginx_modules))
 
 ## Images based on `wodby/nginx`
 

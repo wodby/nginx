@@ -1,5 +1,5 @@
---- a/src/third_party/chromium/src/base/debug/stack_trace_posix.cc
-+++ b/src/third_party/chromium/src/base/debug/stack_trace_posix.cc
+--- a/third_party/chromium/src/base/debug/stack_trace_posix.cc
++++ b/third_party/chromium/src/base/debug/stack_trace_posix.cc
 @@ -5,7 +5,9 @@
  #include "base/debug/stack_trace.h"
 

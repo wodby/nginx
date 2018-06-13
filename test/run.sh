@@ -17,13 +17,6 @@ run_action() {
 run_action check-ready max_try=10
 
 docker-compose exec nginx tests.sh
-
-# Git actions
-echo -n "Running git actions... "
-run_action git-clone url="${git_url}" branch=master
-run_action git-checkout target=develop
-echo "OK"
-
 docker-compose down
 
 cid="$(docker run -d -e NGINX_HTTP2=1 --name "nginx" "${IMAGE}")"

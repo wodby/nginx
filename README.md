@@ -7,7 +7,7 @@
 
 ## Docker Images
 
-!!! For better reliability we release images with stability tags (`wodby/nginx:1.14-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 
+!!! For better reliability we release images with stability tags (`wodby/nginx:1.14-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags. 
 
 Overview:
 

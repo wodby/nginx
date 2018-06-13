@@ -1,5 +1,5 @@
---- a/src/pagespeed/automatic/rename_c_symbols.sh
-+++ b/src/pagespeed/automatic/rename_c_symbols.sh
+--- a/pagespeed/automatic/rename_c_symbols.sh
++++ b/pagespeed/automatic/rename_c_symbols.sh
 @@ -24,8 +24,8 @@
  set -e  # exit script if any command returns an error
  set -u  # exit the script if any variable is uninitialized

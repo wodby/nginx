@@ -1,5 +1,5 @@
---- a/src/pagespeed/kernel/thread/pthread_rw_lock.cc
-+++ b/src/pagespeed/kernel/thread/pthread_rw_lock.cc
+--- a/pagespeed/kernel/thread/pthread_rw_lock.cc
++++ b/pagespeed/kernel/thread/pthread_rw_lock.cc
 @@ -31,7 +31,7 @@
    //
    // Other OS's (FreeBSD, Darwin, OpenSolaris) documentation suggests

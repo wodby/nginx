@@ -34,6 +34,7 @@ RUN set -ex; \
         apr-dev \
         apr-util-dev \
         build-base \
+        gd-dev \
         geoip-dev\
         gettext-dev \
         git \
@@ -44,6 +45,7 @@ RUN set -ex; \
         libpng-dev \
         libressl-dev \
         libtool \
+        linux-headers \
         pcre-dev \
         py-setuptools \
         zlib-dev; \
@@ -120,29 +122,29 @@ RUN set -ex; \
         --http-scgi-temp-path=/var/lib/nginx/tmp/scgi \
         --user=nginx \
         --group=nginx \
-        --with-pcre-jit \
-        --with-http_ssl_module \
-        --with-http_realip_module \
         --with-http_addition_module \
-        --with-http_sub_module \
+        --with-http_auth_request_module \
         --with-http_dav_module \
         --with-http_flv_module \
-        --with-http_mp4_module \
+        --with-http_geoip_module \
         --with-http_gunzip_module \
         --with-http_gzip_static_module \
+        --with-http_mp4_module \
         --with-http_random_index_module \
+        --with-http_realip_module \
         --with-http_secure_link_module \
+        --with-http_ssl_module \
         --with-http_stub_status_module \
-        --with-http_auth_request_module \
-        --with-mail \
-        --with-mail_ssl_module \
+        --with-http_sub_module \
         --with-http_v2_module \
         --with-ipv6 \
-        --with-threads \
+        --with-ld-opt="-Wl,-z,relro,--start-group -lapr-1 -laprutil-1 -licudata -licuuc -lpng -lturbojpeg -ljpeg" \
+        --with-mail \
+        --with-mail_ssl_module \
+        --with-pcre-jit \
         --with-stream \
         --with-stream_ssl_module \
-        --with-http_geoip_module \
-        --with-ld-opt="-Wl,-rpath,/usr/lib/" \
+        --with-threads \
         --add-module=/tmp/ngxuploadprogress \
         --add-module=/tmp/ngxpagespeed; \
     \

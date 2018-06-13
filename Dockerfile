@@ -153,7 +153,7 @@ RUN set -ex; \
 		--with-stream_realip_module \
 		--with-stream_geoip_module=dynamic \
         --with-threads \
-        --add-module=/tmp/ngxuploadprogress; \
+        --add-module=/tmp/ngxuploadprogress \
         --add-module=/tmp/ngxpagespeed; \
     \
     make -j$(getconf _NPROCESSORS_ONLN); \

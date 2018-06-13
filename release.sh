@@ -12,10 +12,6 @@ if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  ||
     IFS=',' read -ra tags <<< "${TAGS}"
 
     for tag in "${tags[@]}"; do
-        if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
-            make release TAG="latest";
-        else
-            make release TAG="${tag}";
-        fi
+        make release TAG="${tag}";
     done
 fi

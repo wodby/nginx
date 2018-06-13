@@ -61,18 +61,26 @@ RUN set -ex; \
     cd /tmp/modpagespeed; \
     # From https://github.com/We-Amp/ngx-pagespeed-alpine
     for i in /tmp/patches/*.patch; do printf "\r\nApplying patch ${i%%.*}\r\n"; patch -p1 < $i || exit 1; done; \
-    \
     cd tools/gyp; \
     ./setup.py install; \
-    \
     cd /tmp/modpagespeed; \
     build/gyp_chromium --depth=. -D use_system_libs=1; \
-    \
     cd pagespeed/automatic; \
     make psol BUILDTYPE=Release \
         CFLAGS+="-I/usr/include/apr-1" \
         CXXFLAGS+="-I/usr/include/apr-1 -DUCHAR_TYPE=uint16_t" \
         -j$(getconf _NPROCESSORS_ONLN); \
+    \
+    \
+    # Get ngx pagespeed module.
+    git clone -b "v${NGX_PAGESPEED_VER}-stable" \
+          --recurse-submodules \
+          --shallow-submodules \
+          --depth=1 \
+          -c advice.detachedHead=false \
+          -j$(getconf _NPROCESSORS_ONLN) \
+          https://github.com/apache/incubator-pagespeed-ngx.git \
+          /tmp/ngxpagespeed; \
     \
     mkdir -p /tmp/ngxpagespeed/psol/lib/Release/linux/x64; \
     mkdir -p /tmp/ngxpagespeed/psol/include/out/Release; \
@@ -86,10 +94,6 @@ RUN set -ex; \
           url \
           /tmp/ngxpagespeed/psol/include/; \
     \
-    \
-    # Get ngx pagespeed module.
-    url="https://github.com/apache/incubator-pagespeed-ngx/archive/v${NGX_PAGESPEED_VER}-stable.tar.gz"; \
-    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngxpagespeed; \
     \
     # Get ngx uploadprogress module.
     mkdir -p /tmp/ngxuploadprogress; \

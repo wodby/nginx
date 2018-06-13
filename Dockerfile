@@ -21,12 +21,10 @@ RUN set -ex; \
 	sed -i '/^wodby/s/!/*/' /etc/shadow; \
 	echo "PS1='\w\$ '" >> /home/wodby/.bashrc; \
     \
-    apk add --update --no-cache -t .nginx-rundeps \
+    apk add --update --no-cache -t .tools \
         findutils \
-        geoip \
         make \
         nghttp2 \
-        pcre \
         sudo; \
     \
     apk add --update --no-cache -t .nginx-build-deps \
@@ -45,6 +43,7 @@ RUN set -ex; \
         libpng-dev \
         libressl-dev \
         libtool \
+        libxslt-dev \
         linux-headers \
         pcre-dev \
         py-setuptools \
@@ -112,16 +111,19 @@ RUN set -ex; \
     ./configure \
         --prefix=/usr/share/nginx \
         --sbin-path=/usr/sbin/nginx \
+        --modules-path=/usr/lib/nginx/modules \
         --conf-path=/etc/nginx/nginx.conf \
         --pid-path=/var/run/nginx/nginx.pid \
         --lock-path=/var/run/nginx/nginx.lock \
-        --http-client-body-temp-path=/var/lib/nginx/tmp/client_body \
-        --http-proxy-temp-path=/var/lib/nginx/tmp/proxy \
-        --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi \
-        --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi \
-        --http-scgi-temp-path=/var/lib/nginx/tmp/scgi \
+        --http-client-body-temp-path=/var/cache/nginx/client_temp \
+        --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
+        --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
+        --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+        --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
         --user=nginx \
         --group=nginx \
+        --with-compat \
+        --with-file-aio \
         --with-http_addition_module \
         --with-http_auth_request_module \
         --with-http_dav_module \
@@ -129,14 +131,17 @@ RUN set -ex; \
         --with-http_geoip_module \
         --with-http_gunzip_module \
         --with-http_gzip_static_module \
+		--with-http_image_filter_module=dynamic \
         --with-http_mp4_module \
         --with-http_random_index_module \
         --with-http_realip_module \
         --with-http_secure_link_module \
+		--with-http_slice_module \
         --with-http_ssl_module \
         --with-http_stub_status_module \
         --with-http_sub_module \
         --with-http_v2_module \
+		--with-http_xslt_module=dynamic \
         --with-ipv6 \
         --with-ld-opt="-Wl,-z,relro,--start-group -lapr-1 -laprutil-1 -licudata -licuuc -lpng -lturbojpeg -ljpeg" \
         --with-mail \
@@ -144,8 +149,11 @@ RUN set -ex; \
         --with-pcre-jit \
         --with-stream \
         --with-stream_ssl_module \
+		--with-stream_ssl_preread_module \
+		--with-stream_realip_module \
+		--with-stream_geoip_module=dynamic \
         --with-threads \
-        --add-module=/tmp/ngxuploadprogress \
+        --add-module=/tmp/ngxuploadprogress; \
         --add-module=/tmp/ngxpagespeed; \
     \
     make -j$(getconf _NPROCESSORS_ONLN); \
@@ -155,17 +163,30 @@ RUN set -ex; \
         "${APP_ROOT}" \
         "${FILES_DIR}" \
         /etc/nginx/conf.d \
-        /var/lib/nginx/tmp \
+        /var/cache/nginx \
+        /var/lib/nginx \
         /etc/nginx/pki; \
     \
     chown -R wodby:wodby \
         "${APP_ROOT}" \
         "${FILES_DIR}" \
         /etc/nginx \
+        /var/cache/nginx \
         /var/lib/nginx; \
     \
     chmod 755 /var/lib/nginx; \
     chmod 400 /etc/nginx/pki; \
+    \
+    strip /usr/sbin/nginx*; \
+    strip /usr/lib/nginx/modules/*.so; \
+    \
+	runDeps="$( \
+		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
+			| tr ',' '\n' \
+			| sort -u \
+			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+	)"; \
+	apk add --no-cache --virtual .nginx-rundeps $runDeps; \
     \
     # Script to fix volumes permissions via sudo.
     echo "find ${APP_ROOT} ${FILES_DIR} -maxdepth 0 -uid 0 -type d -exec chown wodby:wodby {} +" > /usr/local/bin/init_volumes; \

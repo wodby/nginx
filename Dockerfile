@@ -169,7 +169,7 @@ RUN set -ex; \
     install -g nginx -o nginx -d \
         /var/cache/ngx_pagespeed \
         /pagespeed_static \
-        /ngx_pagespeed_beacon;
+        /ngx_pagespeed_beacon; \
     \
     install -m 400 -d /etc/nginx/pki; \
     \

@@ -162,10 +162,11 @@ RUN set -ex; \
     install -g wodby -o wodby -d \
         "${APP_ROOT}" \
         "${FILES_DIR}" \
-        /etc/nginx \
         /etc/nginx/conf.d \
         /var/cache/nginx \
         /var/lib/nginx; \
+    \
+    chown -R wodby:wodby /etc/nginx; \
     \
     install -g nginx -o nginx -d \
         /var/cache/ngx_pagespeed \

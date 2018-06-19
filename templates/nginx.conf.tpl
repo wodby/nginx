@@ -50,6 +50,8 @@ http {
     gzip_proxied                {{ getenv "NGINX_GZIP_PROXIED" "any" }};
     gzip_disable                {{ getenv "NGINX_GZIP_DISABLE" "msie6" }};
 
+    pagespeed                   {{ getenv "NGINX_PAGESPEED" "standby" }};
+
     {{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
     add_header                  X-XSS-Protection '1; mode=block';
     add_header                  X-Frame-Options SAMEORIGIN;

@@ -52,6 +52,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_LOG_FORMAT_OVERRIDE`         |                        |             |
 | `NGINX_LOG_FORMAT_SHOW_REAL_IP`     |                        |             |
 | `NGINX_MULTI_ACCEPT`                | `on`                   |             |
+| `NGINX_PAGESPEED`                   | `unplugged`            |             |
 | `NGINX_RESET_TIMEDOUT_CONNECTION`   | `off`                  |             |
 | `NGINX_SEND_TIMEOUT`                | `60s`                  |             |
 | `NGINX_SENDFILE`                    | `on`                   |             |

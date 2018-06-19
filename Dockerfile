@@ -159,23 +159,19 @@ RUN set -ex; \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install; \
     \
-    mkdir -p \
+    install -g wodby -o wodby -d
         "${APP_ROOT}" \
         "${FILES_DIR}" \
         /etc/nginx/conf.d \
         /var/cache/nginx \
-        /var/lib/nginx \
-        /etc/nginx/pki; \
-    \
-    chown -R wodby:wodby \
-        "${APP_ROOT}" \
-        "${FILES_DIR}" \
-        /etc/nginx \
-        /var/cache/nginx \
         /var/lib/nginx; \
     \
-    chmod 755 /var/lib/nginx; \
-    chmod 400 /etc/nginx/pki; \
+    install -g nginx -o nginx -d \
+        /var/cache/ngx_pagespeed \
+        /pagespeed_static \
+        /ngx_pagespeed_beacon;
+    \
+    install -m 400 -d /etc/nginx/pki; \
     \
     strip /usr/sbin/nginx*; \
     strip /usr/lib/nginx/modules/*.so; \

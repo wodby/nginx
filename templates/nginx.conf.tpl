@@ -50,7 +50,15 @@ http {
     gzip_proxied                {{ getenv "NGINX_GZIP_PROXIED" "any" }};
     gzip_disable                {{ getenv "NGINX_GZIP_DISABLE" "msie6" }};
 
-    pagespeed                   {{ getenv "NGINX_PAGESPEED" "standby" }};
+    pagespeed                       {{ getenv "NGINX_PAGESPEED" "standby" }};
+    pagespeed FileCachePath         {{ getenv "NGINX_PAGESPEED_FILE_CACHE_PATH" "/var/cache/ngx_pagespeed/" }};
+    pagespeed PreserveUrlRelativity {{ getenv "NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY" "on" }};
+    pagespeed RewriteLevel          {{ getenv "NGINX_PAGESPEED_REWRITE_LEVEL" "CoreFilters" }};
+    pagespeed StaticAssetPrefix     {{ getenv "NGINX_PAGESPEED_STATIC_ASSET_PREFIX" "/pagespeed_static" }};
+
+    {{ if getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }}
+    pagespeed EnableFilters         {{ getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }};
+    {{ end }}
 
     {{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
     add_header                  X-XSS-Protection '1; mode=block';

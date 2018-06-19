@@ -15,7 +15,7 @@ _gotpl() {
 sudo init_volumes
 
 _gotpl 'vhost.conf.tpl' '/etc/nginx/conf.d/vhost.conf'
-_gotpl 'pagespeed.conf.tpl' '/etc/nginx/conf.d/pagespeed.conf'
+_gotpl 'pagespeed.conf.tpl' '/etc/nginx/pagespeed.conf'
 _gotpl 'healthz.conf.tpl' '/etc/nginx/healthz.conf'
 _gotpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'
 

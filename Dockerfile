@@ -159,7 +159,7 @@ RUN set -ex; \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install; \
     \
-    install -g wodby -o wodby -d
+    install -g wodby -o wodby -d \
         "${APP_ROOT}" \
         "${FILES_DIR}" \
         /etc/nginx/conf.d \

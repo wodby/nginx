@@ -5,8 +5,8 @@ http_flv_module
 http_geoip_module 
 http_gunzip_module 
 http_gzip_static_module 
-http_image_filter_module
-http_mp4_module
+http_image_filter_module 
+http_mp4_module 
 http_random_index_module 
 http_realip_module 
 http_secure_link_module 

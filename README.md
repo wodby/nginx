@@ -35,6 +35,8 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_DISABLE_CACHING`                   |                             |             |
 | `NGINX_ENABLE_HEALTHZ_LOGS`               |                             |             |
 | `NGINX_ERROR_LOG_LEVEL`                   | `error`                     |             |
+| `NGINX_ERROR_PAGE_403`                    |                             |             |
+| `NGINX_ERROR_PAGE_404`                    |                             |             |
 | `NGINX_GZIP`                              | `on`                        |             |
 | `NGINX_GZIP_BUFFERS`                      | `16 8k`                     |             |
 | `NGINX_GZIP_COMP_LEVEL`                   | `1`                         |             |

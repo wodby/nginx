@@ -38,6 +38,14 @@ server {
         root   /usr/share/nginx/html;
     }
 
+    {{ if getenv "NGINX_ERROR_PAGE_403" }};
+    error_page 403 {{ getenv "NGINX_ERROR_PAGE_403" }};
+    {{ end }}
+
+    {{ if getenv "NGINX_ERROR_PAGE_404" }};
+    error_page 404 {{ getenv "NGINX_ERROR_PAGE_404" }};
+    {{ end }}
+
     include pagespeed.conf;
     include healthz.conf;
 }

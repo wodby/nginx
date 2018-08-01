@@ -5,14 +5,18 @@ server {
     location / {
         root {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }};
 
-        {{ if getenv "NGINX_DISABLE_CACHING" }}
+{{ if getenv "NGINX_DISABLE_CACHING" }}
         expires -1;
         add_header Pragma "no-cache";
         add_header Cache-Control "no-store, no-cache, must-revalicate, post-check=0 pre-check=0";
-        {{ end }}
+{{ end }}
 
+{{ if getenv "NGINX_APP_SERVER_HOST" }}
+        try_files $uri @app;
+{{ else }}
         index {{ getenv "NGINX_INDEX_FILE" "index.html index.htm" }};
         try_files $uri $uri/ /{{ getenv "NGINX_INDEX_FILE" "index.html index.htm" }};
+{{ end }}
     }
 
     location ~* ^.+\.(?:css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|svgz)$ {
@@ -33,18 +37,28 @@ server {
         }
     }
 
+{{ if getenv "NGINX_APP_SERVER_HOST" }}
+    location @app {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://app_server;
+    }
+{{ end }}
+
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
         root   /usr/share/nginx/html;
     }
 
-    {{ if getenv "NGINX_ERROR_PAGE_403" }};
+{{ if getenv "NGINX_ERROR_PAGE_403" }};
     error_page 403 {{ getenv "NGINX_ERROR_PAGE_403" }};
-    {{ end }}
+{{ end }}
 
-    {{ if getenv "NGINX_ERROR_PAGE_404" }};
+{{ if getenv "NGINX_ERROR_PAGE_404" }};
     error_page 404 {{ getenv "NGINX_ERROR_PAGE_404" }};
-    {{ end }}
+{{ end }}
 
     include pagespeed.conf;
     include healthz.conf;

@@ -25,7 +25,10 @@ Supported tags and respective `Dockerfile` links:
 ## Environment Variables
 
 | Variable                                  | Default Value               | Description |
-| ----------------------------------------- | ----------------------      | ----------- |
+| ----------------------------------------- | --------------------------- | ----------- |
+| `NGINX_APP_SERVER_HOST`                   |                             |             |
+| `NGINX_APP_SERVER_PORT`                   | `8080`                      |             |
+| `NGINX_APP_SERVER_FAIL_TIMEOUT`           | `0`                         |             |
 | `NGINX_CLIENT_BODY_BUFFER_SIZE`           | `16k`                       |             |
 | `NGINX_CLIENT_BODY_TIMEOUT`               | `60s`                       |             |
 | `NGINX_CLIENT_HEADER_BUFFER_SIZE`         | `4k`                        |             |

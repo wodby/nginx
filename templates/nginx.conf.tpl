@@ -16,9 +16,9 @@ http {
                                         '"$request" $status $body_bytes_sent '
                                         '"$http_referer" "$http_user_agent"';
 
-    {{ if getenv "NGINX_LOG_FORMAT_OVERRIDE" }}
+{{ if getenv "NGINX_LOG_FORMAT_OVERRIDE" }}
     log_format                  combined '{{ getenv "NGINX_LOG_FORMAT_OVERRIDE" }}';
-    {{ end }}
+{{ end }}
 
     access_log                  /proc/self/fd/1 {{ if getenv "NGINX_LOG_FORMAT_SHOW_REAL_IP" }}real_ip{{ else }}combined{{ end }};
 
@@ -56,19 +56,25 @@ http {
     pagespeed RewriteLevel          {{ getenv "NGINX_PAGESPEED_REWRITE_LEVEL" "CoreFilters" }};
     pagespeed StaticAssetPrefix     {{ getenv "NGINX_PAGESPEED_STATIC_ASSET_PREFIX" "/pagespeed_static" }};
 
-    {{ if getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }}
+{{ if getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }}
     pagespeed EnableFilters         {{ getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }};
-    {{ end }}
+{{ end }}
 
-    {{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
+{{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
     add_header                  X-XSS-Protection '1; mode=block';
     add_header                  X-Frame-Options SAMEORIGIN;
     add_header                  X-Content-Type-Options nosniff;
-    {{ end }}
+{{ end }}
 
     map $uri $no_slash_uri {
         ~^/(?<no_slash>.*)$ $no_slash;
     }
+
+{{ if getenv "NGINX_APP_SERVER_HOST" }}
+    upstream app_server {
+        server {{ getenv "NGINX_APP_SERVER_HOST" }}:{{ getenv "NGINX_APP_SERVER_PORT" "8080" }} fail_timeout={{ getenv "NGINX_APP_SERVER_FAIL_TIMEOUT" "0" }};
+    }
+{{ end }}
 
     include {{ getenv "NGINX_CONF_INCLUDE" "conf.d/*.conf" }};
 }

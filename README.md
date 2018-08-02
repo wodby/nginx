@@ -7,7 +7,7 @@
 
 ## Docker Images
 
-❗For better reliability we release images with stability tags (`wodby/nginx:1.14-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags. 
+❗For better reliability we release images with stability tags (`wodby/nginx:1.15-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags. 
 
 Overview:
 
@@ -77,6 +77,8 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_WORKER_PROCESSES`                  | `auto`                      |             |
 
 ## [Installed Nginx Modules]((https://raw.githubusercontent.com/wodby/nginx/master/tests/nginx_modules))
+
+Include pagespeed module [pre-built for Alpine](https://github.com/wodby/nginx-alpine-psol)
 
 ## Images based on `wodby/nginx`
 

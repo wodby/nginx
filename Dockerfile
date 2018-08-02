@@ -9,8 +9,6 @@ ENV NGINX_VER="${NGINX_VER}" \
     APP_ROOT="/var/www/html" \
     FILES_DIR="/mnt/files"
 
-COPY patches/modpagespeed /tmp/patches
-
 RUN set -ex; \
     \
     addgroup -S nginx; \
@@ -28,13 +26,11 @@ RUN set -ex; \
         sudo; \
     \
     apk add --update --no-cache -t .nginx-build-deps \
-        apache2-dev \
         apr-dev \
         apr-util-dev \
         build-base \
         gd-dev \
         geoip-dev\
-        gettext-dev \
         git \
         gnupg \
         gperf \
@@ -46,32 +42,7 @@ RUN set -ex; \
         libxslt-dev \
         linux-headers \
         pcre-dev \
-        py-setuptools \
         zlib-dev; \
-    \
-    \
-    # Build pagespeed psol
-    git clone -b "v${MOD_PAGESPEED_VER}" \
-        --recurse-submodules \
-        --depth=1 \
-        -c advice.detachedHead=false \
-        -j$(getconf _NPROCESSORS_ONLN) \
-        https://github.com/apache/incubator-pagespeed-mod.git \
-        /tmp/modpagespeed; \
-    \
-    cd /tmp/modpagespeed; \
-    # From https://github.com/We-Amp/ngx-pagespeed-alpine
-    for i in /tmp/patches/*.patch; do printf "\r\nApplying patch ${i%%.*}\r\n"; patch -p1 < $i || exit 1; done; \
-    cd tools/gyp; \
-    ./setup.py install; \
-    cd /tmp/modpagespeed; \
-    build/gyp_chromium --depth=. -D use_system_libs=1; \
-    cd pagespeed/automatic; \
-    make psol BUILDTYPE=Release \
-        CFLAGS+="-I/usr/include/apr-1" \
-        CXXFLAGS+="-I/usr/include/apr-1 -DUCHAR_TYPE=uint16_t" \
-        -j$(getconf _NPROCESSORS_ONLN); \
-    \
     \
     # Get ngx pagespeed module.
     git clone -b "v${NGX_PAGESPEED_VER}-stable" \
@@ -83,23 +54,14 @@ RUN set -ex; \
           https://github.com/apache/incubator-pagespeed-ngx.git \
           /tmp/ngxpagespeed; \
     \
-    mkdir -p /tmp/ngxpagespeed/psol/lib/Release/linux/x64; \
-    mkdir -p /tmp/ngxpagespeed/psol/include/out/Release; \
-    cd /tmp/modpagespeed; \
-    cp -R out/Release/obj /tmp/ngxpagespeed/psol/include/out/Release/; \
-    cp -R pagespeed/automatic/pagespeed_automatic.a /tmp/ngxpagespeed/psol/lib/Release/linux/x64/; \
-    cp -R net \
-          pagespeed \
-          testing \
-          third_party \
-          url \
-          /tmp/ngxpagespeed/psol/include/; \
-    \
+    # Get psol for alpine.
+    url="https://github.com/wodby/nginx-alpine-psol/releases/download/${MOD_PAGESPEED_VER}/psol.tar.gz"; \
+    wget -qO- "${url}" | tar xz -C /tmp/ngxpagespeed; \
     \
     # Get ngx uploadprogress module.
     mkdir -p /tmp/ngxuploadprogress; \
     url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${NGINX_UP_VER}.tar.gz"; \
-    wget -qO- "${url}"  | tar xz  --strip-components=1 -C /tmp/ngxuploadprogress; \
+    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngxuploadprogress; \
     \
     # Download nginx.
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -o /tmp/nginx.tar.gz; \

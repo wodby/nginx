@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+  nginx:
+    image: $IMAGE
+    environment:
+      NGINX_BACKEND_HOST: php
+    depends_on:
+      - php
+    volumes:
+      - codebase:/var/www/html
+  php:
+    image: wodby/php
+    volumes:
+      - codebase:/var/www/html
+
+volumes:
+  codebase:

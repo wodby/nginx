@@ -7,7 +7,8 @@ ENV NGINX_VER="${NGINX_VER}" \
     MOD_PAGESPEED_VER=1.13.35.2 \
     NGX_PAGESPEED_VER=1.13.35.2 \
     APP_ROOT="/var/www/html" \
-    FILES_DIR="/mnt/files"
+    FILES_DIR="/mnt/files" \
+    NGINX_VHOST_PRESET="html"
 
 RUN set -ex; \
     \
@@ -128,6 +129,7 @@ RUN set -ex; \
         /var/cache/nginx \
         /var/lib/nginx; \
     \
+    touch /etc/nginx/upstream.conf; \
     chown -R wodby:wodby /etc/nginx; \
     \
     install -g nginx -o nginx -d \

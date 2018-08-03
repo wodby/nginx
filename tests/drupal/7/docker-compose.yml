@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+  nginx:
+    image: $IMAGE
+    environment:
+      NGINX_BACKEND_HOST: drupal
+      NGINX_VHOST_PRESET: drupal7
+      NGINX_SERVER_EXTRA_CONF_FILEPATH: /var/www/html/server.conf
+    depends_on:
+      - drupal
+    volumes:
+      - codebase:/var/www/html
+      - ./server.conf:/var/www/html/server.conf
+  drupal:
+    image: drupal:7-fpm
+    volumes:
+      - codebase:/var/www/html
+
+volumes:
+  codebase:

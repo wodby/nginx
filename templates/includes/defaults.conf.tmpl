@@ -1,0 +1,99 @@
+{{ if getenv "NGINX_DISABLE_CACHING" }}
+expires -1;
+add_header Pragma "no-cache";
+add_header Cache-Control "no-store, no-cache, must-revalicate, post-check=0 pre-check=0";
+{{ end }}
+
+if (!-d $request_filename) {
+    rewrite ^/(.+)/$ /$1 permanent;
+}
+
+location ~* ^/.well-known/ {
+    allow all;
+}
+
+location = /favicon.ico {
+    expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+    try_files /favicon.ico @empty;
+    log_not_found off;
+    access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+}
+
+location = /robots.txt {
+    allow all;
+    log_not_found off;
+    access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+}
+
+location @empty {
+    expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+    empty_gif;
+}
+
+{{ $static := (getenv "NGINX_STATIC_EXT_REGEX" "css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf") }}
+
+location ~* ^.+\.(?:{{ $static }})$ {
+    root {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }};
+    access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+    tcp_nodelay {{ getenv "NGINX_STATIC_TCP_DELAY" "off" }};
+    expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+
+    add_header Pragma "cache";
+    add_header Cache-Control "public";
+
+    open_file_cache {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE" "max=1000 inactive=20s" }};
+    open_file_cache_valid {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_VALID" "30s" }};
+    open_file_cache_min_uses {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES" "2" }};
+    open_file_cache_errors {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_ERRORS" "off" }};
+
+    location ~* ^.+\.(?:svgz|tgz|gz)$ {
+        gzip off;
+        add_header Content-Encoding gzip;
+    }
+}
+
+location ~* \.flv$ {
+    flv;
+}
+
+location ~* ^.+\.(?:m4a|mp4|mov)$ {
+    mp4;
+    mp4_buffer_size {{ getenv "NGINX_STATIC_MP4_BUFFER_SIZE" "1M" }};
+    mp4_max_buffer_size {{ getenv "NGINX_STATIC_MP4_MAX_BUFFER_SIZE" "5M" }};
+}
+
+location ~ ^/\.healthz$ {
+    access_log off;
+    return 204;
+}
+
+{{ $pagespeed := (getenv "NGINX_PAGESPEED") }}
+{{ if (eq $pagespeed "on") }}
+location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" {
+    add_header "" "";
+}
+
+location ~ "^/pagespeed_static/" { }
+location ~ "^/ngx_pagespeed_beacon$" { }
+{{ end }}
+
+location ~ /\. {
+    deny all;
+}
+
+error_page 500 502 503 504 /50x.html;
+location = /50x.html {
+    root   /usr/share/nginx/html;
+}
+
+{{ if getenv "NGINX_ERROR_PAGE_403" }};
+error_page 403 {{ getenv "NGINX_ERROR_PAGE_403" }};
+{{ end }}
+
+{{ if getenv "NGINX_ERROR_PAGE_404" }};
+error_page 404 {{ getenv "NGINX_ERROR_PAGE_404" }};
+{{ end }}
+
+{{ if getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }}
+include {{ getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }};
+{{ end }}

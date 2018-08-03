@@ -22,7 +22,11 @@ build:
 	docker build -t $(REPO):$(TAG) --build-arg NGINX_VER=$(NGINX_VER) ./
 
 test:
-	cd ./test && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/wordpress && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/drupal/8 && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/drupal/7 && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/drupal/6 && IMAGE=$(REPO):$(TAG) ./run.sh
 
 push:
 	docker push $(REPO):$(TAG)

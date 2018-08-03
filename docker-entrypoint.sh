@@ -12,13 +12,25 @@ _gotpl() {
     fi
 }
 
+process_templates() {
+    _gotpl 'nginx.conf.tmpl' '/etc/nginx/nginx.conf'
+    _gotpl 'vhost.conf.tmpl' '/etc/nginx/conf.d/vhost.conf'
+
+    _gotpl 'includes/defaults.conf.tmpl' '/etc/nginx/defaults.conf'
+    _gotpl 'includes/fastcgi.conf.tmpl' '/etc/nginx/fastcgi.conf'
+
+    _gotpl "presets/${NGINX_VHOST_PRESET/_/-}.conf.tmpl" '/etc/nginx/preset.conf'
+
+    if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal8|drupal7|drupal6|wordpress|php$ ]]; then
+        _gotpl 'includes/upstream.php.conf.tmpl' '/etc/nginx/upstream.conf'
+    elif [[ "${NGINX_VHOST_PRESET}" == "app_server" ]]; then
+        _gotpl 'includes/upstream.app-server.conf.tmpl' '/etc/nginx/upstream.conf'
+    fi
+}
+
 sudo init_volumes
 
-_gotpl 'vhost.conf.tpl' '/etc/nginx/conf.d/vhost.conf'
-_gotpl 'pagespeed.conf.tpl' '/etc/nginx/pagespeed.conf'
-_gotpl 'healthz.conf.tpl' '/etc/nginx/healthz.conf'
-_gotpl 'nginx.conf.tpl' '/etc/nginx/nginx.conf'
-
+process_templates
 exec_init_scripts
 
 if [[ "${1}" == 'make' ]]; then

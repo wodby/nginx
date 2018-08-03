@@ -1,0 +1,19 @@
+version: "2"
+
+services:
+  nginx:
+    image: $IMAGE
+    environment:
+      NGINX_BACKEND_HOST: wordpress
+      NGINX_VHOST_PRESET: wordpress
+    depends_on:
+      - wordpress
+    volumes:
+      - codebase:/var/www/html
+  wordpress:
+    image: wordpress:4-php7.0-fpm-alpine
+    volumes:
+      - codebase:/var/www/html
+
+volumes:
+  codebase:

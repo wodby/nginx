@@ -1,0 +1,170 @@
+index index.php;
+
+include fastcgi.conf;
+
+{{ if getenv "NGINX_DRUPAL_HIDE_HEADERS" }}
+fastcgi_hide_header 'X-Drupal-Cache';
+fastcgi_hide_header 'X-Generator';
+fastcgi_hide_header 'X-Drupal-Dynamic-Cache';
+{{ end }}
+
+location / {
+    {{ if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
+    location ~* /sites/.+/files {
+        try_files $uri @file_proxy;
+    }
+    {{ end }}
+    location ~* /system/files/ {
+        include fastcgi.conf;
+        fastcgi_param QUERY_STRING q=$uri&$args;
+        fastcgi_param SCRIPT_NAME /index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+        fastcgi_pass php;
+        log_not_found off;
+    }
+
+    location ~* /sites/.+/files/private/ {
+        internal;
+    }
+
+    location ~* /files/styles/ {
+        access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+        try_files $uri @drupal;
+    }
+
+    location ~* /sites/.+/files/.+\.txt {
+        access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+        tcp_nodelay off;
+        open_file_cache {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE" "max=1000 inactive=20s" }};
+        open_file_cache_valid {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_VALID" "30s" }};
+        open_file_cache_min_uses {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES" "2" }};
+        open_file_cache_errors {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_ERRORS" "off" }};
+    }
+
+    location ~* /sites/.+/files/advagg_css/ {
+        expires max;
+        add_header ETag '';
+        add_header Last-Modified 'Wed, 20 Jan 1988 04:20:42 GMT';
+        add_header Accept-Ranges '';
+        location ~* /sites/.*/files/advagg_css/css[_[:alnum:]]+\.css$ {
+            access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+            try_files $uri @drupal;
+        }
+    }
+
+    location ~* /sites/.+/files/advagg_js/ {
+        expires max;
+        add_header ETag '';
+        add_header Last-Modified 'Wed, 20 Jan 1988 04:20:42 GMT';
+        add_header Accept-Ranges '';
+        location ~* /sites/.*/files/advagg_js/js[_[:alnum:]]+\.js$ {
+            access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+            try_files $uri @drupal;
+        }
+    }
+
+    location ~* /admin/reports/hacked/.+/diff/ {
+        try_files $uri @drupal;
+    }
+    {{ if getenv "NGINX_DRUPAL_ALLOW_XML_ENDPOINTS" }}
+    location ~* ^.+\.xml {
+        try_files $uri @drupal;
+    }
+    {{ else }}
+    location ~* /rss.xml {
+        try_files $uri @drupal-no-args;
+    }
+
+    location ~* /sitemap.xml {
+        try_files $uri @drupal;
+    }
+    {{ end }}
+
+    location ~* ^(?:.+\.(?:htaccess|make|txt|engine|inc|info|install|module|profile|po|pot|sh|.*sql|test|theme|tpl(?:\.php)?|xtmpl)|code-style\.pl|/Entries.*|/Repository|/Root|/Tag|/Template)$ {
+        return 404;
+    }
+
+    try_files $uri @drupal;
+}
+
+{{ if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
+location @file_proxy {
+    rewrite ^ {{ getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}$request_uri? permanent;
+}
+{{ end }}
+
+location @drupal {
+    include fastcgi.conf;
+    fastcgi_param QUERY_STRING $query_string;
+    fastcgi_param SCRIPT_NAME /index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+    fastcgi_pass php;
+    track_uploads {{ getenv "NGINX_DRUPAL_TRACK_UPLOADS" "uploads 60s" }};
+}
+
+location @drupal-no-args {
+    include fastcgi.conf;
+    fastcgi_param QUERY_STRING q=$uri;
+    fastcgi_param SCRIPT_NAME /index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+    fastcgi_pass php;
+}
+
+location = /index.php {
+    fastcgi_pass php;
+}
+
+location = /core/install.php {
+    fastcgi_pass php;
+}
+
+location ~* ^/core/authorize.php {
+    include fastcgi.conf;
+    fastcgi_param QUERY_STRING $args;
+    fastcgi_param SCRIPT_NAME /core/authorize.php;
+    fastcgi_param SCRIPT_FILENAME $document_root/core/authorize.php;
+    fastcgi_pass php;
+}
+
+location = /core/modules/statistics/statistics.php {
+    fastcgi_pass php;
+}
+
+location = /cron {
+    include fastcgi.conf;
+    fastcgi_param QUERY_STRING $args;
+    fastcgi_param SCRIPT_NAME /index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+    fastcgi_pass php;
+}
+
+location ~* ^/update.php {
+    include fastcgi.conf;
+    fastcgi_param QUERY_STRING $args;
+    fastcgi_param SCRIPT_NAME /update.php;
+    fastcgi_param SCRIPT_FILENAME $document_root/update.php;
+    fastcgi_pass php;
+}
+
+location ^~ /patches {
+    return 404;
+}
+
+location ^~ /backup {
+    return 404;
+}
+
+location ~* ^.+\.php$ {
+    return 404;
+}
+
+location ~ (?<upload_form_uri>.*)/x-progress-id:(?<upload_id>\d*) {
+    rewrite ^ $upload_form_uri?X-Progress-ID=$upload_id;
+}
+
+location ~ ^/progress$ {
+    upload_progress_json_output;
+    report_uploads uploads;
+}

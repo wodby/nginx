@@ -1,3 +1,9 @@
+{{ if getenv "NGINX_APP_SERVER_HOST" }}
+upstream app_server {
+    server {{ getenv "NGINX_APP_SERVER_HOST" }}:{{ getenv "NGINX_APP_SERVER_PORT" "8080" }} fail_timeout={{ getenv "NGINX_APP_SERVER_FAIL_TIMEOUT" "0" }};
+}
+{{ end }}
+
 server {
     listen       80 default_server{{ if getenv "NGINX_HTTP2" }} http2{{ end }};
     server_name  {{ getenv "NGINX_SERVER_NAME" "default" }};

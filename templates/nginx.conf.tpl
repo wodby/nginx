@@ -70,11 +70,5 @@ http {
         ~^/(?<no_slash>.*)$ $no_slash;
     }
 
-{{ if getenv "NGINX_APP_SERVER_HOST" }}
-    upstream app_server {
-        server {{ getenv "NGINX_APP_SERVER_HOST" }}:{{ getenv "NGINX_APP_SERVER_PORT" "8080" }} fail_timeout={{ getenv "NGINX_APP_SERVER_FAIL_TIMEOUT" "0" }};
-    }
-{{ end }}
-
     include {{ getenv "NGINX_CONF_INCLUDE" "conf.d/*.conf" }};
 }

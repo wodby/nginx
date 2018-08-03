@@ -115,6 +115,8 @@ By default will be used `html` virtual host preset, you can change it via env va
 
 ### HTML
 
+This is the default preset.
+
 [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/html.conf.tmpl)
 
 ```
@@ -139,6 +141,7 @@ Additional environment variables for customization:
   
 ```
 NGINX_VHOST_PRESET=drupal8
+NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
 ```
 
 #### Drupal 7 
@@ -147,6 +150,7 @@ NGINX_VHOST_PRESET=drupal8
   
 ```
 NGINX_VHOST_PRESET=drupal7
+NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
 ```
 
 #### Drupal 6
@@ -155,6 +159,7 @@ NGINX_VHOST_PRESET=drupal7
   
 ```
 NGINX_VHOST_PRESET=drupal6
+NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
 ```
 
 ### WordPress
@@ -163,6 +168,7 @@ NGINX_VHOST_PRESET=drupal6
   
 ```
 NGINX_VHOST_PRESET=wordpress
+NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
 ```
 
 ### PHP
@@ -171,6 +177,7 @@ NGINX_VHOST_PRESET=wordpress
 
 ```
 NGINX_VHOST_PRESET=php
+NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
 ```
 
 ### HTTP proxy (application server)
@@ -179,6 +186,7 @@ NGINX_VHOST_PRESET=php
 
 ```
 NGINX_VHOST_PRESET=http-proxy
+NGINX_BACKEND_HOST=[SPECIFY YOUR APP SERVER HOST]
 ```
 
 ## Customization

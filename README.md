@@ -11,9 +11,9 @@
 * [Virtual hosts presets](#virtual-hosts-presets)
     * [HTML](#html)
     * [PHP](#php)
-    * [Drupal](#drupal-876)
+    * [Drupal](#drupal)
     * [WordPress](#wordpress)
-    * [Application server (HTTP proxy)](#application-server-http-proxy)
+    * [HTTP proxy (application server)](#http-proxy-application-server)
 * [Customization](#customization)
 * [Orchestration actions](#orchestration-actions)
 
@@ -111,19 +111,19 @@ Include pagespeed module [pre-built for Alpine](https://github.com/wodby/nginx-a
 
 ## Virtual hosts presets
 
+By default will be used `html` virtual host preset, you can change it via env var `$NGINX_VHOST_PRESET`. The list of available presets below,   
+
 ### HTML
 
-`NGINX_VHOST_PRESET=html` (default)
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/html.conf.tmpl)
 
-[Virtual host preset](https://github.com/wodby/nginx/blob/master/templates/presets/html.conf.tmpl)
+```
+NGINX_VHOST_PRESET=html
+```
 
-### Drupal 8/7/6
+### Drupal
 
-* `NGINX_VHOST_PRESET=drupal8` - [virtual host preset](https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl)
-* `NGINX_VHOST_PRESET=drupal7` - [virtual host preset](https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl)
-* `NGINX_VHOST_PRESET=drupal6` - [virtual host preset](https://github.com/wodby/nginx/blob/master/templates/presets/drupal6.conf.tmpl)
-
-Additional environment variables:
+Additional environment variables for customization:
 
 | Variable                           | Default Value               | Description                   |
 | ---------------------------------- | --------------------------- | -----------                   |
@@ -133,23 +133,53 @@ Additional environment variables:
 | `NGINX_DRUPAL_TRACK_UPLOADS`       | `uploads 60s`               |                               |
 | `NGINX_DRUPAL_XMLRPC_SERVER_NAME`  |                             | Drupal 6 only                 |
 
+#### Drupal 8  
+
+[virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl)
+  
+```
+NGINX_VHOST_PRESET=drupal8
+```
+
+#### Drupal 7 
+
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl)
+  
+```
+NGINX_VHOST_PRESET=drupal7
+```
+
+#### Drupal 6
+
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal6.conf.tmpl)
+  
+```
+NGINX_VHOST_PRESET=drupal6
+```
+
 ### WordPress
 
-`NGINX_VHOST_PRESET=wordpress`
-
-[Virtual host preset](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
+  
+```
+NGINX_VHOST_PRESET=wordpress
+```
 
 ### PHP
 
-`NGINX_VHOST_PRESET=php`
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
 
-[Virtual host preset](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
+```
+NGINX_VHOST_PRESET=php
+```
 
-### Application server (HTTP proxy)
+### HTTP proxy (application server)
 
-`NGINX_VHOST_PRESET=app_server`
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/http-proxy.conf.tmpl)
 
-[Virtual host preset](https://github.com/wodby/nginx/blob/master/templates/presets/app-server.conf.tmpl)
+```
+NGINX_VHOST_PRESET=http-proxy
+```
 
 ## Customization
 

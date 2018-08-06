@@ -39,8 +39,8 @@ Supported tags and respective `Dockerfile` links:
 | Variable                                  | Default Value               | Description                      |
 | ----------------------------------------- | --------------------------- | -----------                      |
 | `NGINX_BACKEND_FAIL_TIMEOUT`              | `0`                         |                                  |
-| `NGINX_BACKEND_HOST`                      |                             |                                  |
-| `NGINX_BACKEND_PORT`                      | `8080`                      | Default value varies for presets |
+| `NGINX_BACKEND_HOST`                      |                             | Default value varies for presets |
+| `NGINX_BACKEND_PORT`                      |                             | Default value varies for presets |
 | `NGINX_CLIENT_BODY_BUFFER_SIZE`           | `16k`                       |                                  |
 | `NGINX_CLIENT_BODY_TIMEOUT`               | `60s`                       |                                  |
 | `NGINX_CLIENT_HEADER_BUFFER_SIZE`         | `4k`                        |                                  |
@@ -125,6 +125,8 @@ NGINX_VHOST_PRESET=html
 
 ### Drupal
 
+Uses FastCGI upstream.
+
 Additional environment variables for customization:
 
 | Variable                           | Default Value               | Description                   |
@@ -137,7 +139,7 @@ Additional environment variables for customization:
 
 #### Drupal 8  
 
-[virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl)
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl)
   
 ```
 NGINX_VHOST_PRESET=drupal8
@@ -164,6 +166,8 @@ NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
 
 ### WordPress
 
+Uses FastCGI upstream.
+
 [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
   
 ```
@@ -172,6 +176,8 @@ NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
 ```
 
 ### PHP
+
+Uses FastCGI upstream.
 
 [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
 

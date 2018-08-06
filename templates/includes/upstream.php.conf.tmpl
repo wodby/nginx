@@ -1,5 +1,5 @@
 upstream php {
-    server {{ getenv "NGINX_BACKEND_HOST" }}:9000 fail_timeout={{ getenv "NGINX_BACKEND_FAIL_TIMEOUT" "0" }};
+    server {{ getenv "NGINX_BACKEND_HOST" "php" }}:{{ getenv "NGINX_BACKEND_PORT" "9000" }} fail_timeout={{ getenv "NGINX_BACKEND_FAIL_TIMEOUT" "0" }};
 }
 
 map $http_x_forwarded_proto $fastcgi_https {

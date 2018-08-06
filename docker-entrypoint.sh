@@ -19,7 +19,7 @@ process_templates() {
     _gotpl 'includes/defaults.conf.tmpl' '/etc/nginx/defaults.conf'
     _gotpl 'includes/fastcgi.conf.tmpl' '/etc/nginx/fastcgi.conf'
 
-    _gotpl "presets/${NGINX_VHOST_PRESET/_/-}.conf.tmpl" '/etc/nginx/preset.conf'
+    _gotpl "presets/${NGINX_VHOST_PRESET}.conf.tmpl" '/etc/nginx/preset.conf'
 
     if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal8|drupal7|drupal6|wordpress|php$ ]]; then
         _gotpl 'includes/upstream.php.conf.tmpl' '/etc/nginx/upstream.conf'

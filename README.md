@@ -118,12 +118,12 @@ By default will be used `html` virtual host preset, you can change it via env va
 
 This is the default preset.
 
-* [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/html.conf.tmpl)
+* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/html.conf.tmpl)
 * Usage: this preset selected by default
 
 ### HTTP proxy (application server)
 
-* [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/http-proxy.conf.tmpl)
+* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/http-proxy.conf.tmpl)
 * Usage: add `NGINX_VHOST_PRESET=http-proxy` and `NGINX_BACKEND_HOST=[host]` 
 
 Additional environment variables for HTTP proxy preset:
@@ -149,12 +149,12 @@ Additional environment variables for all php-based presets:
 
 #### PHP
 
-* [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
+* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
 * Usage: add `NGINX_VHOST_PRESET=php`, optionally modify `NGINX_BACKEND_HOST`
 
 #### WordPress
 
-* [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
+* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
 * Usage: add `NGINX_VHOST_PRESET=wordpress`, optionally modify `NGINX_BACKEND_HOST`  
 
 #### Drupal

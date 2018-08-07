@@ -169,8 +169,8 @@ Additional environment variables for Drupal presets:
 | `NGINX_DRUPAL_TRACK_UPLOADS`       | `uploads 60s` |                               |
 | `NGINX_DRUPAL_XMLRPC_SERVER_NAME`  |               | D6 and D7 only                |
 
-* Virtual host templates: [Drupal 8], [Drupal 7], [Drupal 6]
-* Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal8`, `drupal7` or `drupal6` depending your Drupal version. Optionally modify `NGINX_BACKEND_HOST`
+* Preset templates: [Drupal 8], [Drupal 7], [Drupal 6]
+* Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal8`, `drupal7` or `drupal6`. Optionally modify `NGINX_BACKEND_HOST`
 
 [Drupal 8]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl
 [Drupal 7]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl

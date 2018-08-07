@@ -35,7 +35,7 @@ location @empty {
 location ~* ^.+\.(?:{{ $static }})$ {
     root {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }};
     access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
-    tcp_nodelay {{ getenv "NGINX_STATIC_TCP_DELAY" "off" }};
+    tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};
     expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
 
     add_header Pragma "cache";
@@ -77,7 +77,7 @@ location ~ "^/pagespeed_static/" { }
 location ~ "^/ngx_pagespeed_beacon$" { }
 {{ end }}
 
-{{ if not (getenv "NGINX_ALLOW_ACCESS_HIDDEN_FILES") }};
+{{ if not (getenv "NGINX_ALLOW_ACCESS_HIDDEN_FILES") }}
 location ~ /\. {
     deny all;
 }

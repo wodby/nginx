@@ -37,5 +37,5 @@ location ~ [^/]\.php(/|$) {
     }
 
     fastcgi_pass php;
-    track_uploads uploads 60s;
+    track_uploads {{ getenv "NGINX_TRACK_UPLOADS" "uploads 60s" }};
 }

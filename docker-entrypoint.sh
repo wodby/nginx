@@ -23,6 +23,7 @@ _backwards_compatibility() {
     vars[NGINX_STATIC_CONTENT_OPEN_FILE_CACHE_MIN_USES]="NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES"
     vars[NGINX_STATIC_CONTENT_OPEN_FILE_CACHE_VALID]="NGINX_STATIC_OPEN_FILE_CACHE_VALID"
     vars[NGINX_XMLRPC_SERVER_NAME]="NGINX_DRUPAL_XMLRPC_SERVER_NAME"
+    vars[NGINX_DRUPAL_TRACK_UPLOADS]="NGINX_TRACK_UPLOADS"
 
     for i in "${!vars[@]}"; do
         # Use value from old var if it's not empty and the new is.
@@ -46,6 +47,11 @@ process_templates() {
     elif [[ "${NGINX_VHOST_PRESET}" == "http-proxy" ]]; then
         _gotpl 'includes/upstream.http-proxy.conf.tmpl' '/etc/nginx/upstream.conf'
     fi
+
+    # Clean up multi empty lines with one.
+    sed -i '/^$/N;/^\n$/D' /etc/nginx/defaults.conf
+    sed -i '/^$/N;/^\n$/D' /etc/nginx/nginx.conf
+    sed -i '/^$/N;/^\n$/D' /etc/nginx/preset.conf
 }
 
 sudo init_volumes

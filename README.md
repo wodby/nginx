@@ -93,6 +93,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_STATIC_OPEN_FILE_CACHE`            | `max=1000 inactive=20s`     |             |
 | `NGINX_TCP_NODELAY`                       | `on`                        |             |
 | `NGINX_TCP_NOPUSH`                        | `on`                        |             |
+| `NGINX_TRACK_UPLOADS`                     | `uploads 60s`               |             |
 | `NGINX_UNDERSCORES_IN_HEADERS`            | `off`                       |             |
 | `NGINX_UPLOAD_PROGRESS`                   | `uploads 1m`                |             |
 | `NGINX_USER`                              | `nginx`                     |             |
@@ -167,7 +168,6 @@ Additional environment variables for Drupal presets:
 | `NGINX_DRUPAL_ALLOW_XML_ENDPOINTS` |               |                               |
 | `NGINX_DRUPAL_FILE_PROXY_URL`      |               | e.g. `http://dev.example.com` |
 | `NGINX_DRUPAL_HIDE_HEADERS`        |               |                               |
-| `NGINX_DRUPAL_TRACK_UPLOADS`       | `uploads 60s` |                               |
 | `NGINX_DRUPAL_XMLRPC_SERVER_NAME`  |               | D6 and D7 only                |
 
 * Preset templates: [Drupal 8], [Drupal 7], [Drupal 6]

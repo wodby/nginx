@@ -124,11 +124,7 @@ This is the default preset.
 ### HTTP proxy (application server)
 
 * [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/http-proxy.conf.tmpl)
-* Usage: add the following environment variables
-    ```
-    NGINX_VHOST_PRESET=http-proxy
-    NGINX_BACKEND_HOST=[SPECIFY YOUR APP SERVER HOST]
-    ```
+* Usage: add `NGINX_VHOST_PRESET=http-proxy` and `NGINX_BACKEND_HOST=[host]` 
 
 Additional environment variables for HTTP proxy preset:
 
@@ -154,18 +150,12 @@ Additional environment variables for all php-based presets:
 #### PHP
 
 * [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
-* Usage: add the following environment variables
-    ```
-    NGINX_VHOST_PRESET=php
-    ```
+* Usage: add `NGINX_VHOST_PRESET=php`, optionally modify `NGINX_BACKEND_HOST`
 
 #### WordPress
 
 * [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
-* Usage: add the following environment variables  
-    ```
-    NGINX_VHOST_PRESET=wordpress
-    ```
+* Usage: add `NGINX_VHOST_PRESET=wordpress`, optionally modify `NGINX_BACKEND_HOST`  
 
 #### Drupal
 
@@ -180,12 +170,7 @@ Additional environment variables for Drupal presets:
 | `NGINX_DRUPAL_XMLRPC_SERVER_NAME`  |               | D6 and D7 only                |
 
 * Virtual host templates: [Drupal 8], [Drupal 7], [Drupal 6]
-* Usage: add the following environment variables depending on your Drupal version:
-    ```
-    NGINX_VHOST_PRESET=drupal8
-    NGINX_VHOST_PRESET=drupal7
-    NGINX_VHOST_PRESET=drupal6
-    ```
+* Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal8`, `drupal7` or `drupal6` depending your Drupal version
 
 [Drupal 8]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl
 [Drupal 7]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl

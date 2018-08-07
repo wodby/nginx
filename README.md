@@ -39,6 +39,7 @@ Supported tags and respective `Dockerfile` links:
 
 | Variable                                  | Default Value               | Description |
 | ----------------------------------------- | --------------------------- | ----------- |
+| `NGINX_ALLOW_ACCESS_HIDDEN_FILES`         |                             |             |
 | `NGINX_BACKEND_FAIL_TIMEOUT`              | `0`                         |             |
 | `NGINX_BACKEND_HOST`                      |                             |             |
 | `NGINX_BACKEND_PORT`                      |                             |             |

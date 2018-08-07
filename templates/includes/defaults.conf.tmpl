@@ -77,9 +77,11 @@ location ~ "^/pagespeed_static/" { }
 location ~ "^/ngx_pagespeed_beacon$" { }
 {{ end }}
 
+{{ if not (getenv "NGINX_ALLOW_ACCESS_HIDDEN_FILES") }};
 location ~ /\. {
     deny all;
 }
+{{ end }}
 
 error_page 500 502 503 504 /50x.html;
 location = /50x.html {

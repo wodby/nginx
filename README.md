@@ -111,7 +111,7 @@ Include pagespeed module [pre-built for Alpine](https://github.com/wodby/nginx-a
 
 ## Virtual hosts presets
 
-By default will be used `html` virtual host preset, you can change it via env var `$NGINX_VHOST_PRESET`. The list of available presets below,   
+By default will be used `html` virtual host preset, you can change it via env var `$NGINX_VHOST_PRESET`. The list of available presets:
 
 ### HTML
 

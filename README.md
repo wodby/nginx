@@ -90,7 +90,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_STATIC_OPEN_FILE_CACHE_ERRORS`     | `on`                        |             |
 | `NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES`   | `2`                         |             |
 | `NGINX_STATIC_OPEN_FILE_CACHE_VALID`      | `30s`                       |             |
-| `NGINX_STATIC_OPEN_FILE_CACHE`            | `max=1000 inactive=20s`     |             |
+| `NGINX_STATIC_OPEN_FILE_CACHE`            | `max=1000 inactive=30s`     |             |
 | `NGINX_TCP_NODELAY`                       | `on`                        |             |
 | `NGINX_TCP_NOPUSH`                        | `on`                        |             |
 | `NGINX_TRACK_UPLOADS`                     | `uploads 60s`               |             |

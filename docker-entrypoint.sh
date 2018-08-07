@@ -12,6 +12,26 @@ _gotpl() {
     fi
 }
 
+# Backwards compatibility for old env vars names.
+_backwards_compatibility() {
+    declare -A vars
+    # vars[DEPRECATED]="ACTUAL"
+    vars[NGINX_ALLOW_XML_ENDPOINTS]="NGINX_DRUPAL_ALLOW_XML_ENDPOINTS"
+    vars[NGINX_STATIC_CONTENT_ACCESS_LOG]="NGINX_STATIC_ACCESS_LOG"
+    vars[NGINX_STATIC_CONTENT_EXPIRES]="NGINX_STATIC_EXPIRES"
+    vars[NGINX_STATIC_CONTENT_OPEN_FILE_CACHE]="NGINX_STATIC_OPEN_FILE_CACHE"
+    vars[NGINX_STATIC_CONTENT_OPEN_FILE_CACHE_MIN_USES]="NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES"
+    vars[NGINX_STATIC_CONTENT_OPEN_FILE_CACHE_VALID]="NGINX_STATIC_OPEN_FILE_CACHE_VALID"
+    vars[NGINX_XMLRPC_SERVER_NAME]="NGINX_DRUPAL_XMLRPC_SERVER_NAME"
+
+    for i in "${!vars[@]}"; do
+        # Use value from old var if it's not empty and the new is.
+        if [[ -n "${!i}" && -z "${!vars[$i]}" ]]; then
+            export ${vars[$i]}="${!i}"
+        fi
+    done
+}
+
 process_templates() {
     _gotpl 'nginx.conf.tmpl' '/etc/nginx/nginx.conf'
     _gotpl 'vhost.conf.tmpl' '/etc/nginx/conf.d/vhost.conf'

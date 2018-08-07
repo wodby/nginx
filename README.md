@@ -10,10 +10,8 @@
 * [Installed modules](#installed-modules)
 * [Virtual hosts presets](#virtual-hosts-presets)
     * [HTML](#html)
-    * [PHP](#php)
-    * [Drupal](#drupal)
-    * [WordPress](#wordpress)
     * [HTTP proxy (application server)](#http-proxy-application-server)
+    * [PHP-based (FastCGI)](#php-based-fastcgi)
 * [Customization](#customization)
 * [Orchestration actions](#orchestration-actions)
 
@@ -36,72 +34,74 @@ Supported tags and respective `Dockerfile` links:
 
 ## Environment Variables
 
-| Variable                                  | Default Value               | Description                      |
-| ----------------------------------------- | --------------------------- | -----------                      |
-| `NGINX_BACKEND_FAIL_TIMEOUT`              | `0`                         |                                  |
-| `NGINX_BACKEND_HOST`                      |                             | Default value varies for presets |
-| `NGINX_BACKEND_PORT`                      |                             | Default value varies for presets |
-| `NGINX_CLIENT_BODY_BUFFER_SIZE`           | `16k`                       |                                  |
-| `NGINX_CLIENT_BODY_TIMEOUT`               | `60s`                       |                                  |
-| `NGINX_CLIENT_HEADER_BUFFER_SIZE`         | `4k`                        |                                  |
-| `NGINX_CLIENT_HEADER_TIMEOUT`             | `60s`                       |                                  |
-| `NGINX_CLIENT_MAX_BODY_SIZE`              | `32m`                       |                                  |
-| `NGINX_CONF_INCLUDE`                      | `conf.d/*.conf`             |                                  |
-| `NGINX_DISABLE_CACHING`                   |                             |                                  |
-| `NGINX_ERROR_LOG_LEVEL`                   | `error`                     |                                  |
-| `NGINX_ERROR_PAGE_403`                    |                             |                                  |
-| `NGINX_ERROR_PAGE_404`                    |                             |                                  |
-| `NGINX_GZIP_BUFFERS`                      | `16 8k`                     |                                  |
-| `NGINX_GZIP_COMP_LEVEL`                   | `1`                         |                                  |
-| `NGINX_GZIP_DISABLE`                      | `msie6`                     |                                  |
-| `NGINX_GZIP_HTTP_VERSION`                 | `1.1`                       |                                  |
-| `NGINX_GZIP_MIN_LENGTH`                   | `20`                        |                                  |
-| `NGINX_GZIP_PROXIED`                      | `any`                       |                                  |
-| `NGINX_GZIP_VARY`                         | `on`                        |                                  |
-| `NGINX_GZIP`                              | `on`                        |                                  |
-| `NGINX_HTTP2`                             |                             |                                  |
-| `NGINX_INDEX_FILE`                        | `index.html index.htm`      | Default value varies for presets |
-| `NGINX_KEEPALIVE_REQUESTS`                | `100`                       |                                  |
-| `NGINX_KEEPALIVE_TIMEOUT`                 | `75s`                       |                                  |
-| `NGINX_LARGE_CLIENT_HEADER_BUFFERS`       | `8 16k`                     |                                  |
-| `NGINX_LOG_FORMAT_OVERRIDE`               |                             |                                  |
-| `NGINX_LOG_FORMAT_SHOW_REAL_IP`           |                             |                                  |
-| `NGINX_MULTI_ACCEPT`                      | `on`                        |                                  |
-| `NGINX_NO_DEFAULT_HEADERS`                |                             |                                  |
-| `NGINX_PAGESPEED_ENABLE_FILTERS`          |                             |                                  |
-| `NGINX_PAGESPEED_FILE_CACHE_PATH`         | `/var/cache/ngx_pagespeed/` |                                  |
-| `NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY` | `on`                        |                                  |
-| `NGINX_PAGESPEED_REWRITE_LEVEL`           | `CoreFilters`               |                                  |
-| `NGINX_PAGESPEED_STATIC_ASSET_PREFIX`     | `/pagespeed_static`         |                                  |
-| `NGINX_PAGESPEED`                         | `unplugged`                 |                                  |
-| `NGINX_RESET_TIMEDOUT_CONNECTION`         | `off`                       |                                  |
-| `NGINX_SEND_TIMEOUT`                      | `60s`                       |                                  |
-| `NGINX_SENDFILE`                          | `on`                        |                                  |
-| `NGINX_SERVER_EXTRA_CONF_FILEPATH`        |                             |                                  |
-| `NGINX_SERVER_ROOT`                       | `/var/www/html`             |                                  |
-| `NGINX_SERVER_NAME`                       | `default`                   |                                  |
-| `NGINX_SERVER_TOKENS`                     | `off`                       |                                  |
-| `NGINX_STATIC_ACCESS_LOG`                 | `off`                       |                                  |
-| `NGINX_STATIC_EXPIRES`                    | `7d`                        |                                  |
-| `NGINX_STATIC_MP4_BUFFER_SIZE`            | `1M`                        |                                  |
-| `NGINX_STATIC_MP4_MAX_BUFFER_SIZE`        | `5M`                        |                                  |
-| `NGINX_STATIC_OPEN_FILE_CACHE_ERRORS`     | `on`                        |                                  |
-| `NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES`   | `2`                         |                                  |
-| `NGINX_STATIC_OPEN_FILE_CACHE_VALID`      | `30s`                       |                                  |
-| `NGINX_STATIC_OPEN_FILE_CACHE`            | `max=1000 inactive=20s`     |                                  |
-| `NGINX_TCP_NODELAY`                       | `on`                        |                                  |
-| `NGINX_TCP_NOPUSH`                        | `on`                        |                                  |
-| `NGINX_UNDERSCORES_IN_HEADERS`            | `off`                       |                                  |
-| `NGINX_UPLOAD_PROGRESS`                   | `uploads 1m`                |                                  |
-| `NGINX_USER`                              | `nginx`                     |                                  |
-| `NGINX_VHOST_PRESET`                      | `html`                      |                                  |
-| `NGINX_WORKER_CONNECTIONS`                | `1024`                      |                                  |
-| `NGINX_WORKER_PROCESSES`                  | `auto`                      |                                  |
+| Variable                                  | Default Value               | Description |
+| ----------------------------------------- | --------------------------- | ----------- |
+| `NGINX_BACKEND_FAIL_TIMEOUT`              | `0`                         |             |
+| `NGINX_BACKEND_HOST`                      |                             |             |
+| `NGINX_BACKEND_PORT`                      |                             |             |
+| `NGINX_CLIENT_BODY_BUFFER_SIZE`           | `16k`                       |             |
+| `NGINX_CLIENT_BODY_TIMEOUT`               | `60s`                       |             |
+| `NGINX_CLIENT_HEADER_BUFFER_SIZE`         | `4k`                        |             |
+| `NGINX_CLIENT_HEADER_TIMEOUT`             | `60s`                       |             |
+| `NGINX_CLIENT_MAX_BODY_SIZE`              | `32m`                       |             |
+| `NGINX_CONF_INCLUDE`                      | `conf.d/*.conf`             |             |
+| `NGINX_DISABLE_CACHING`                   |                             |             |
+| `NGINX_ERROR_LOG_LEVEL`                   | `error`                     |             |
+| `NGINX_ERROR_PAGE_403`                    |                             |             |
+| `NGINX_ERROR_PAGE_404`                    |                             |             |
+| `NGINX_GZIP_BUFFERS`                      | `16 8k`                     |             |
+| `NGINX_GZIP_COMP_LEVEL`                   | `1`                         |             |
+| `NGINX_GZIP_DISABLE`                      | `msie6`                     |             |
+| `NGINX_GZIP_HTTP_VERSION`                 | `1.1`                       |             |
+| `NGINX_GZIP_MIN_LENGTH`                   | `20`                        |             |
+| `NGINX_GZIP_PROXIED`                      | `any`                       |             |
+| `NGINX_GZIP_VARY`                         | `on`                        |             |
+| `NGINX_GZIP`                              | `on`                        |             |
+| `NGINX_HTTP2`                             |                             |             |
+| `NGINX_INDEX_FILE`                        | `index.html index.htm`      |             |
+| `NGINX_KEEPALIVE_REQUESTS`                | `100`                       |             |
+| `NGINX_KEEPALIVE_TIMEOUT`                 | `75s`                       |             |
+| `NGINX_LARGE_CLIENT_HEADER_BUFFERS`       | `8 16k`                     |             |
+| `NGINX_LOG_FORMAT_OVERRIDE`               |                             |             |
+| `NGINX_LOG_FORMAT_SHOW_REAL_IP`           |                             |             |
+| `NGINX_MULTI_ACCEPT`                      | `on`                        |             |
+| `NGINX_NO_DEFAULT_HEADERS`                |                             |             |
+| `NGINX_PAGESPEED_ENABLE_FILTERS`          |                             |             |
+| `NGINX_PAGESPEED_FILE_CACHE_PATH`         | `/var/cache/ngx_pagespeed/` |             |
+| `NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY` | `on`                        |             |
+| `NGINX_PAGESPEED_REWRITE_LEVEL`           | `CoreFilters`               |             |
+| `NGINX_PAGESPEED_STATIC_ASSET_PREFIX`     | `/pagespeed_static`         |             |
+| `NGINX_PAGESPEED`                         | `unplugged`                 |             |
+| `NGINX_RESET_TIMEDOUT_CONNECTION`         | `off`                       |             |
+| `NGINX_SEND_TIMEOUT`                      | `60s`                       |             |
+| `NGINX_SENDFILE`                          | `on`                        |             |
+| `NGINX_SERVER_EXTRA_CONF_FILEPATH`        |                             |             |
+| `NGINX_SERVER_ROOT`                       | `/var/www/html`             |             |
+| `NGINX_SERVER_NAME`                       | `default`                   |             |
+| `NGINX_SERVER_TOKENS`                     | `off`                       |             |
+| `NGINX_STATIC_ACCESS_LOG`                 | `off`                       |             |
+| `NGINX_STATIC_EXPIRES`                    | `7d`                        |             |
+| `NGINX_STATIC_MP4_BUFFER_SIZE`            | `1M`                        |             |
+| `NGINX_STATIC_MP4_MAX_BUFFER_SIZE`        | `5M`                        |             |
+| `NGINX_STATIC_OPEN_FILE_CACHE_ERRORS`     | `on`                        |             |
+| `NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES`   | `2`                         |             |
+| `NGINX_STATIC_OPEN_FILE_CACHE_VALID`      | `30s`                       |             |
+| `NGINX_STATIC_OPEN_FILE_CACHE`            | `max=1000 inactive=20s`     |             |
+| `NGINX_TCP_NODELAY`                       | `on`                        |             |
+| `NGINX_TCP_NOPUSH`                        | `on`                        |             |
+| `NGINX_UNDERSCORES_IN_HEADERS`            | `off`                       |             |
+| `NGINX_UPLOAD_PROGRESS`                   | `uploads 1m`                |             |
+| `NGINX_USER`                              | `nginx`                     |             |
+| `NGINX_VHOST_PRESET`                      | `html`                      |             |
+| `NGINX_WORKER_CONNECTIONS`                | `1024`                      |             |
+| `NGINX_WORKER_PROCESSES`                  | `auto`                      |             |
 
 Static files extension defined via the regex and can be overriden via the env var `NGINX_STATIC_EXT_REGEX`, default:
 ```
 css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf
 ```
+
+Some environment variables can be overridden or added per [preset](#virtual-hosts-presets). 
 
 ## Installed modules
 
@@ -123,69 +123,6 @@ This is the default preset.
 NGINX_VHOST_PRESET=html
 ```
 
-### Drupal
-
-Uses FastCGI upstream.
-
-Additional environment variables for customization:
-
-| Variable                           | Default Value               | Description                   |
-| ---------------------------------- | --------------------------- | -----------                   |
-| `NGINX_DRUPAL_ALLOW_XML_ENDPOINTS` |                             |                               |
-| `NGINX_DRUPAL_FILE_PROXY_URL`      |                             | e.g. `http://dev.example.com` |
-| `NGINX_DRUPAL_HIDE_HEADERS`        |                             |                               |
-| `NGINX_DRUPAL_TRACK_UPLOADS`       | `uploads 60s`               |                               |
-| `NGINX_DRUPAL_XMLRPC_SERVER_NAME`  |                             | Drupal 6 only                 |
-
-#### Drupal 8  
-
-[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl)
-  
-```
-NGINX_VHOST_PRESET=drupal8
-NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
-```
-
-#### Drupal 7 
-
-[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl)
-  
-```
-NGINX_VHOST_PRESET=drupal7
-NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
-```
-
-#### Drupal 6
-
-[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal6.conf.tmpl)
-  
-```
-NGINX_VHOST_PRESET=drupal6
-NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
-```
-
-### WordPress
-
-Uses FastCGI upstream.
-
-[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
-  
-```
-NGINX_VHOST_PRESET=wordpress
-NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
-```
-
-### PHP
-
-Uses FastCGI upstream.
-
-[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
-
-```
-NGINX_VHOST_PRESET=php
-NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
-```
-
 ### HTTP proxy (application server)
 
 [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/http-proxy.conf.tmpl)
@@ -193,6 +130,75 @@ NGINX_BACKEND_HOST=[SPECIFY YOUR PHP-FPM HOST]
 ```
 NGINX_VHOST_PRESET=http-proxy
 NGINX_BACKEND_HOST=[SPECIFY YOUR APP SERVER HOST]
+```
+
+| Variable             | Default Value | Description |
+| -------------------- | ------------- | ----------- |
+| `NGINX_BACKEND_HOST` |               |             |
+| `NGINX_BACKEND_PORT` | `8080`        |             |
+
+### PHP-based (FastCGI)
+
+| Variable                           | Default Value | Description |
+| ---------------------------------- | ------------- | ----------- |
+| `NGINX_BACKEND_HOST`               | `php`         |             |
+| `NGINX_BACKEND_PORT`               | `9000`        |             |
+| `NGINX_FASTCGI_BUFFER_SIZE`        | `32k`         |             |
+| `NGINX_FASTCGI_BUFFERS`            | `16 32k`      |             |
+| `NGINX_FASTCGI_INTERCEPT_ERRORS`   | `on`          |             |
+| `NGINX_FASTCGI_READ_TIMEOUT`       | `900`         |             |
+| `NGINX_INDEX_FILE`                 | `index.php`   |             |
+
+#### WordPress
+
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
+  
+```
+NGINX_VHOST_PRESET=wordpress
+```
+
+#### PHP
+
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
+
+```
+NGINX_VHOST_PRESET=php
+```
+
+#### Drupal
+
+Additional environment variables for customization:
+
+| Variable                           | Default Value | Description                   |
+| ---------------------------------- | ------------- | ----------------------------- |
+| `NGINX_DRUPAL_ALLOW_XML_ENDPOINTS` |               |                               |
+| `NGINX_DRUPAL_FILE_PROXY_URL`      |               | e.g. `http://dev.example.com` |
+| `NGINX_DRUPAL_HIDE_HEADERS`        |               |                               |
+| `NGINX_DRUPAL_TRACK_UPLOADS`       | `uploads 60s` |                               |
+| `NGINX_DRUPAL_XMLRPC_SERVER_NAME`  |               | D6 and D7 only                |
+
+##### Drupal 8  
+
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl)
+  
+```
+NGINX_VHOST_PRESET=drupal8
+```
+
+##### Drupal 7 
+
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl)
+  
+```
+NGINX_VHOST_PRESET=drupal7
+```
+
+##### Drupal 6
+
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/drupal6.conf.tmpl)
+  
+```
+NGINX_VHOST_PRESET=drupal6
 ```
 
 ## Customization

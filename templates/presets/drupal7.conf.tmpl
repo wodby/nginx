@@ -141,9 +141,9 @@ location ~* ^/update.php {
 }
 
 location = /xmlrpc.php {
-    {{ if getenv "NGINX_XMLRPC_SERVER_NAME" "" }}
+    {{ if getenv "NGINX_DRUPAL_XMLRPC_SERVER_NAME" "" }}
     include fastcgi.conf;
-    fastcgi_param  SERVER_NAME {{ getenv "NGINX_XMLRPC_SERVER_NAME" }};
+    fastcgi_param  SERVER_NAME {{ getenv "NGINX_DRUPAL_XMLRPC_SERVER_NAME" }};
     {{ end }}
     fastcgi_pass php;
 }

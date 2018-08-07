@@ -12,6 +12,9 @@
     * [HTML](#html)
     * [HTTP proxy (application server)](#http-proxy-application-server)
     * [PHP-based (FastCGI)](#php-based-fastcgi)
+        * [PHP](#php)
+        * [WordPress](#wordpress)
+        * [Drupal](#drupal)
 * [Customization](#customization)
 * [Orchestration actions](#orchestration-actions)
 
@@ -149,20 +152,20 @@ NGINX_BACKEND_HOST=[SPECIFY YOUR APP SERVER HOST]
 | `NGINX_FASTCGI_READ_TIMEOUT`       | `900`         |             |
 | `NGINX_INDEX_FILE`                 | `index.php`   |             |
 
-#### WordPress
-
-[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
-  
-```
-NGINX_VHOST_PRESET=wordpress
-```
-
 #### PHP
 
 [Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
 
 ```
 NGINX_VHOST_PRESET=php
+```
+
+#### WordPress
+
+[Virtual host template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
+  
+```
+NGINX_VHOST_PRESET=wordpress
 ```
 
 #### Drupal

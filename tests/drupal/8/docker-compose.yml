@@ -8,6 +8,7 @@ services:
       NGINX_VHOST_PRESET: drupal8
       NGINX_SERVER_EXTRA_CONF_FILEPATH: /var/www/html/server.conf
       NGINX_ALLOW_XML_ENDPOINTS: 1
+      NGINX_LOG_FORMAT_OVERRIDE: '$$http_x_forwarded_for - $$remote_user [$$time_local] "$$request" $$status $$body_bytes_sent "$$http_referer" "$$http_user_agent"'
     depends_on:
       - drupal
     volumes:

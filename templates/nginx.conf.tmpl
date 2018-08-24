@@ -17,10 +17,10 @@ http {
                                         '"$http_referer" "$http_user_agent"';
 
 {{ if getenv "NGINX_LOG_FORMAT_OVERRIDE" }}
-    log_format                  combined '{{ getenv "NGINX_LOG_FORMAT_OVERRIDE" }}';
+    log_format                  custom '{{ getenv "NGINX_LOG_FORMAT_OVERRIDE" }}';
 {{ end }}
 
-    access_log                  /proc/self/fd/1 {{ if getenv "NGINX_LOG_FORMAT_SHOW_REAL_IP" }}real_ip{{ else }}combined{{ end }};
+    access_log                  /proc/self/fd/1 {{ if getenv "NGINX_LOG_FORMAT_SHOW_REAL_IP" }}real_ip{{ else }}custom{{ end }};
 
     send_timeout                {{ getenv "NGINX_SEND_TIMEOUT" "60s" }};
     sendfile                    {{ getenv "NGINX_SENDFILE" "on" }};

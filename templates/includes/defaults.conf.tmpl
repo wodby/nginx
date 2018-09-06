@@ -4,10 +4,6 @@ add_header Pragma "no-cache";
 add_header Cache-Control "no-store, no-cache, must-revalicate, post-check=0 pre-check=0";
 {{ end }}
 
-if (!-d $request_filename) {
-    rewrite ^/(.+)/$ /$1 permanent;
-}
-
 location ~* ^/.well-known/ {
     allow all;
 }

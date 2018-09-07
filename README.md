@@ -122,7 +122,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_geoip]               |           |
 | [http_gunzip]              |           |
 | [http_gzip_static]         |           |
-| [http_image_filter_module] |           |
+| [http_image_filter]        |           |
 | [http_mp4]                 |           |
 | [http_random_index]        |           |
 | [http_realip]              |           |
@@ -132,11 +132,11 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_stub_status]         |           |
 | [http_sub]                 |           |
 | [http_v2]                  |           |
-| [http_xslt_module]         |           |
+| [http_xslt]                |           |
 | [mail_ssl]                 |           |
 | [ngxpagespeed]             | 1.13.35.2 |
 | [ngxuploadprogress]        | 0.9.1     |
-| [stream_geoip_module]      |           |
+| [stream_geoip]             |           |
 | [stream_realip]            |           |
 | [stream_ssl]               |           |
 | [stream_ssl_preread]       |           |

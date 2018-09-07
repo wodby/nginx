@@ -15,6 +15,8 @@
         * [PHP](#php)
         * [WordPress](#wordpress)
         * [Drupal](#drupal)
+    * [Custom preset](#custom-preset)
+    * [No preset](#no-preset)
 * [Customization](#customization)
 * [Orchestration actions](#orchestration-actions)
 
@@ -80,8 +82,8 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_SEND_TIMEOUT`                      | `60s`                       |             |
 | `NGINX_SENDFILE`                          | `on`                        |             |
 | `NGINX_SERVER_EXTRA_CONF_FILEPATH`        |                             |             |
-| `NGINX_SERVER_ROOT`                       | `/var/www/html`             |             |
 | `NGINX_SERVER_NAME`                       | `default`                   |             |
+| `NGINX_SERVER_ROOT`                       | `/var/www/html`             |             |
 | `NGINX_SERVER_TOKENS`                     | `off`                       |             |
 | `NGINX_STATIC_ACCESS_LOG`                 | `off`                       |             |
 | `NGINX_STATIC_EXPIRES`                    | `7d`                        |             |
@@ -97,6 +99,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_UNDERSCORES_IN_HEADERS`            | `off`                       |             |
 | `NGINX_UPLOAD_PROGRESS`                   | `uploads 1m`                |             |
 | `NGINX_USER`                              | `nginx`                     |             |
+| `NGINX_VHOST_NO_DEFAULTS`                 |                             |             |
 | `NGINX_VHOST_PRESET`                      | `html`                      |             |
 | `NGINX_WORKER_CONNECTIONS`                | `1024`                      |             |
 | `NGINX_WORKER_PROCESSES`                  | `auto`                      |             |
@@ -177,11 +180,21 @@ Additional environment variables for Drupal presets:
 [Drupal 7]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl
 [Drupal 6]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal6.conf.tmpl
 
+#### Custom preset
+
+You can use a custom by preset by mounting your preset to `/etc/gotpl/presets/[my-preset-name].conf.tmpl` and setting `$NGINX_VHOST_PRESET=[my-preset-name]`.
+
+#### No preset
+
+To disable presets set `$NGINX_VHOST_PRESET=""`
+
 ## Customization
 
-* If you can't customize a config via environment variables, you can completely override include of the virtual host config by overriding `NGINX_CONF_INCLUDE`, it will be included in `nginx.conf`.
-* If you want to keep virtual host config but need to add extra locations use `NGINX_SERVER_EXTRA_CONF_FILEPATH`, the specified file will be included at the end of virtual host config (`server` context)
-* Could not find your preset? Contributions are welcome! 
+* Disable default recommended headers via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
+* Disable default rules included in virtual host via `$NGINX_VHOST_NO_DEFAULTS` 
+* Add extra locations via `$NGINX_SERVER_EXTRA_CONF_FILEPATH=/filepath/to/nginx-locations.conf`, the file will be included at the end of virtual host config (`server` context)
+* Define [custom preset](#custom-preset)
+* Completely override include of the virtual host config by overriding `NGINX_CONF_INCLUDE`, it will be included in `nginx.conf`
 
 ## Orchestration actions
 

@@ -62,15 +62,15 @@ http {
     pagespeed RewriteLevel          {{ getenv "NGINX_PAGESPEED_REWRITE_LEVEL" "CoreFilters" }};
     pagespeed StaticAssetPrefix     {{ getenv "NGINX_PAGESPEED_STATIC_ASSET_PREFIX" "/pagespeed_static" }};
 
-{{ if getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }}
+    {{ if getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }}
     pagespeed EnableFilters         {{ getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }};
-{{ end }}
+    {{ end }}
 
-{{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
+    {{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
     add_header                  X-XSS-Protection '1; mode=block';
     add_header                  X-Frame-Options SAMEORIGIN;
     add_header                  X-Content-Type-Options nosniff;
-{{ end }}
+    {{ end }}
 
     map $uri $no_slash_uri {
         ~^/(?<no_slash>.*)$ $no_slash;

@@ -34,24 +34,21 @@ _backwards_compatibility() {
 }
 
 process_templates() {
-    _gotpl 'nginx.conf.tmpl' '/etc/nginx/nginx.conf'
-    _gotpl 'vhost.conf.tmpl' '/etc/nginx/conf.d/vhost.conf'
+    _gotpl "nginx.conf.tmpl" "/etc/nginx/nginx.conf"
+    _gotpl "vhost.conf.tmpl" "/etc/nginx/conf.d/vhost.conf"
 
-    _gotpl 'includes/defaults.conf.tmpl' '/etc/nginx/defaults.conf'
-    _gotpl 'includes/fastcgi.conf.tmpl' '/etc/nginx/fastcgi.conf'
+    _gotpl "includes/defaults.conf.tmpl" "/etc/nginx/defaults.conf"
+    _gotpl "includes/fastcgi.conf.tmpl" "/etc/nginx/fastcgi.conf"
 
-    _gotpl "presets/${NGINX_VHOST_PRESET}.conf.tmpl" '/etc/nginx/preset.conf'
+    if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
+        _gotpl "presets/${NGINX_VHOST_PRESET}.conf.tmpl" "/etc/nginx/preset.conf"
 
-    if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal8|drupal7|drupal6|wordpress|php$ ]]; then
-        _gotpl 'includes/upstream.php.conf.tmpl' '/etc/nginx/upstream.conf'
-    elif [[ "${NGINX_VHOST_PRESET}" == "http-proxy" ]]; then
-        _gotpl 'includes/upstream.http-proxy.conf.tmpl' '/etc/nginx/upstream.conf'
+        if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal8|drupal7|drupal6|wordpress|php$ ]]; then
+            _gotpl "includes/upstream.php.conf.tmpl" "/etc/nginx/upstream.conf"
+        elif [[ "${NGINX_VHOST_PRESET}" == "http-proxy" ]]; then
+            _gotpl "includes/upstream.http-proxy.conf.tmpl" "/etc/nginx/upstream.conf"
+        fi
     fi
-
-    # Clean up multi empty lines with one.
-    sed -i '/^$/N;/^\n$/D' /etc/nginx/defaults.conf
-    sed -i '/^$/N;/^\n$/D' /etc/nginx/nginx.conf
-    sed -i '/^$/N;/^\n$/D' /etc/nginx/preset.conf
 }
 
 sudo init_volumes
@@ -59,7 +56,7 @@ sudo init_volumes
 process_templates
 exec_init_scripts
 
-if [[ "${1}" == 'make' ]]; then
+if [[ "${1}" == "make" ]]; then
     exec "${@}" -f /usr/local/bin/actions.mk
 else
     exec $@

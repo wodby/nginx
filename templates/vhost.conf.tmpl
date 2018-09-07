@@ -6,6 +6,11 @@ server {
 
     root {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }};
 
+    {{ if getenv "NGINX_VHOST_PRESET" }}
     include preset.conf;
+    {{ end }}
+
+    {{ if not (getenv "NGINX_VHOST_NO_DEFAULTS") }}
     include defaults.conf;
+    {{ end }}
 }

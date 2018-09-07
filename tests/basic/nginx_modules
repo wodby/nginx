@@ -18,7 +18,7 @@ http_v2
 http_xslt
 mail_ssl
 ngxpagespeed
-ngxuploadprogress 
+ngxuploadprogress
 stream_geoip
 stream_realip
 stream_ssl

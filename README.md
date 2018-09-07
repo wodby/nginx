@@ -7,7 +7,7 @@
 
 * [Docker images](#docker-images)
 * [Environment variables](#environment-variables)
-* [Modules](#modules)
+* [Nginx modules](#nginx-modules)
 * [Virtual hosts presets](#virtual-hosts-presets)
     * [HTML](#html)
     * [HTTP proxy (application server)](#http-proxy-application-server)
@@ -111,9 +111,35 @@ css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv
 
 Some environment variables can be overridden or added per [preset](#virtual-hosts-presets). 
 
-## Modules
+## Nginx modules
 
-The list of installed modules can be found [here](https://github.com/wodby/nginx/blob/master/tests/basic/nginx_modules) 
+| Name                       | Version   |
+| -------------------------- | --------- |
+| [http_addition]            |           |
+| [http_auth_request]        |           |
+| [http_dav]                 |           |
+| [http_flv]                 |           |
+| [http_geoip]               |           |
+| [http_gunzip]              |           |
+| [http_gzip_static]         |           |
+| [http_image_filter_module] |           |
+| [http_mp4]                 |           |
+| [http_random_index]        |           |
+| [http_realip]              |           |
+| [http_secure_link]         |           |
+| [http_slice]               |           |
+| [http_ssl]                 |           |
+| [http_stub_status]         |           |
+| [http_sub]                 |           |
+| [http_v2]                  |           |
+| [http_xslt_module]         |           |
+| [mail_ssl]                 |           |
+| [ngxpagespeed]             | 1.13.35.2 |
+| [ngxuploadprogress]        | 0.9.1     |
+| [stream_geoip_module]      |           |
+| [stream_realip]            |           |
+| [stream_ssl]               |           |
+| [stream_ssl_preread]       |           |
 
 ## Virtual hosts presets
 
@@ -215,3 +241,29 @@ default params values:
     is_hash 0
     branch ""    
 ```
+
+[http_addition]: http://nginx.org/en/docs/http/ngx_http_addition_module.html
+[http_auth_request]: http://nginx.org/en/docs/http/ngx_http_auth_request_module.html
+[http_dav]: http://nginx.org/en/docs/http/ngx_http_dav_module.html
+[http_flv]: http://nginx.org/en/docs/http/ngx_http_flv_module.html
+[http_geoip]: http://nginx.org/en/docs/http/ngx_http_geoip_module.html
+[http_gunzip]: http://nginx.org/en/docs/http/ngx_http_gunzip_module.html
+[http_gzip_static]: http://nginx.org/en/docs/http/ngx_http_gzip_static_module.html
+[http_image_filter]: http://nginx.org/en/docs/http/ngx_http_image_filter_module.html
+[http_mp4]: http://nginx.org/en/docs/http/ngx_http_mp4_module.html
+[http_random_index]: http://nginx.org/en/docs/http/ngx_http_random_index_module.html
+[http_realip]: http://nginx.org/en/docs/http/ngx_http_realip_module.html
+[http_secure_link]: http://nginx.org/en/docs/http/ngx_http_secure_link_module.html
+[http_slice]: http://nginx.org/en/docs/http/ngx_http_slice_module.html
+[http_ssl]: http://nginx.org/en/docs/http/ngx_http_ssl_module.html
+[http_stub_status]: http://nginx.org/en/docs/http/ngx_http_stub_status_module.html
+[http_sub]: http://nginx.org/en/docs/http/ngx_http_sub_module.html
+[http_v2]: http://nginx.org/en/docs/http/ngx_http_v2_module.html
+[http_xslt]: http://nginx.org/en/docs/http/ngx_http_xslt_module.html
+[mail_ssl]: http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html
+[ngxpagespeed]: https://github.com/apache/incubator-pagespeed-ngx
+[ngxuploadprogress]: https://github.com/masterzen/nginx-upload-progress-module
+[stream_geoip]: http://nginx.org/en/docs/stream/ngx_stream_geoip_module.html
+[stream_realip]: http://nginx.org/en/docs/stream/ngx_stream_realip_module.html
+[stream_ssl]: http://nginx.org/en/docs/stream/ngx_stream_ssl_module.html
+[stream_ssl_preread]: http://nginx.org/en/docs/stream/ngx_stream_ssl_preread_module.html

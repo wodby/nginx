@@ -63,6 +63,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_GZIP_PROXIED`                      | `any`                       |             |
 | `NGINX_GZIP_VARY`                         | `on`                        |             |
 | `NGINX_GZIP`                              | `on`                        |             |
+| `NGINX_HIDE_50x_ERRORS`                   |                             |             |
 | `NGINX_HTTP2`                             |                             |             |
 | `NGINX_INDEX_FILE`                        | `index.html index.htm`      |             |
 | `NGINX_KEEPALIVE_REQUESTS`                | `100`                       |             |

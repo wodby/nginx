@@ -160,6 +160,8 @@ RUN set -ex; \
         echo '/usr/sbin/nginx' ; \
     } | tee /etc/sudoers.d/wodby; \
     \
+    # Remove nginx mentions from default error page.
+    sed '/nginx/d' /usr/share/nginx/html/50x.html; \
     # Cleanup
     apk del --purge .nginx-build-deps; \
     rm -rf /tmp/*; \

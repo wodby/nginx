@@ -20,17 +20,17 @@ echo "Checking Drupal endpoints"
 echo -n "Checking / page... "
 nginx_exec curl -I "localhost" | grep '302 Found'
 echo -n "authorize.php...   "
-nginx_exec curl -I "localhost/core/authorize.php" | grep '500 Internal Server Error'
+nginx_exec curl -I "localhost/core/authorize.php" | grep '500 Service unavailable'
 echo -n "install.php...     "
 nginx_exec curl -I "localhost/core/install.php" | grep '200 OK'
 echo -n "statistics.php...  "
-nginx_exec curl -I "localhost/core/modules/statistics/statistics.php" | grep '500 Internal Server Error'
+nginx_exec curl -I "localhost/core/modules/statistics/statistics.php" | grep '500 Service unavailable'
 echo -n "cron...            "
 nginx_exec curl -I "localhost/cron" | grep '302 Found'
 echo -n "index.php...       "
 nginx_exec curl -I "localhost/index.php" | grep '302 Found'
 echo -n "update.php...      "
-nginx_exec curl -I "localhost/update.php" | grep '500 Internal Server Error'
+nginx_exec curl -I "localhost/update.php" | grep '500 Service unavailable'
 echo -n ".htaccess...       "
 nginx_exec curl -I "localhost/.htaccess" | grep '404 Not Found'
 echo -n "favicon.ico...     "

@@ -49,6 +49,8 @@ process_templates() {
             _gotpl "includes/upstream.http-proxy.conf.tmpl" "/etc/nginx/upstream.conf"
         fi
     fi
+
+    _gotpl "50x.html.tmpl" "/usr/share/nginx/html/50x.html"
 }
 
 sudo init_volumes

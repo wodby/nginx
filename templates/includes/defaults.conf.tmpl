@@ -82,16 +82,25 @@ location ~ /\. {
 {{ if getenv "NGINX_HIDE_50x_ERRORS" }}
 error_page 500 502 503 504 /50x.html;
 location = /50x.html {
-    root   /usr/share/nginx/html;
+    root /usr/share/nginx/html;
+    internal;
 }
 {{ end }}
 
 {{ if getenv "NGINX_ERROR_PAGE_403" }}
-error_page 403 {{ getenv "NGINX_ERROR_PAGE_403" }};
+error_page 403 /403.html;
+location = /403.html {
+    root {{ getenv "NGINX_ERROR_PAGE_403" }};
+    internal;
+}
 {{ end }}
 
 {{ if getenv "NGINX_ERROR_PAGE_404" }}
-error_page 404 {{ getenv "NGINX_ERROR_PAGE_404" }};
+error_page 404 /404.html;
+location = /404.html {
+    root {{ getenv "NGINX_ERROR_PAGE_404" }};
+    internal;
+}
 {{ end }}
 
 {{ if getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }}

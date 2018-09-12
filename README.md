@@ -54,8 +54,8 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_DISABLE_CACHING`                   |                             |             |
 | `NGINX_ERROR_LOG_LEVEL`                   | `error`                     |             |
 | `NGINX_ERROR_MESSAGE_50x`                 |                             |             |
-| `NGINX_ERROR_PAGE_403`                    |                             |             |
-| `NGINX_ERROR_PAGE_404`                    |                             |             |
+| `NGINX_ERROR_403_URI`                     |                             |             |
+| `NGINX_ERROR_404_URI`                     |                             |             |
 | `NGINX_GZIP_BUFFERS`                      | `16 8k`                     |             |
 | `NGINX_GZIP_COMP_LEVEL`                   | `1`                         |             |
 | `NGINX_GZIP_DISABLE`                      | `msie6`                     |             |

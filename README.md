@@ -52,10 +52,10 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_CLIENT_MAX_BODY_SIZE`              | `32m`                       |             |
 | `NGINX_CONF_INCLUDE`                      | `conf.d/*.conf`             |             |
 | `NGINX_DISABLE_CACHING`                   |                             |             |
-| `NGINX_ERROR_LOG_LEVEL`                   | `error`                     |             |
-| `NGINX_ERROR_MESSAGE_50x`                 |                             |             |
 | `NGINX_ERROR_403_URI`                     |                             |             |
 | `NGINX_ERROR_404_URI`                     |                             |             |
+| `NGINX_ERROR_LOG_LEVEL`                   | `error`                     |             |
+| `NGINX_ERROR_MESSAGE_50x`                 |                             |             |
 | `NGINX_GZIP_BUFFERS`                      | `16 8k`                     |             |
 | `NGINX_GZIP_COMP_LEVEL`                   | `1`                         |             |
 | `NGINX_GZIP_DISABLE`                      | `msie6`                     |             |
@@ -80,6 +80,8 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_PAGESPEED_REWRITE_LEVEL`           | `CoreFilters`               |             |
 | `NGINX_PAGESPEED_STATIC_ASSET_PREFIX`     | `/pagespeed_static`         |             |
 | `NGINX_PAGESPEED`                         | `unplugged`                 |             |
+| `NGINX_REAL_IP_HEADER`                    | `X-Real-IP`                 |             |
+| `NGINX_REAL_IP_RECURSIVE`                 | `off`                       |             |
 | `NGINX_RESET_TIMEDOUT_CONNECTION`         | `off`                       |             |
 | `NGINX_SEND_TIMEOUT`                      | `60s`                       |             |
 | `NGINX_SENDFILE`                          | `on`                        |             |
@@ -87,6 +89,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_SERVER_NAME`                       | `default`                   |             |
 | `NGINX_SERVER_ROOT`                       | `/var/www/html`             |             |
 | `NGINX_SERVER_TOKENS`                     | `off`                       |             |
+| `NGINX_SET_REAL_IP_FROM`                  |                             |             |
 | `NGINX_STATIC_ACCESS_LOG`                 | `off`                       |             |
 | `NGINX_STATIC_EXPIRES`                    | `7d`                        |             |
 | `NGINX_STATIC_MP4_BUFFER_SIZE`            | `1M`                        |             |

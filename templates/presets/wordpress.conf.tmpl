@@ -2,7 +2,12 @@ index index.php;
 
 include fastcgi.conf;
 
-add_header Cache-Control "store, must-revalidate, post-check=0, pre-check=0";
+{{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
+add_header  X-XSS-Protection '1; mode=block';
+add_header  X-Frame-Options SAMEORIGIN;
+add_header  X-Content-Type-Options nosniff;
+add_header  Cache-Control "store, must-revalidate, post-check=0, pre-check=0";
+{{ end }}
 
 location = /readme.html {
     return 404;

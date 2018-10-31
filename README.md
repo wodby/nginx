@@ -193,6 +193,7 @@ Additional environment variables for all php-based presets:
 
 * [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
 * Usage: add `NGINX_VHOST_PRESET=wordpress`, optionally modify `NGINX_BACKEND_HOST`  
+* Access to `*.txt` files allowed only if they are located in uploads directory
 
 #### Drupal
 

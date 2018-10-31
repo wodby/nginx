@@ -90,7 +90,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_SERVER_ROOT`                       | `/var/www/html`             |             |
 | `NGINX_SERVER_TOKENS`                     | `off`                       |             |
 | `NGINX_SET_REAL_IP_FROM`                  |                             |             |
-| `NGINX_STATIC_404_INDEX_REDIRECT`         |                             |             |
+| `NGINX_STATIC_404_TRY_INDEX`              |                             |             |
 | `NGINX_STATIC_ACCESS_LOG`                 | `off`                       |             |
 | `NGINX_STATIC_EXPIRES`                    | `7d`                        |             |
 | `NGINX_STATIC_MP4_BUFFER_SIZE`            | `1M`                        |             |

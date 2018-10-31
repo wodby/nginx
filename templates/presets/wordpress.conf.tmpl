@@ -42,7 +42,7 @@ location / {
             add_header Content-Encoding gzip;
         }
 
-        {{ if getenv "NGINX_STATIC_404_INDEX_REDIRECT" }}
+        {{ if getenv "NGINX_STATIC_404_TRY_INDEX" }}
         try_files $uri $uri/ /index.php?$args;
         {{ end }}
     }

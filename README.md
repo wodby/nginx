@@ -66,7 +66,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_GZIP`                              | `on`                        |             |
 | `NGINX_HIDE_50x_ERRORS`                   |                             |             |
 | `NGINX_HTTP2`                             |                             |             |
-| `NGINX_INDEX_FILE`                        | `index.html index.htm`      |             |
+| `NGINX_INDEX_FILE`                        | `index.html index.htm`      | Default may vary depending on a preset |
 | `NGINX_KEEPALIVE_REQUESTS`                | `100`                       |             |
 | `NGINX_KEEPALIVE_TIMEOUT`                 | `75s`                       |             |
 | `NGINX_LARGE_CLIENT_HEADER_BUFFERS`       | `8 16k`                     |             |
@@ -188,6 +188,7 @@ Additional environment variables for all php-based presets:
 
 * [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
 * Usage: add `NGINX_VHOST_PRESET=php`, optionally modify `NGINX_BACKEND_HOST`
+* `$NGINX_INDEX_FILE` set to `index.php` by default
 
 #### WordPress
 

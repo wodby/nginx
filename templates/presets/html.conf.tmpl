@@ -1,5 +1,5 @@
 {{ $static := (getenv "NGINX_STATIC_EXT_REGEX" "css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt") }}
-{{ $index := (getenv "NGINX_INDEX_FILE" "index.html index.htm") }}
+{{ $index := (getenv "NGINX_INDEX_FILE" "index.html") }}
 
 location / {
     location ~* ^.+\.(?:{{ $static }})$ {
@@ -23,5 +23,5 @@ location / {
 
     index {{ $index }};
 
-    try_files $uri $uri/ /index.html =404;
+    try_files $uri $uri/ /{{ $index }} =404;
 }

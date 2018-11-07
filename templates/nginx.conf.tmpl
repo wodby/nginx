@@ -14,13 +14,6 @@ http {
 
     {{ $access_log_format := "combined" }}
 
-    {{ if getenv "NGINX_LOG_FORMAT_SHOW_REAL_IP" }}
-    log_format                  real_ip '$http_x_real_ip - $remote_user [$time_local] '
-                                        '"$request" $status $body_bytes_sent '
-                                        '"$http_referer" "$http_user_agent"';
-    {{ $access_log_format := "real_ip" }}
-    {{ end }}
-
     {{ if getenv "NGINX_LOG_FORMAT_OVERRIDE" }}
     log_format                  custom '{{ getenv "NGINX_LOG_FORMAT_OVERRIDE" }}';
     {{ $access_log_format := "custom" }}

@@ -85,7 +85,8 @@ RUN set -ex; \
     tar -xzf "v${OWASP_CRS_VER}.tar.gz" -C /tmp; \
     mv "/tmp/owasp-modsecurity-crs-${OWASP_CRS_VER}" /usr/local/owasp-modsecurity-crs; \
     cp /usr/local/owasp-modsecurity-crs/crs-setup.conf.example /usr/local/owasp-modsecurity-crs/crs-setup.conf; \
-    echo "Include /etc/nginx/modsec/modsecurity.conf\r\nInclude /usr/local/owasp-modsecurity-crs/rules/*.conf" > /etc/nginx/main.conf;\
+    sed -i "s#SecRule REQUEST_COOKIES|#SecRule REQUEST_URI|REQUEST_COOKIES|#" /usr/local/owasp-modsecurity-crs/rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf; \
+    echo "Include /etc/nginx/modsec/modsecurity.conf\r\nInclude /usr/local/owasp-modsecurity-crs/crs-setup.conf\r\nInclude /usr/local/owasp-modsecurity-crs/rules/*.conf" > /etc/nginx/main.conf;\
     # Get ngx pagespeed module.
     git clone -b "v${NGX_PAGESPEED_VER}-stable" \
           --recurse-submodules \

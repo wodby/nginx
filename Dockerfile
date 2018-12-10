@@ -9,6 +9,7 @@ ENV NGINX_VER="${NGINX_VER}" \
     APP_ROOT="/var/www/html" \
     FILES_DIR="/mnt/files" \
     NGINX_VHOST_PRESET="html" \
+    MOD_SECURITY_VER="3.0.3" \
     OWASP_CRS_VER="3.1.0"
 
 RUN set -ex; \
@@ -65,7 +66,7 @@ RUN set -ex; \
         sed \
         curl \
         libmaxminddb-dev; \
-    git clone --depth 1 -b v3/master --single-branch https://github.com/SpiderLabs/ModSecurity /tmp/ModSecurity; \
+    git clone --depth 1 -b "v${MOD_SECURITY_VER}" --single-branch https://github.com/SpiderLabs/ModSecurity /tmp/ModSecurity; \
     cd /tmp/ModSecurity; \
     git submodule init;  \
     git submodule update; \
@@ -74,6 +75,8 @@ RUN set -ex; \
     make; \
     make install;  \
     mkdir -p /etc/nginx/modsec/; \
+    # Getting recommended settings
+    mv /tmp/ModSecurity/modsecurity.conf-recommended /etc/nginx/modsec/modsecurity.conf;  \
     cp unicode.mapping /etc/nginx/modsec/; \
     ln -s /usr/local/modsecurity/lib/* /usr/local/lib/; \
     git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git /tmp/ModSecurity-nginx; \
@@ -82,6 +85,7 @@ RUN set -ex; \
     tar -xzf "v${OWASP_CRS_VER}.tar.gz" -C /tmp; \
     mv "/tmp/owasp-modsecurity-crs-${OWASP_CRS_VER}" /usr/local/owasp-modsecurity-crs; \
     cp /usr/local/owasp-modsecurity-crs/crs-setup.conf.example /usr/local/owasp-modsecurity-crs/crs-setup.conf; \
+    echo "Include /etc/nginx/modsec/modsecurity.conf\r\nInclude /usr/local/owasp-modsecurity-crs/rules/*.conf" > /etc/nginx/main.conf;\
     # Get ngx pagespeed module.
     git clone -b "v${NGX_PAGESPEED_VER}-stable" \
           --recurse-submodules \
@@ -159,10 +163,6 @@ RUN set -ex; \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install; \
     mkdir -p /usr/share/nginx/modules; \
-    \
-    # Getting recommended settings
-    #wget -P /etc/nginx/modsec/ https://raw.githubusercontent.com/SpiderLabs/ModSecurity/v3/master/modsecurity.conf-recommended; \
-    mv /tmp/ModSecurity/modsecurity.conf-recommended /etc/nginx/modsec/modsecurity.conf;  \
     \
     install -g wodby -o wodby -d \
         "${APP_ROOT}" \

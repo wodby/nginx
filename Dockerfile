@@ -11,7 +11,7 @@ ENV NGINX_VER="${NGINX_VER}" \
     NGINX_VHOST_PRESET="html" \
     OWASP_CRS_VER="3.1.0"
 
-RUN set -e; \
+RUN set -ex; \
     \
     addgroup -S nginx; \
     adduser -S -D -H -h /var/cache/nginx -s /sbin/nologin -G nginx nginx; \

@@ -6,8 +6,8 @@ SecAction \
   nolog,\
   pass,\
   t:none,\
-  setvar:tx.inbound_anomaly_score_threshold={{ getenv "NGINX_MODSEC_ANOMALY_IN_THRESHOLD" "15" }},\
-  setvar:tx.outbound_anomaly_score_threshold={{ getenv "NGINX_MODSEC_ANOMALY_OUT_THRESHOLD" "10" }}"
+  setvar:tx.inbound_anomaly_score_threshold={{ getenv "NGINX_MODSEC_ANOMALY_IN_THRESHOLD" "7" }},\
+  setvar:tx.outbound_anomaly_score_threshold={{ getenv "NGINX_MODSEC_ANOMALY_OUT_THRESHOLD" "7" }}"
 
 {{ if or (eq (getenv "NGINX_VHOST_PRESET") "drupal8") (eq (getenv "NGINX_VHOST_PRESET") "drupal7") (eq (getenv "NGINX_VHOST_PRESET") "drupal6") }}
 SecAction \

@@ -35,7 +35,6 @@ _backwards_compatibility() {
 
 process_templates() {
     _backwards_compatibility
-
     _gotpl "nginx.conf.tmpl" "/etc/nginx/nginx.conf"
     _gotpl "vhost.conf.tmpl" "/etc/nginx/conf.d/vhost.conf"
 

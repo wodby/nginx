@@ -108,6 +108,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_VHOST_PRESET`                      | `html`                      |             |
 | `NGINX_WORKER_CONNECTIONS`                | `1024`                      |             |
 | `NGINX_WORKER_PROCESSES`                  | `auto`                      |             |
+| `NGINX_DISABLE_MODSECURITY`               |                             | To disable loading of Mod Security module |
 
 Static files extension defined via the regex and can be overriden via the env var `NGINX_STATIC_EXT_REGEX`, default:
 ```
@@ -139,12 +140,22 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_v2]                  |           |
 | [http_xslt]                |           |
 | [mail_ssl]                 |           |
+| [modsecurity]              | 3.0.3     |
 | [ngxpagespeed]             | 1.13.35.2 |
 | [ngxuploadprogress]        | 0.9.1     |
 | [stream_geoip]             |           |
 | [stream_realip]            |           |
 | [stream_ssl]               |           |
 | [stream_ssl_preread]       |           |
+## Mod Security 
+
+By Default , mod security module will be enabled with Owasp Core Rule set enabled for better protection. 
+Owasp Core Rule Set version 3.1.0
+* [Owasp Core Rule Set](https://github.com/SpiderLabs/owasp-modsecurity-crs/)
+We are also using the nginx connector provided for the mod security module.
+* [Nginx Mod Security Connector](https://github.com/SpiderLabs/ModSecurity-nginx)
+Mod security version 3.0.3
+* [Mod Security](https://github.com/SpiderLabs/ModSecurity)
 
 ## Virtual hosts presets
 
@@ -270,6 +281,7 @@ default params values:
 [http_v2]: http://nginx.org/en/docs/http/ngx_http_v2_module.html
 [http_xslt]: http://nginx.org/en/docs/http/ngx_http_xslt_module.html
 [mail_ssl]: http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html
+[modsecurity]: https://github.com/SpiderLabs/ModSecurity-nginx
 [ngxpagespeed]: https://github.com/apache/incubator-pagespeed-ngx
 [ngxuploadprogress]: https://github.com/masterzen/nginx-upload-progress-module
 [stream_geoip]: http://nginx.org/en/docs/stream/ngx_stream_geoip_module.html

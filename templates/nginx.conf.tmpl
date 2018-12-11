@@ -2,7 +2,7 @@ user                            {{ getenv "NGINX_USER" "nginx" }};
 daemon                          off;
 worker_processes                {{ getenv "NGINX_WORKER_PROCESSES" "auto" }};
 error_log                       /proc/self/fd/2 {{ getenv "NGINX_ERROR_LOG_LEVEL" "error" }};
-{{ if not ( getenv "NGINX_DISABLE_MODSECURITY") }}
+{{ if eq ( getenv "NGINX_DISABLE_MODSECURITY" "1") "0" }}
 load_module                     modules/ngx_http_modsecurity_module.so;
 {{ end }}
 events {

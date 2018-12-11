@@ -1,0 +1,47 @@
+Include /etc/nginx/modsec/modsecurity.conf
+
+SecAction \
+ "id:900110,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.inbound_anomaly_score_threshold={{ getenv "NGINX_MODSEC_ANOMALY_IN_THRESHOLD" "15" }},\
+  setvar:tx.outbound_anomaly_score_threshold={{ getenv "NGINX_MODSEC_ANOMALY_OUT_THRESHOLD" "10" }}"
+
+{{ if or (eq (getenv "NGINX_VHOST_PRESET") "drupal8") (eq (getenv "NGINX_VHOST_PRESET") "drupal7") (eq (getenv "NGINX_VHOST_PRESET") "drupal6") }}
+SecAction \
+ "id:900130,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.crs_exclusions_drupal=1,\
+  setvar:tx.crs_exclusions_wordpress=0,\
+  setvar:tx.crs_exclusions_nextcloud=0,\
+  setvar:tx.crs_exclusions_dokuwiki=0,\
+  setvar:tx.crs_exclusions_cpanel=0"
+{{ end }}
+
+{{ if (eq (getenv "NGINX_VHOST_PRESET") "wordpress") }}
+SecAction \
+ "id:900130,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.crs_exclusions_drupal=0,\
+  setvar:tx.crs_exclusions_wordpress=1,\
+  setvar:tx.crs_exclusions_nextcloud=0,\
+  setvar:tx.crs_exclusions_dokuwiki=0,\
+  setvar:tx.crs_exclusions_cpanel=0"
+{{ end }}
+
+{{ if getenv "NGINX_MODSEC_SETUP_RULES" }}
+Include {{ getenv "NGINX_MODSEC_SETUP_RULES" }}
+{{ end }}
+
+Include /usr/local/owasp-modsecurity-crs/crs-setup.conf
+
+Include /usr/local/owasp-modsecurity-crs/rules/*.conf
+

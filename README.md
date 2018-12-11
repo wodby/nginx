@@ -157,6 +157,16 @@ We are also using the nginx connector provided for the mod security module.
 Mod security version 3.0.3
 * [Mod Security](https://github.com/SpiderLabs/ModSecurity)
 
+
+Additional environment variables for ModSecurity fine tuning:
+
+| Variable                            | Default Value | Description |
+| ------------------------------------| ------------- | ----------- |
+| `NGINX_MODSEC_ANOMALY_IN_THRESHOLD` | `15`          | The anomaly detection for input. For fine tuning mod security performance  |
+| `NGINX_MODSEC_ANOMALY_OUT_THRESHOLD`| `10`          | The anomaly detection for output. |
+| `NGINX_MODSEC_SETUP_RULES`        |          | Location of setup rules to be loaded, this is supposed to contain exclusions   |
+
+
 ## Virtual hosts presets
 
 By default will be used `html` virtual host preset, you can change it via env var `$NGINX_VHOST_PRESET`. The list of available presets:

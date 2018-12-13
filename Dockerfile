@@ -70,7 +70,7 @@ RUN set -ex; \
     git submodule init;  \
     git submodule update; \
     ./build.sh; \
-    ./configure; \
+    ./configure --disable-doxygen-doc --disable-doxygen-html; \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install;  \
     mkdir -p /etc/nginx/modsec/; \

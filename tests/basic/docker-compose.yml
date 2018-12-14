@@ -7,4 +7,5 @@ services:
       - ./tests.sh:/usr/local/bin/tests.sh
       - ./nginx_modules:/home/wodby/nginx_modules
     environment:
-      NGINX_DISABLE_MODSECURITY: "0"
+      NGINX_MODSECURITY_ENABLE: "1"
+      NGINX_MODSEC_USE_OWASP_CRS: "1"

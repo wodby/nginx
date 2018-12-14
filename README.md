@@ -166,6 +166,8 @@ Additional environment variables for ModSecurity fine tuning:
 | `NGINX_MODSEC_ANOMALY_OUT_THRESHOLD`| `7`           | The anomaly detection for output. |
 | `NGINX_MODSEC_PRE_CORE_RULES`       |               | Location of setup rules to be loaded before the core rules  |
 | `NGINX_MODSEC_POST_CORE_RULES`      |               | Location of setup rules to be loaded after the core rules   |
+| `NGINX_MODSEC_USE_OWASP_CRS`      | 0              | Use owasp mod sec core rule set , use 1 to enabl owasp crs  |
+
 
 
 ## Virtual hosts presets

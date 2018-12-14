@@ -1,6 +1,8 @@
 Include /etc/nginx/modsec/modsecurity.conf
 
+{{ if eq ( getenv "NGINX_MODSEC_USE_OWASP_CRS" "0") "1" }}
 Include /usr/local/owasp-modsecurity-crs/crs-setup.conf
+{{ end }}
 
 {{ if or (eq (getenv "NGINX_VHOST_PRESET") "drupal8") (eq (getenv "NGINX_VHOST_PRESET") "drupal7") (eq (getenv "NGINX_VHOST_PRESET") "drupal6") }}
 SecAction \
@@ -43,8 +45,9 @@ SecAction \
 Include {{ getenv "NGINX_MODSEC_PRE_CORE_RULES" }}
 {{ end }}
 
-
+{{ if eq ( getenv "NGINX_MODSEC_USE_OWASP_CRS" "0") "1" }}
 Include /usr/local/owasp-modsecurity-crs/rules/*.conf
+{{ end }}
 
 {{ if getenv "NGINX_MODSEC_POST_CORE_RULES" }}
 Include {{ getenv "NGINX_MODSEC_POST_CORE_RULES" }}

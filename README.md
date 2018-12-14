@@ -108,7 +108,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_VHOST_PRESET`                      | `html`                      |             |
 | `NGINX_WORKER_CONNECTIONS`                | `1024`                      |             |
 | `NGINX_WORKER_PROCESSES`                  | `auto`                      |             |
-| `NGINX_ENABLE_MODSECURITY`               | 0                           | By default this is disabled,Set this to 1, to enable |
+| `NGINX_MODSECURITY_ENABLE`               | 0                           | By default this is disabled,Set this to 1, to enable |
 
 Static files extension defined via the regex and can be overriden via the env var `NGINX_STATIC_EXT_REGEX`, default:
 ```

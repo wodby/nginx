@@ -41,7 +41,8 @@ location ~ ^/\.healthz$ {
     return 204;
 }
 
-{{ $pagespeed := (getenv "NGINX_PAGESPEED") }}
+{{ if getenv "NGINX_PAGESPEED_ENABLED" }}
+{{ $pagespeed := (getenv "NGINX_PAGESPEED" "on") }}
 {{ if (eq $pagespeed "on") }}
 location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" {
     add_header "" "";
@@ -49,6 +50,7 @@ location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" {
 
 location ~ "^/pagespeed_static/" { }
 location ~ "^/ngx_pagespeed_beacon$" { }
+{{ end }}
 {{ end }}
 
 {{ if not (getenv "NGINX_ALLOW_ACCESS_HIDDEN_FILES") }}

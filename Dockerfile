@@ -169,7 +169,7 @@ RUN set -ex; \
 		--with-stream_geoip_module=dynamic \
         --with-threads \
         --add-module=/tmp/ngxuploadprogress \
-        --add-module=/tmp/ngxpagespeed \
+        --add-dynamic-module=/tmp/ngxpagespeed \
         --add-dynamic-module=/tmp/ngxmodsecurity; \
     \
     make -j$(getconf _NPROCESSORS_ONLN); \
@@ -197,6 +197,7 @@ RUN set -ex; \
     strip /usr/local/lib/libmodsecurity.so*; \
     \
     ln -s /usr/lib/nginx/modules/ngx_http_modsecurity_module.so /usr/share/nginx/modules/; \
+    ln -s /usr/lib/nginx/modules/ngx_pagespeed.so /usr/share/nginx/modules/; \
     \
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/local/modsecurity/lib/*.so /usr/lib/nginx/modules/*.so /tmp/envsubst \

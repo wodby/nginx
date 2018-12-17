@@ -7,5 +7,6 @@ services:
       - ./tests.sh:/usr/local/bin/tests.sh
       - ./nginx_modules:/home/wodby/nginx_modules
     environment:
+      NGINX_PAGESPEED_ENABLED: "1"
       NGINX_MODSECURITY_ENABLE: "1"
       NGINX_MODSECURITY_USE_OWASP_CRS: "1"

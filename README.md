@@ -85,7 +85,8 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY`            | `on`                        |                                        |
 | `NGINX_PAGESPEED_REWRITE_LEVEL`                      | `CoreFilters`               |                                        |
 | `NGINX_PAGESPEED_STATIC_ASSET_PREFIX`                | `/pagespeed_static`         |                                        |
-| `NGINX_PAGESPEED`                                    | `unplugged`                 |                                        |
+| `NGINX_PAGESPEED`                                    | `on`                        |                                        |
+| `NGINX_PAGESPEED_ENABLED`                            |                             |                                        |
 | `NGINX_REAL_IP_HEADER`                               | `X-Real-IP`                 |                                        |
 | `NGINX_REAL_IP_RECURSIVE`                            | `off`                       |                                        |
 | `NGINX_RESET_TIMEDOUT_CONNECTION`                    | `off`                       |                                        |
@@ -154,7 +155,11 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [stream_ssl]               |                                                           |
 | [stream_ssl_preread]       |                                                           |
 
-## ModSecurity
+### Pagespeed
+
+To enable [Apache PageSpeed module](https://www.modpagespeed.com/) set `$NGINX_PAGESPEED_ENABLED` to any value. Additionally, you can change module status via `$NGINX_PAGESPEED` (set to `on` by default) and configure it via `$NGINX_PAGESPEED_` environment variables.
+
+### ModSecurity
 
 ModSecurity is disabled by default, to enable set `$NGINX_MODSECURITY_ENABLE` to any value. Additionally, you can enable [OWASP Core Rule Set (CRS)](https://modsecurity.org/crs/) by setting `$NGINX_MODSECURITY_USE_OWASP_CRS` to any value, ️be wary since it may [block some requests](https://github.com/wodby/nginx/pull/14#issuecomment-447404035) with the default configuration. See env vars starting with `$NGINX_MODSECURITY_` for advanced configuration.  
 

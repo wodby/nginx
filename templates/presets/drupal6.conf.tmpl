@@ -1,6 +1,6 @@
 {{ $static := (getenv "NGINX_STATIC_EXT_REGEX" "css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt") }}
 
-index index.php;
+index index.php index.html;
 
 include fastcgi.conf;
 
@@ -18,7 +18,7 @@ location / {
     {{ end }}
     location ~* /system/files/ {
         include fastcgi.conf;
-        fastcgi_param QUERY_STRING q=$uri&$args;
+        fastcgi_param QUERY_STRING $query_string;
         fastcgi_param SCRIPT_NAME /index.php;
         fastcgi_param SCRIPT_FILENAME $document_root/index.php;
         fastcgi_pass php;

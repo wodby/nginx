@@ -2,8 +2,8 @@
 
 include fastcgi.conf;
 
-{{ $index := (getenv "NGINX_INDEX_FILE" "index.php") }}
-index {{ $index }};
+{{ $index := (getenv "NGINX_FASTCGI_INDEX" "index.php") }}
+index {{ getenv "NGINX_INDEX_FILE" "index.php index.html" }};
 
 location / {
     location ~* ^.+\.(?:{{ $static }})$ {

@@ -33,4 +33,4 @@ fastcgi_buffer_size {{ getenv "NGINX_FASTCGI_BUFFER_SIZE" "32k" }};
 fastcgi_intercept_errors {{ getenv "NGINX_FASTCGI_INTERCEPT_ERRORS" "on" }};
 fastcgi_read_timeout {{ getenv "NGINX_FASTCGI_READ_TIMEOUT" "900" }};
 fastcgi_keep_conn on;
-fastcgi_index {{ getenv "NGINX_INDEX_FILE" "index.php" }};
+fastcgi_index {{ getenv "NGINX_FASTCGI_INDEX" "index.php" }};

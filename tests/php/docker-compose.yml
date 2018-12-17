@@ -5,14 +5,11 @@ services:
     image: $IMAGE
     environment:
       NGINX_BACKEND_HOST: php
+      NGINX_VHOST_PRESET: php
     depends_on:
       - php
-    volumes:
-      - codebase:/var/www/html
   php:
     image: wodby/php
-    volumes:
-      - codebase:/var/www/html
 
 volumes:
   codebase:

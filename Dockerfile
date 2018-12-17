@@ -9,7 +9,8 @@ ENV NGINX_VER="${NGINX_VER}" \
     APP_ROOT="/var/www/html" \
     FILES_DIR="/mnt/files" \
     NGINX_VHOST_PRESET="html" \
-    MOD_SECURITY_VER="3.0.3" \
+    NGX_MODSECURITY_VER="1.0.0" \
+    MODSECURITY_VER="3.0.3" \
     OWASP_CRS_VER="3.1.0"
 
 RUN set -ex; \
@@ -48,43 +49,54 @@ RUN set -ex; \
         zlib-dev; \
      \
      apk add --no-cache -t .libmodsecurity-deps \
-        pcre-dev \
-        libxml2-dev \
-        git \
-        libtool \
-        automake \
         autoconf \
-        g++ \
-        flex \
+        automake \
         bison \
-        yajl-dev \
-        doxygen \
-        geoip \
-        yajl \
-        libstdc++ \
-        sed \
         curl \
-        libmaxminddb-dev; \
-    git clone --depth 1 -b "v${MOD_SECURITY_VER}" --single-branch https://github.com/SpiderLabs/ModSecurity /tmp/ModSecurity; \
-    cd /tmp/ModSecurity; \
+        flex \
+        g++ \
+        geoip \
+        git \
+        libmaxminddb-dev \
+        libstdc++ \
+        libtool \
+        libxml2-dev \
+        pcre-dev \
+        rsync \
+        sed \
+        yajl \
+        yajl-dev; \
+    \
+    # Modsecurity lib.
+    cd /tmp; \
+    git clone --depth 1 -b "v${MODSECURITY_VER}" --single-branch https://github.com/SpiderLabs/ModSecurity; \
+    cd ModSecurity; \
     git submodule init;  \
     git submodule update; \
     ./build.sh; \
     ./configure --disable-doxygen-doc --disable-doxygen-html; \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install;  \
-    mkdir -p /etc/nginx/modsec/; \
-    # Getting recommended settings
-    mv /tmp/ModSecurity/modsecurity.conf-recommended /etc/nginx/modsec/modsecurity.conf;  \
-    cp unicode.mapping /etc/nginx/modsec/; \
-    ln -s /usr/local/modsecurity/lib/* /usr/local/lib/; \
-    git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git /tmp/ModSecurity-nginx; \
-    cd /tmp; \
-    wget https://github.com/SpiderLabs/owasp-modsecurity-crs/archive/v"${OWASP_CRS_VER}".tar.gz; \
-    tar -xzf "v${OWASP_CRS_VER}.tar.gz" -C /tmp; \
-    mv "/tmp/owasp-modsecurity-crs-${OWASP_CRS_VER}" /usr/local/owasp-modsecurity-crs; \
-    cp /usr/local/owasp-modsecurity-crs/crs-setup.conf.example /usr/local/owasp-modsecurity-crs/crs-setup.conf; \
-    sed -i "s#SecRule REQUEST_COOKIES|#SecRule REQUEST_URI|REQUEST_COOKIES|#" /usr/local/owasp-modsecurity-crs/rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf; \
+    mkdir -p /etc/nginx/modsecurity/; \
+    mv modsecurity.conf-recommended /etc/nginx/modsecurity/recommended.conf;  \
+    sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/nginx/modsecurity/recommended.conf; \
+    cp unicode.mapping /etc/nginx/modsecurity/; \
+    rsync -a --links /usr/local/modsecurity/lib/libmodsecurity.so* /usr/local/lib/; \
+    \
+    # Get ngx modsecurity module.
+    mkdir -p /tmp/ngxmodsecurity; \
+    ver="${NGX_MODSECURITY_VER}"; \
+    url="https://github.com/SpiderLabs/ModSecurity-nginx/releases/download/v${ver}/modsecurity-nginx-v${ver}.tar.gz"; \
+    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngxmodsecurity; \
+    \
+    # OWASP.
+    wget -qO- "https://github.com/SpiderLabs/owasp-modsecurity-crs/archive/v${OWASP_CRS_VER}.tar.gz" | tar xz -C /tmp; \
+    cd /tmp/owasp-modsecurity-crs-*; \
+    sed -i "s#SecRule REQUEST_COOKIES|#SecRule REQUEST_URI|REQUEST_COOKIES|#" rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf; \
+    mkdir -p /etc/nginx/modsecurity/crs/; \
+    mv crs-setup.conf.example /etc/nginx/modsecurity/crs/setup.conf; \
+    mv rules /etc/nginx/modsecurity/crs; \
+    \
     # Get ngx pagespeed module.
     git clone -b "v${NGX_PAGESPEED_VER}-stable" \
           --recurse-submodules \
@@ -94,9 +106,11 @@ RUN set -ex; \
           -j$(getconf _NPROCESSORS_ONLN) \
           https://github.com/apache/incubator-pagespeed-ngx.git \
           /tmp/ngxpagespeed; \
+    \
     # Get psol for alpine.
     url="https://github.com/wodby/nginx-alpine-psol/releases/download/${MOD_PAGESPEED_VER}/psol.tar.gz"; \
     wget -qO- "${url}" | tar xz -C /tmp/ngxpagespeed; \
+    \
     # Get ngx uploadprogress module.
     mkdir -p /tmp/ngxuploadprogress; \
     url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${NGINX_UP_VER}.tar.gz"; \
@@ -155,9 +169,8 @@ RUN set -ex; \
 		--with-stream_geoip_module=dynamic \
         --with-threads \
         --add-module=/tmp/ngxuploadprogress \
-        --add-module=/tmp/ngxpagespeed \
-        # Added Modsecurity connector as dynamic module.
-        --add-dynamic-module=/tmp/ModSecurity-nginx; \
+        --add-dynamic-module=/tmp/ngxpagespeed \
+        --add-dynamic-module=/tmp/ngxmodsecurity; \
     \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install; \
@@ -181,9 +194,10 @@ RUN set -ex; \
     install -m 400 -d /etc/nginx/pki; \
     strip /usr/sbin/nginx*; \
     strip /usr/lib/nginx/modules/*.so; \
-    
-    cp /usr/lib/nginx/modules/ngx_http_modsecurity_module.so /usr/share/nginx/modules/; \
-    strip /usr/local/lib/libmodsecurity.so.3; \
+    strip /usr/local/lib/libmodsecurity.so*; \
+    \
+    ln -s /usr/lib/nginx/modules/ngx_http_modsecurity_module.so /usr/share/nginx/modules/; \
+    ln -s /usr/lib/nginx/modules/ngx_pagespeed.so /usr/share/nginx/modules/; \
     \
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/local/modsecurity/lib/*.so /usr/lib/nginx/modules/*.so /tmp/envsubst \
@@ -193,7 +207,6 @@ RUN set -ex; \
 	)"; \
 	apk add --no-cache --virtual .nginx-rundeps $runDeps; \
     \
-    sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/nginx/modsec/modsecurity.conf; \
     # Script to fix volumes permissions via sudo.
     echo "find ${APP_ROOT} ${FILES_DIR} -maxdepth 0 -uid 0 -type d -exec chown wodby:wodby {} +" > /usr/local/bin/init_volumes; \
     chmod +x /usr/local/bin/init_volumes; \
@@ -205,11 +218,12 @@ RUN set -ex; \
     } | tee /etc/sudoers.d/wodby; \
     \
     chown wodby:wodby /usr/share/nginx/html/50x.html; \
-    # Cleanup
-    apk del --purge .nginx-build-deps; \
-    apk del --purge .libmodsecurity-deps; \
-    rm -rf /tmp/*; \
-    rm -rf /var/cache/apk/* ;
+    \
+    apk del --purge .nginx-build-deps .libmodsecurity-deps; \
+    rm -rf \
+        /tmp/* \
+        /usr/local/modsecurity \
+        /var/cache/apk/* ;
 
 USER wodby
 

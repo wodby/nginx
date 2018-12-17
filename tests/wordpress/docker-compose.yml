@@ -11,7 +11,7 @@ services:
     volumes:
       - codebase:/var/www/html
   wordpress:
-    image: wordpress:4-php7.0-fpm-alpine
+    image: wordpress:fpm-alpine
     volumes:
       - codebase:/var/www/html
 

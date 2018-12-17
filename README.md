@@ -8,6 +8,7 @@
 * [Docker images](#docker-images)
 * [Environment variables](#environment-variables)
 * [Nginx modules](#nginx-modules)
+* [ModSecurity](#modsecurity)
 * [Virtual hosts presets](#virtual-hosts-presets)
     * [HTML](#html)
     * [HTTP proxy (application server)](#http-proxy-application-server)
@@ -39,78 +40,83 @@ Supported tags and respective `Dockerfile` links:
 
 ## Environment Variables
 
-| Variable                                  | Default Value               | Description |
-| ----------------------------------------- | --------------------------- | ----------- |
-| `NGINX_ALLOW_ACCESS_HIDDEN_FILES`         |                             |             |
-| `NGINX_BACKEND_FAIL_TIMEOUT`              | `0`                         |             |
-| `NGINX_BACKEND_HOST`                      |                             |             |
-| `NGINX_BACKEND_PORT`                      |                             |             |
-| `NGINX_CLIENT_BODY_BUFFER_SIZE`           | `16k`                       |             |
-| `NGINX_CLIENT_BODY_TIMEOUT`               | `60s`                       |             |
-| `NGINX_CLIENT_HEADER_BUFFER_SIZE`         | `4k`                        |             |
-| `NGINX_CLIENT_HEADER_TIMEOUT`             | `60s`                       |             |
-| `NGINX_CLIENT_MAX_BODY_SIZE`              | `32m`                       |             |
-| `NGINX_CONF_INCLUDE`                      | `conf.d/*.conf`             |             |
-| `NGINX_DISABLE_CACHING`                   |                             |             |
-| `NGINX_ERROR_403_URI`                     |                             |             |
-| `NGINX_ERROR_404_URI`                     |                             |             |
-| `NGINX_ERROR_LOG_LEVEL`                   | `error`                     |             |
-| `NGINX_ERROR_MESSAGE_50x`                 |                             |             |
-| `NGINX_GZIP_BUFFERS`                      | `16 8k`                     |             |
-| `NGINX_GZIP_COMP_LEVEL`                   | `1`                         |             |
-| `NGINX_GZIP_DISABLE`                      | `msie6`                     |             |
-| `NGINX_GZIP_HTTP_VERSION`                 | `1.1`                       |             |
-| `NGINX_GZIP_MIN_LENGTH`                   | `20`                        |             |
-| `NGINX_GZIP_PROXIED`                      | `any`                       |             |
-| `NGINX_GZIP_VARY`                         | `on`                        |             |
-| `NGINX_GZIP`                              | `on`                        |             |
-| `NGINX_HIDE_50x_ERRORS`                   |                             |             |
-| `NGINX_HTTP2`                             |                             |             |
-| `NGINX_INDEX_FILE`                        | `index.html index.htm`      | Default may vary depending on a preset |
-| `NGINX_KEEPALIVE_REQUESTS`                | `100`                       |             |
-| `NGINX_KEEPALIVE_TIMEOUT`                 | `75s`                       |             |
-| `NGINX_LARGE_CLIENT_HEADER_BUFFERS`       | `8 16k`                     |             |
-| `NGINX_LOG_FORMAT_OVERRIDE`               |                             |             |
-| `NGINX_MULTI_ACCEPT`                      | `on`                        |             |
-| `NGINX_NO_DEFAULT_HEADERS`                |                             |             |
-| `NGINX_PAGESPEED_ENABLE_FILTERS`          |                             |             |
-| `NGINX_PAGESPEED_FILE_CACHE_PATH`         | `/var/cache/ngx_pagespeed/` |             |
-| `NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY` | `on`                        |             |
-| `NGINX_PAGESPEED_REWRITE_LEVEL`           | `CoreFilters`               |             |
-| `NGINX_PAGESPEED_STATIC_ASSET_PREFIX`     | `/pagespeed_static`         |             |
-| `NGINX_PAGESPEED`                         | `unplugged`                 |             |
-| `NGINX_REAL_IP_HEADER`                    | `X-Real-IP`                 |             |
-| `NGINX_REAL_IP_RECURSIVE`                 | `off`                       |             |
-| `NGINX_RESET_TIMEDOUT_CONNECTION`         | `off`                       |             |
-| `NGINX_SEND_TIMEOUT`                      | `60s`                       |             |
-| `NGINX_SENDFILE`                          | `on`                        |             |
-| `NGINX_SERVER_EXTRA_CONF_FILEPATH`        |                             |             |
-| `NGINX_SERVER_NAME`                       | `default`                   |             |
-| `NGINX_SERVER_ROOT`                       | `/var/www/html`             |             |
-| `NGINX_SERVER_TOKENS`                     | `off`                       |             |
-| `NGINX_SET_REAL_IP_FROM`                  |                             |             |
-| `NGINX_STATIC_404_TRY_INDEX`              |                             |             |
-| `NGINX_STATIC_ACCESS_LOG`                 | `off`                       |             |
-| `NGINX_STATIC_EXPIRES`                    | `7d`                        |             |
-| `NGINX_STATIC_MP4_BUFFER_SIZE`            | `1M`                        |             |
-| `NGINX_STATIC_MP4_MAX_BUFFER_SIZE`        | `5M`                        |             |
-| `NGINX_STATIC_OPEN_FILE_CACHE_ERRORS`     | `on`                        |             |
-| `NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES`   | `2`                         |             |
-| `NGINX_STATIC_OPEN_FILE_CACHE_VALID`      | `30s`                       |             |
-| `NGINX_STATIC_OPEN_FILE_CACHE`            | `max=1000 inactive=30s`     |             |
-| `NGINX_TCP_NODELAY`                       | `on`                        |             |
-| `NGINX_TCP_NOPUSH`                        | `on`                        |             |
-| `NGINX_TRACK_UPLOADS`                     | `uploads 60s`               |             |
-| `NGINX_UNDERSCORES_IN_HEADERS`            | `off`                       |             |
-| `NGINX_UPLOAD_PROGRESS`                   | `uploads 1m`                |             |
-| `NGINX_USER`                              | `nginx`                     |             |
-| `NGINX_VHOST_NO_DEFAULTS`                 |                             |             |
-| `NGINX_VHOST_PRESET`                      | `html`                      |             |
-| `NGINX_WORKER_CONNECTIONS`                | `1024`                      |             |
-| `NGINX_WORKER_PROCESSES`                  | `auto`                      |             |
-| `NGINX_MODSECURITY_ENABLE`               | 0                           | By default this is disabled,Set this to 1, to enable |
+| Variable                                             | Default Value               | Description                            |
+| -----------------------------------------            | --------------------------- | -----------                            |
+| `NGINX_ALLOW_ACCESS_HIDDEN_FILES`                    |                             |                                        |
+| `NGINX_BACKEND_FAIL_TIMEOUT`                         | `0`                         |                                        |
+| `NGINX_BACKEND_HOST`                                 |                             |                                        |
+| `NGINX_BACKEND_PORT`                                 |                             |                                        |
+| `NGINX_CLIENT_BODY_BUFFER_SIZE`                      | `16k`                       |                                        |
+| `NGINX_CLIENT_BODY_TIMEOUT`                          | `60s`                       |                                        |
+| `NGINX_CLIENT_HEADER_BUFFER_SIZE`                    | `4k`                        |                                        |
+| `NGINX_CLIENT_HEADER_TIMEOUT`                        | `60s`                       |                                        |
+| `NGINX_CLIENT_MAX_BODY_SIZE`                         | `32m`                       |                                        |
+| `NGINX_CONF_INCLUDE`                                 | `conf.d/*.conf`             |                                        |
+| `NGINX_DISABLE_CACHING`                              |                             |                                        |
+| `NGINX_ERROR_403_URI`                                |                             |                                        |
+| `NGINX_ERROR_404_URI`                                |                             |                                        |
+| `NGINX_ERROR_LOG_LEVEL`                              | `error`                     |                                        |
+| `NGINX_ERROR_MESSAGE_50x`                            |                             |                                        |
+| `NGINX_GZIP_BUFFERS`                                 | `16 8k`                     |                                        |
+| `NGINX_GZIP_COMP_LEVEL`                              | `1`                         |                                        |
+| `NGINX_GZIP_DISABLE`                                 | `msie6`                     |                                        |
+| `NGINX_GZIP_HTTP_VERSION`                            | `1.1`                       |                                        |
+| `NGINX_GZIP_MIN_LENGTH`                              | `20`                        |                                        |
+| `NGINX_GZIP_PROXIED`                                 | `any`                       |                                        |
+| `NGINX_GZIP_VARY`                                    | `on`                        |                                        |
+| `NGINX_GZIP`                                         | `on`                        |                                        |
+| `NGINX_HIDE_50x_ERRORS`                              |                             |                                        |
+| `NGINX_HTTP2`                                        |                             |                                        |
+| `NGINX_INDEX_FILE`                                   | `index.html index.htm`      | Default may vary depending on a preset |
+| `NGINX_KEEPALIVE_REQUESTS`                           | `100`                       |                                        |
+| `NGINX_KEEPALIVE_TIMEOUT`                            | `75s`                       |                                        |
+| `NGINX_LARGE_CLIENT_HEADER_BUFFERS`                  | `8 16k`                     |                                        |
+| `NGINX_LOG_FORMAT_OVERRIDE`                          |                             |                                        |
+| `NGINX_MODSECURITY_INBOUND_ANOMALY_SCORE_THRESHOLD`  | `7`                         |                                        |
+| `NGINX_MODSECURITY_OUTBOUND_ANOMALY_SCORE_THRESHOLD` | `7`                         |                                        |
+| `NGINX_MODSECURITY_POST_CORE_RULES`                  |                             | Location to rules loaded after CRS     |
+| `NGINX_MODSECURITY_PRE_CORE_RULES`                   |                             | Location to rules loaded before CRS    |
+| `NGINX_MODSECURITY_USE_OWASP_CRS`                    |                             | See [ModSecurity](#modsecurity)        |
+| `NGINX_MODSECURITY_ENABLE`                           |                             | See [ModSecurity](#modsecurity)        |
+| `NGINX_MULTI_ACCEPT`                                 | `on`                        |                                        |
+| `NGINX_NO_DEFAULT_HEADERS`                           |                             |                                        |
+| `NGINX_PAGESPEED_ENABLE_FILTERS`                     |                             |                                        |
+| `NGINX_PAGESPEED_FILE_CACHE_PATH`                    | `/var/cache/ngx_pagespeed/` |                                        |
+| `NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY`            | `on`                        |                                        |
+| `NGINX_PAGESPEED_REWRITE_LEVEL`                      | `CoreFilters`               |                                        |
+| `NGINX_PAGESPEED_STATIC_ASSET_PREFIX`                | `/pagespeed_static`         |                                        |
+| `NGINX_PAGESPEED`                                    | `unplugged`                 |                                        |
+| `NGINX_REAL_IP_HEADER`                               | `X-Real-IP`                 |                                        |
+| `NGINX_REAL_IP_RECURSIVE`                            | `off`                       |                                        |
+| `NGINX_RESET_TIMEDOUT_CONNECTION`                    | `off`                       |                                        |
+| `NGINX_SEND_TIMEOUT`                                 | `60s`                       |                                        |
+| `NGINX_SENDFILE`                                     | `on`                        |                                        |
+| `NGINX_SERVER_EXTRA_CONF_FILEPATH`                   |                             |                                        |
+| `NGINX_SERVER_NAME`                                  | `default`                   |                                        |
+| `NGINX_SERVER_ROOT`                                  | `/var/www/html`             |                                        |
+| `NGINX_SERVER_TOKENS`                                | `off`                       |                                        |
+| `NGINX_SET_REAL_IP_FROM`                             |                             |                                        |
+| `NGINX_STATIC_404_TRY_INDEX`                         |                             |                                        |
+| `NGINX_STATIC_ACCESS_LOG`                            | `off`                       |                                        |
+| `NGINX_STATIC_EXPIRES`                               | `7d`                        |                                        |
+| `NGINX_STATIC_MP4_BUFFER_SIZE`                       | `1M`                        |                                        |
+| `NGINX_STATIC_MP4_MAX_BUFFER_SIZE`                   | `5M`                        |                                        |
+| `NGINX_STATIC_OPEN_FILE_CACHE_ERRORS`                | `on`                        |                                        |
+| `NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES`              | `2`                         |                                        |
+| `NGINX_STATIC_OPEN_FILE_CACHE_VALID`                 | `30s`                       |                                        |
+| `NGINX_STATIC_OPEN_FILE_CACHE`                       | `max=1000 inactive=30s`     |                                        |
+| `NGINX_TCP_NODELAY`                                  | `on`                        |                                        |
+| `NGINX_TCP_NOPUSH`                                   | `on`                        |                                        |
+| `NGINX_TRACK_UPLOADS`                                | `uploads 60s`               |                                        |
+| `NGINX_UNDERSCORES_IN_HEADERS`                       | `off`                       |                                        |
+| `NGINX_UPLOAD_PROGRESS`                              | `uploads 1m`                |                                        |
+| `NGINX_USER`                                         | `nginx`                     |                                        |
+| `NGINX_VHOST_NO_DEFAULTS`                            |                             |                                        |
+| `NGINX_VHOST_PRESET`                                 | `html`                      |                                        |
+| `NGINX_WORKER_CONNECTIONS`                           | `1024`                      |                                        |
+| `NGINX_WORKER_PROCESSES`                             | `auto`                      |                                        |
 
-Static files extension defined via the regex and can be overriden via the env var `NGINX_STATIC_EXT_REGEX`, default:
+Static files extension defined via the regex and can be overridden via the env var `NGINX_STATIC_EXT_REGEX`, default:
 ```
 css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt
 ```
@@ -119,56 +125,38 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 
 ## Nginx modules
 
-| Name                       | Version   |
-| -------------------------- | --------- |
-| [http_addition]            |           |
-| [http_auth_request]        |           |
-| [http_dav]                 |           |
-| [http_flv]                 |           |
-| [http_geoip]               |           |
-| [http_gunzip]              |           |
-| [http_gzip_static]         |           |
-| [http_image_filter]        |           |
-| [http_mp4]                 |           |
-| [http_random_index]        |           |
-| [http_realip]              |           |
-| [http_secure_link]         |           |
-| [http_slice]               |           |
-| [http_ssl]                 |           |
-| [http_stub_status]         |           |
-| [http_sub]                 |           |
-| [http_v2]                  |           |
-| [http_xslt]                |           |
-| [mail_ssl]                 |           |
-| [modsecurity]              | 3.0.3     |
-| [ngxpagespeed]             | 1.13.35.2 |
-| [ngxuploadprogress]        | 0.9.1     |
-| [stream_geoip]             |           |
-| [stream_realip]            |           |
-| [stream_ssl]               |           |
-| [stream_ssl_preread]       |           |
-## Mod Security 
+| Name                       | Version                                                   |
+| -------------------------- | --------------------------------------------------------- |
+| [http_addition]            |                                                           |
+| [http_auth_request]        |                                                           |
+| [http_dav]                 |                                                           |
+| [http_flv]                 |                                                           |
+| [http_geoip]               |                                                           |
+| [http_gunzip]              |                                                           |
+| [http_gzip_static]         |                                                           |
+| [http_image_filter]        |                                                           |
+| [http_mp4]                 |                                                           |
+| [http_random_index]        |                                                           |
+| [http_realip]              |                                                           |
+| [http_secure_link]         |                                                           |
+| [http_slice]               |                                                           |
+| [http_ssl]                 |                                                           |
+| [http_stub_status]         |                                                           |
+| [http_sub]                 |                                                           |
+| [http_v2]                  |                                                           |
+| [http_xslt]                |                                                           |
+| [mail_ssl]                 |                                                           |
+| [modsecurity]              | module 1.0.0 ([modsecurity lib] 3.0.3, [OWASP CRS] 3.1.0) |
+| [pagespeed]                | 1.13.35.2                                                 |
+| [uploadprogress]           | 0.9.1                                                     |
+| [stream_geoip]             |                                                           |
+| [stream_realip]            |                                                           |
+| [stream_ssl]               |                                                           |
+| [stream_ssl_preread]       |                                                           |
 
-By Default , mod security module will be enabled with Owasp Core Rule set enabled for better protection. 
-Owasp Core Rule Set version 3.1.0
-* [Owasp Core Rule Set](https://github.com/SpiderLabs/owasp-modsecurity-crs/)
-We are also using the nginx connector provided for the mod security module.
-* [Nginx Mod Security Connector](https://github.com/SpiderLabs/ModSecurity-nginx)
-Mod security version 3.0.3
-* [Mod Security](https://github.com/SpiderLabs/ModSecurity)
+## ModSecurity
 
-
-Additional environment variables for ModSecurity fine tuning:
-
-| Variable                            | Default Value | Description |
-| ------------------------------------| ------------- | ----------- |
-| `NGINX_MODSEC_ANOMALY_IN_THRESHOLD` | `10`           | The anomaly detection for input. For fine tuning mod security performance  |
-| `NGINX_MODSEC_ANOMALY_OUT_THRESHOLD`| `7`           | The anomaly detection for output. |
-| `NGINX_MODSEC_PRE_CORE_RULES`       |               | Location of setup rules to be loaded before the core rules  |
-| `NGINX_MODSEC_POST_CORE_RULES`      |               | Location of setup rules to be loaded after the core rules   |
-| `NGINX_MODSEC_USE_OWASP_CRS`      | 0              | Use owasp mod sec core rule set , use 1 to enabl owasp crs  |
-
-
+ModSecurity is disabled by default, to enable set `$NGINX_MODSECURITY_ENABLE` to any value. Additionally, you can enable [OWASP Core Rule Set (CRS)](https://modsecurity.org/crs/) by setting `$NGINX_MODSECURITY_USE_OWASP_CRS` to any value, ️be wary since it may [block some requests](https://github.com/wodby/nginx/pull/14#issuecomment-447404035) with the default configuration. See env vars starting with `$NGINX_MODSECURITY_` for advanced configuration.  
 
 ## Virtual hosts presets
 
@@ -294,10 +282,12 @@ default params values:
 [http_v2]: http://nginx.org/en/docs/http/ngx_http_v2_module.html
 [http_xslt]: http://nginx.org/en/docs/http/ngx_http_xslt_module.html
 [mail_ssl]: http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html
+[modsecurity lib]: https://modsecurity.org/
 [modsecurity]: https://github.com/SpiderLabs/ModSecurity-nginx
-[ngxpagespeed]: https://github.com/apache/incubator-pagespeed-ngx
-[ngxuploadprogress]: https://github.com/masterzen/nginx-upload-progress-module
+[OWASP CRS]: https://modsecurity.org/crs/
+[pagespeed]: https://github.com/apache/incubator-pagespeed-ngx
 [stream_geoip]: http://nginx.org/en/docs/stream/ngx_stream_geoip_module.html
 [stream_realip]: http://nginx.org/en/docs/stream/ngx_stream_realip_module.html
 [stream_ssl]: http://nginx.org/en/docs/stream/ngx_stream_ssl_module.html
 [stream_ssl_preread]: http://nginx.org/en/docs/stream/ngx_stream_ssl_preread_module.html
+[uploadprogress]: https://github.com/masterzen/nginx-upload-progress-module

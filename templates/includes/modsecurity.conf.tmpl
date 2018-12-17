@@ -1,7 +1,7 @@
-Include /etc/nginx/modsec/modsecurity.conf
+Include /etc/nginx/modsecurity/recommended.conf
 
-{{ if eq ( getenv "NGINX_MODSEC_USE_OWASP_CRS" "0") "1" }}
-Include /usr/local/owasp-modsecurity-crs/crs-setup.conf
+{{ if getenv "NGINX_MODSECURITY_USE_OWASP_CRS" }}
+Include /etc/nginx/modsecurity/crs/setup.conf
 {{ end }}
 
 {{ if or (eq (getenv "NGINX_VHOST_PRESET") "drupal8") (eq (getenv "NGINX_VHOST_PRESET") "drupal7") (eq (getenv "NGINX_VHOST_PRESET") "drupal6") }}
@@ -38,18 +38,18 @@ SecAction \
   nolog,\
   pass,\
   t:none,\
-  setvar:tx.inbound_anomaly_score_threshold={{ getenv "NGINX_MODSEC_ANOMALY_IN_THRESHOLD" "7" }},\
-  setvar:tx.outbound_anomaly_score_threshold={{ getenv "NGINX_MODSEC_ANOMALY_OUT_THRESHOLD" "7" }}"
+  setvar:tx.inbound_anomaly_score_threshold={{ getenv "NGINX_MODSECURITY_INBOUND_ANOMALY_SCORE_THRESHOLD" "7" }},\
+  setvar:tx.outbound_anomaly_score_threshold={{ getenv "NGINX_MODSECURITY_OUTBOUND_ANOMALY_SCORE_THRESHOLD" "7" }}"
 
-{{ if getenv "NGINX_MODSEC_PRE_CORE_RULES" }}
-Include {{ getenv "NGINX_MODSEC_PRE_CORE_RULES" }}
+{{ if getenv "NGINX_MODSECURITY_PRE_CORE_RULES" }}
+Include {{ getenv "NGINX_MODSECURITY_PRE_CORE_RULES" }}
 {{ end }}
 
-{{ if eq ( getenv "NGINX_MODSEC_USE_OWASP_CRS" "0") "1" }}
-Include /usr/local/owasp-modsecurity-crs/rules/*.conf
+{{ if getenv "NGINX_MODSECURITY_USE_OWASP_CRS" }}
+Include /etc/nginx/modsecurity/crs/rules/*.conf
 {{ end }}
 
-{{ if getenv "NGINX_MODSEC_POST_CORE_RULES" }}
-Include {{ getenv "NGINX_MODSEC_POST_CORE_RULES" }}
+{{ if getenv "NGINX_MODSECURITY_POST_CORE_RULES" }}
+Include {{ getenv "NGINX_MODSECURITY_POST_CORE_RULES" }}
 {{ end }}
 

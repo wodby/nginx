@@ -1,4 +1,3 @@
-ModSecurity
 http_addition
 http_auth_request
 http_dav
@@ -18,6 +17,7 @@ http_sub
 http_v2
 http_xslt
 mail_ssl
+ngxmodsecurity
 ngxpagespeed
 ngxuploadprogress
 stream_geoip

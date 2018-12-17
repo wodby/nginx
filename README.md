@@ -108,7 +108,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_VHOST_PRESET`                      | `html`                      |             |
 | `NGINX_WORKER_CONNECTIONS`                | `1024`                      |             |
 | `NGINX_WORKER_PROCESSES`                  | `auto`                      |             |
-| `NGINX_DISABLE_MODSECURITY`               |                             | To disable loading of Mod Security module |
+| `NGINX_MODSECURITY_ENABLE`               | 0                           | By default this is disabled,Set this to 1, to enable |
 
 Static files extension defined via the regex and can be overriden via the env var `NGINX_STATIC_EXT_REGEX`, default:
 ```
@@ -156,6 +156,19 @@ We are also using the nginx connector provided for the mod security module.
 * [Nginx Mod Security Connector](https://github.com/SpiderLabs/ModSecurity-nginx)
 Mod security version 3.0.3
 * [Mod Security](https://github.com/SpiderLabs/ModSecurity)
+
+
+Additional environment variables for ModSecurity fine tuning:
+
+| Variable                            | Default Value | Description |
+| ------------------------------------| ------------- | ----------- |
+| `NGINX_MODSEC_ANOMALY_IN_THRESHOLD` | `10`           | The anomaly detection for input. For fine tuning mod security performance  |
+| `NGINX_MODSEC_ANOMALY_OUT_THRESHOLD`| `7`           | The anomaly detection for output. |
+| `NGINX_MODSEC_PRE_CORE_RULES`       |               | Location of setup rules to be loaded before the core rules  |
+| `NGINX_MODSEC_POST_CORE_RULES`      |               | Location of setup rules to be loaded after the core rules   |
+| `NGINX_MODSEC_USE_OWASP_CRS`      | 0              | Use owasp mod sec core rule set , use 1 to enabl owasp crs  |
+
+
 
 ## Virtual hosts presets
 

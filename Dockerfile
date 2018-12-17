@@ -57,8 +57,7 @@ RUN set -ex; \
         g++ \
         flex \
         bison \
-        yajl-dev; \
-    apk add --no-cache \
+        yajl-dev \
         doxygen \
         geoip \
         yajl \
@@ -71,7 +70,7 @@ RUN set -ex; \
     git submodule init;  \
     git submodule update; \
     ./build.sh; \
-    ./configure; \
+    ./configure --disable-doxygen-doc --disable-doxygen-html; \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install;  \
     mkdir -p /etc/nginx/modsec/; \
@@ -86,7 +85,6 @@ RUN set -ex; \
     mv "/tmp/owasp-modsecurity-crs-${OWASP_CRS_VER}" /usr/local/owasp-modsecurity-crs; \
     cp /usr/local/owasp-modsecurity-crs/crs-setup.conf.example /usr/local/owasp-modsecurity-crs/crs-setup.conf; \
     sed -i "s#SecRule REQUEST_COOKIES|#SecRule REQUEST_URI|REQUEST_COOKIES|#" /usr/local/owasp-modsecurity-crs/rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf; \
-    echo -e "Include /etc/nginx/modsec/modsecurity.conf\r\n\r\nInclude /usr/local/owasp-modsecurity-crs/crs-setup.conf\r\nInclude /usr/local/owasp-modsecurity-crs/rules/*.conf" > /etc/nginx/modsec/main.conf; \
     # Get ngx pagespeed module.
     git clone -b "v${NGX_PAGESPEED_VER}-stable" \
           --recurse-submodules \
@@ -211,7 +209,7 @@ RUN set -ex; \
     apk del --purge .nginx-build-deps; \
     apk del --purge .libmodsecurity-deps; \
     rm -rf /tmp/*; \
-    rm -rf /var/cache/apk/*
+    rm -rf /var/cache/apk/* ;
 
 USER wodby
 

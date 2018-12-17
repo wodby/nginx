@@ -8,7 +8,8 @@
 * [Docker images](#docker-images)
 * [Environment variables](#environment-variables)
 * [Nginx modules](#nginx-modules)
-* [ModSecurity](#modsecurity)
+    * [Pagespeed](#pagespeed)
+    * [ModSecurity](#modsecurity)
 * [Virtual hosts presets](#virtual-hosts-presets)
     * [HTML](#html)
     * [HTTP proxy (application server)](#http-proxy-application-server)
@@ -72,21 +73,21 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_KEEPALIVE_TIMEOUT`                            | `75s`                       |                                        |
 | `NGINX_LARGE_CLIENT_HEADER_BUFFERS`                  | `8 16k`                     |                                        |
 | `NGINX_LOG_FORMAT_OVERRIDE`                          |                             |                                        |
+| `NGINX_MODSECURITY_ENABLED`                          |                             | See [ModSecurity](#modsecurity)        |
 | `NGINX_MODSECURITY_INBOUND_ANOMALY_SCORE_THRESHOLD`  | `7`                         |                                        |
 | `NGINX_MODSECURITY_OUTBOUND_ANOMALY_SCORE_THRESHOLD` | `7`                         |                                        |
 | `NGINX_MODSECURITY_POST_CORE_RULES`                  |                             | Location to rules loaded after CRS     |
 | `NGINX_MODSECURITY_PRE_CORE_RULES`                   |                             | Location to rules loaded before CRS    |
 | `NGINX_MODSECURITY_USE_OWASP_CRS`                    |                             | See [ModSecurity](#modsecurity)        |
-| `NGINX_MODSECURITY_ENABLE`                           |                             | See [ModSecurity](#modsecurity)        |
 | `NGINX_MULTI_ACCEPT`                                 | `on`                        |                                        |
 | `NGINX_NO_DEFAULT_HEADERS`                           |                             |                                        |
 | `NGINX_PAGESPEED_ENABLE_FILTERS`                     |                             |                                        |
+| `NGINX_PAGESPEED_ENABLED`                            |                             |                                        |
 | `NGINX_PAGESPEED_FILE_CACHE_PATH`                    | `/var/cache/ngx_pagespeed/` |                                        |
 | `NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY`            | `on`                        |                                        |
 | `NGINX_PAGESPEED_REWRITE_LEVEL`                      | `CoreFilters`               |                                        |
 | `NGINX_PAGESPEED_STATIC_ASSET_PREFIX`                | `/pagespeed_static`         |                                        |
 | `NGINX_PAGESPEED`                                    | `on`                        |                                        |
-| `NGINX_PAGESPEED_ENABLED`                            |                             |                                        |
 | `NGINX_REAL_IP_HEADER`                               | `X-Real-IP`                 |                                        |
 | `NGINX_REAL_IP_RECURSIVE`                            | `off`                       |                                        |
 | `NGINX_RESET_TIMEDOUT_CONNECTION`                    | `off`                       |                                        |
@@ -161,7 +162,7 @@ To enable [Apache PageSpeed module](https://www.modpagespeed.com/) set `$NGINX_P
 
 ### ModSecurity
 
-ModSecurity is disabled by default, to enable set `$NGINX_MODSECURITY_ENABLE` to any value. Additionally, you can enable [OWASP Core Rule Set (CRS)](https://modsecurity.org/crs/) by setting `$NGINX_MODSECURITY_USE_OWASP_CRS` to any value, ️be wary since it may [block some requests](https://github.com/wodby/nginx/pull/14#issuecomment-447404035) with the default configuration. See env vars starting with `$NGINX_MODSECURITY_` for advanced configuration.  
+ModSecurity is disabled by default, to enable set `$NGINX_MODSECURITY_ENABLED` to any value. Additionally, you can enable [OWASP Core Rule Set (CRS)](https://modsecurity.org/crs/) by setting `$NGINX_MODSECURITY_USE_OWASP_CRS` to any value, ️be wary since it may [block some requests](https://github.com/wodby/nginx/pull/14#issuecomment-447404035) with the default configuration. See env vars starting with `$NGINX_MODSECURITY_` for advanced configuration.  
 
 ## Virtual hosts presets
 

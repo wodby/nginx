@@ -51,11 +51,11 @@ process_templates() {
             _gotpl "includes/fastcgi.conf.tmpl" "/etc/nginx/fastcgi.conf"
             _gotpl "includes/upstream.php.conf.tmpl" "/etc/nginx/upstream.conf"
         elif [[ "${NGINX_VHOST_PRESET}" =~ ^http-proxy|django$ ]]; then
-            _gotpl "includes/upstream.http-proxy.conf.tmpl" "/etc/nginx/upstream.conf"
-        fi
+            if [[ -z "${NGINX_BACKEND_HOST}" && "${NGINX_VHOST_PRESET}" == "django" ]]; then
+                export NGINX_BACKEND_HOST="python";
+            fi
 
-        if [[ -z "${NGINX_BACKEND_HOST}" && "${NGINX_VHOST_PRESET}" == "django" ]]; then
-            export NGINX_BACKEND_HOST="python";
+            _gotpl "includes/upstream.http-proxy.conf.tmpl" "/etc/nginx/upstream.conf"
         fi
     fi
 

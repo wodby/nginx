@@ -55,9 +55,9 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_CLIENT_MAX_BODY_SIZE`                         | `32m`                       |                                     |
 | `NGINX_CONF_INCLUDE`                                 | `conf.d/*.conf`             |                                     |
 | `NGINX_DISABLE_CACHING`                              |                             |                                     |
-| `NGINX_DJANGO_MEDIA_ROOT`                            | `/usr/src/app/media/`       |                                     |
+| `NGINX_DJANGO_MEDIA_ROOT`                            | `/var/www/html/media/`      |                                     |
 | `NGINX_DJANGO_MEDIA_URL`                             | `/media/`                   |                                     |
-| `NGINX_DJANGO_STATIC_ROOT`                           | `/usr/src/app/static/`      |                                     |
+| `NGINX_DJANGO_STATIC_ROOT`                           | `/var/www/html/static/`     |                                     |
 | `NGINX_DJANGO_STATIC_URL`                            | `/static/`                  |                                     |
 | `NGINX_DRUPAL_ALLOW_XML_ENDPOINTS`                   |                             |                                     |
 | `NGINX_DRUPAL_FILE_PROXY_URL`                        |                             | e.g. `http://dev.example.com`       |

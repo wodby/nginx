@@ -35,21 +35,27 @@ _backwards_compatibility() {
 
 process_templates() {
     _backwards_compatibility
+
     _gotpl "nginx.conf.tmpl" "/etc/nginx/nginx.conf"
     _gotpl "vhost.conf.tmpl" "/etc/nginx/conf.d/vhost.conf"
-
     _gotpl "includes/defaults.conf.tmpl" "/etc/nginx/defaults.conf"
-    _gotpl "includes/fastcgi.conf.tmpl" "/etc/nginx/fastcgi.conf"
 
-    _gotpl "includes/modsecurity.conf.tmpl" "/etc/nginx/modsecurity/main.conf"
+    if [[ -n "${NGINX_MODSECURITY_ENABLED}" ]]; then
+        _gotpl "includes/modsecurity.conf.tmpl" "/etc/nginx/modsecurity/main.conf"
+    fi
 
     if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
         _gotpl "presets/${NGINX_VHOST_PRESET}.conf.tmpl" "/etc/nginx/preset.conf"
 
         if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal8|drupal7|drupal6|wordpress|php$ ]]; then
+            _gotpl "includes/fastcgi.conf.tmpl" "/etc/nginx/fastcgi.conf"
             _gotpl "includes/upstream.php.conf.tmpl" "/etc/nginx/upstream.conf"
-        elif [[ "${NGINX_VHOST_PRESET}" == "http-proxy" ]]; then
+        elif [[ "${NGINX_VHOST_PRESET}" =~ ^http-proxy|python$ ]]; then
             _gotpl "includes/upstream.http-proxy.conf.tmpl" "/etc/nginx/upstream.conf"
+        fi
+
+        if [[ -z "${NGINX_BACKEND_HOST}" && "${NGINX_VHOST_PRESET}" == "python" ]]; then
+            export NGINX_BACKEND_HOST="python";
         fi
     fi
 

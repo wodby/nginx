@@ -13,6 +13,7 @@
 * [Virtual hosts presets](#virtual-hosts-presets)
     * [HTML](#html)
     * [HTTP proxy (application server)](#http-proxy-application-server)
+    * [Python](#python)
     * [PHP-based (FastCGI)](#PHP-based-fastcgi)
         * [PHP](#php)
         * [WordPress](#wordpress)
@@ -54,6 +55,11 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_CLIENT_MAX_BODY_SIZE`                         | `32m`                       |                                     |
 | `NGINX_CONF_INCLUDE`                                 | `conf.d/*.conf`             |                                     |
 | `NGINX_DISABLE_CACHING`                              |                             |                                     |
+| `NGINX_DJANGO`                                       |                             | Set to enable Django locations for static and media files |
+| `NGINX_DJANGO_MEDIA_ROOT`                            | `/usr/src/app/media/`       |                                     |
+| `NGINX_DJANGO_MEDIA_URL`                             | `/media/`                   |                                     |
+| `NGINX_DJANGO_STATIC_ROOT`                           | `/usr/src/app/static/`      |                                     |
+| `NGINX_DJANGO_STATIC_URL`                            | `/static/`                  |                                     |
 | `NGINX_DRUPAL_ALLOW_XML_ENDPOINTS`                   |                             |                                     |
 | `NGINX_DRUPAL_FILE_PROXY_URL`                        |                             | e.g. `http://dev.example.com`       |
 | `NGINX_DRUPAL_HIDE_HEADERS`                          |                             |                                     |
@@ -190,30 +196,44 @@ By default will be used `html` virtual host preset, you can change it via env va
 
 ### HTML
 
-This is the default preset.
+* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/html.conf.tmpl)
+* Usage: this preset selected by default
+
+Overridden default values:
 
 | Variable             | Default Value |
 | -------------------- | ------------- |
 | `NGINX_INDEX_FILE`   | `index.html`  |
 
-* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/html.conf.tmpl)
-* Usage: this preset selected by default
-
 ### HTTP proxy (application server)
 
 * [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/http-proxy.conf.tmpl)
-* Usage: add `NGINX_VHOST_PRESET=http-proxy` and `NGINX_BACKEND_HOST=[host]` 
+* Usage: add `NGINX_VHOST_PRESET=http-proxy` and `NGINX_BACKEND_HOST=[HOST]` 
 
-Additional environment variables for HTTP proxy preset:
+Overridden default values:
 
 | Variable             | Default Value |
 | -------------------- | ------------- |
 | `NGINX_BACKEND_HOST` |               |
 | `NGINX_BACKEND_PORT` | `8080`        |
 
+### Python
+
+Same as HTTP proxy but with additional media/static locations for Django's that can be enabled via `$NGINX_DJANGO=1`.
+
+* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/python.conf.tmpl)
+* Usage: add `NGINX_VHOST_PRESET=python` 
+
+Overridden default values:
+
+| Variable             | Default Value |
+| -------------------- | ------------- |
+| `NGINX_BACKEND_HOST` | `python`      |
+| `NGINX_BACKEND_PORT` | `8080`        |
+
 ### PHP-based (FastCGI)
 
-Additional environment variables for all PHP-based presets:
+Overridden default values:
 
 | Variable             | Default Value |
 | -------------------- | ------------- |
@@ -222,12 +242,14 @@ Additional environment variables for all PHP-based presets:
 
 #### PHP
 
+* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
+* Usage: add `NGINX_VHOST_PRESET=php`, optionally modify `NGINX_BACKEND_HOST`
+
+Overridden default values:
+
 | Variable           | Default Value          |
 | ------------------ | -------------          |
 | `NGINX_INDEX_FILE` | `index.php index.html` |
-
-* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
-* Usage: add `NGINX_VHOST_PRESET=php`, optionally modify `NGINX_BACKEND_HOST`
 
 #### WordPress
 

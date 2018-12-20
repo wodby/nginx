@@ -10,7 +10,6 @@ location @app {
     proxy_pass http://app_server;
 }
 
-{{ if getenv "NGINX_DJANGO" }}
 location {{ getenv "NGINX_DJANGO_STATIC_URL" "/static/" }} {
     alias {{ getenv "NGINX_DJANGO_STATIC_ROOT" "/usr/src/app/static/" }};
 }
@@ -18,4 +17,3 @@ location {{ getenv "NGINX_DJANGO_STATIC_URL" "/static/" }} {
 location {{ getenv "NGINX_DJANGO_MEDIA_URL" "/media/" }} {
     alias {{ getenv "NGINX_DJANGO_MEDIA_ROOT" "/usr/src/app/media/" }};
 }
-{{ end }}

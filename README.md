@@ -13,7 +13,7 @@
 * [Virtual hosts presets](#virtual-hosts-presets)
     * [HTML](#html)
     * [HTTP proxy (application server)](#http-proxy-application-server)
-    * [Python](#python)
+    * [Django](#django)
     * [PHP-based (FastCGI)](#PHP-based-fastcgi)
         * [PHP](#php)
         * [WordPress](#wordpress)
@@ -55,7 +55,6 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_CLIENT_MAX_BODY_SIZE`                         | `32m`                       |                                     |
 | `NGINX_CONF_INCLUDE`                                 | `conf.d/*.conf`             |                                     |
 | `NGINX_DISABLE_CACHING`                              |                             |                                     |
-| `NGINX_DJANGO`                                       |                             | Set to enable Django locations for static and media files |
 | `NGINX_DJANGO_MEDIA_ROOT`                            | `/usr/src/app/media/`       |                                     |
 | `NGINX_DJANGO_MEDIA_URL`                             | `/media/`                   |                                     |
 | `NGINX_DJANGO_STATIC_ROOT`                           | `/usr/src/app/static/`      |                                     |
@@ -217,12 +216,12 @@ Overridden default values:
 | `NGINX_BACKEND_HOST` |               |
 | `NGINX_BACKEND_PORT` | `8080`        |
 
-### Python
+### Django
 
-Same as HTTP proxy but with additional media/static locations for Django's that can be enabled via `$NGINX_DJANGO=1`.
+Same as HTTP proxy but with additional media/static locations for Django.
 
-* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/python.conf.tmpl)
-* Usage: add `NGINX_VHOST_PRESET=python` 
+* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/django.conf.tmpl)
+* Usage: add `NGINX_VHOST_PRESET=django` 
 
 Overridden default values:
 

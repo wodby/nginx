@@ -5,7 +5,7 @@ services:
 
 env:
   matrix:
-    - NGINX_VER=1.15.7 TAGS=1.15,1,latest
+    - NGINX_VER=1.15.8 TAGS=1.15,1,latest
     - NGINX_VER=1.14.2 TAGS=1.14
     - NGINX_VER=1.13.12 TAGS=1.13
 

@@ -67,8 +67,8 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_ERROR_404_URI`                                |                             |                                     |
 | `NGINX_ERROR_LOG_LEVEL`                              | `error`                     |                                     |
 | `NGINX_ERROR_MESSAGE_50x`                            |                             |                                     |
-| `NGINX_FASTCGI_REQUEST_URI`                          | `$request_uri`              | For PHP-based presets only          |
-| `NGINX_FASTCGI_DOCUMENT_URI`                         | `$document_uri`             | For PHP-based presets only          |
+| `NGINX_FASTCGI_PARAM_REQUEST_URI`                          | `$request_uri`              | For PHP-based presets only          |
+| `NGINX_FASTCGI_PARAM_DOCUMENT_URI`                         | `$document_uri`             | For PHP-based presets only          |
 | `NGINX_FASTCGI_BUFFER_SIZE`                          | `32k`                       | For PHP-based presets only          |
 | `NGINX_FASTCGI_BUFFERS`                              | `16 32k`                    | For PHP-based presets only          |
 | `NGINX_FASTCGI_INDEX`                                | `index.php`                 | For PHP-based presets only          |

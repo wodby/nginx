@@ -2,8 +2,8 @@ fastcgi_param REQUEST_METHOD $request_method;
 fastcgi_param CONTENT_TYPE $content_type if_not_empty;
 fastcgi_param CONTENT_LENGTH $content_length;
 
-fastcgi_param REQUEST_URI $request_uri;
-fastcgi_param DOCUMENT_URI $document_uri;
+fastcgi_param REQUEST_URI {{ getenv "NGINX_FASTCGI_REQUEST_URI" "$request_uri" }};
+fastcgi_param DOCUMENT_URI {{ getenv "NGINX_FASTCGI_DOCUMENT_URI" "$document_uri" }};
 fastcgi_param DOCUMENT_ROOT $document_root;
 fastcgi_param SERVER_PROTOCOL $server_protocol;
 

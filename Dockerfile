@@ -1,4 +1,6 @@
-FROM wodby/alpine:3.8-2.1.1
+ARG BASE_IMAGE_TAG
+
+FROM wodby/alpine:${BASE_IMAGE_TAG}
 
 ARG NGINX_VER
 

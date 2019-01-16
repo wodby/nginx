@@ -4,6 +4,9 @@ services:
   - docker
 
 env:
+  global:
+    - BASE_IMAGE_STABILITY_TAG=2.1.1
+    - ALPINE_VER=3.8
   matrix:
     - NGINX_VER=1.15.8 TAGS=1.15,1,latest
     - NGINX_VER=1.14.2 TAGS=1.14

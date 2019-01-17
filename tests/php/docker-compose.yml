@@ -6,6 +6,8 @@ services:
     environment:
       NGINX_BACKEND_HOST: php
       NGINX_VHOST_PRESET: php
+      NGINX_SET_REAL_IP_FROM: "127.0.0.1/32"
+      NGINX_REAL_IP_HEADER: "X-Forwarded-For"
     depends_on:
       - php
   php:

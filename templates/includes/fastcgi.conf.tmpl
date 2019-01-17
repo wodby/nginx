@@ -15,6 +15,10 @@ fastcgi_param SERVER_ADDR $server_addr;
 fastcgi_param SERVER_PORT $server_port;
 fastcgi_param SERVER_NAME $server_name;
 
+fastcgi_param COUNTRY_CODE $geoip2_data_country_code;
+fastcgi_param COUNTRY_NAME $geoip2_data_country_name;
+fastcgi_param CITY_NAME    $geoip2_data_city_name;
+
 fastcgi_param REDIRECT_STATUS 200;
 
 fastcgi_param HTTPS $fastcgi_https if_not_empty;

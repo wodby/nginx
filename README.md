@@ -10,6 +10,7 @@
 * [Nginx modules](#nginx-modules)
     * [PageSpeed]
     * [ModSecurity]
+    * [GeoIP2]
 * [Virtual hosts presets](#virtual-hosts-presets)
     * [HTML](#html)
     * [HTTP proxy (application server)](#http-proxy-application-server)
@@ -141,34 +142,34 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 
 ## Nginx modules
 
-| Name                  | Version           |
-| --------------------- | ----------------  |
-| [http_addition]       |                   |
-| [http_auth_request]   |                   |
-| [http_dav]            |                   |
-| [http_flv]            |                   |
-| [http_geoip]          |                   |
-| [http_gunzip]         |                   |
-| [http_gzip_static]    |                   |
-| [http_image_filter]   |                   |
-| [http_mp4]            |                   |
-| [http_random_index]   |                   |
-| [http_realip]         |                   |
-| [http_secure_link]    |                   |
-| [http_slice]          |                   |
-| [http_ssl]            |                   |
-| [http_stub_status]    |                   |
-| [http_sub]            |                   |
-| [http_v2]             |                   |
-| [http_xslt]           |                   |
-| [mail_ssl]            |                   |
-| modsecurity           | See [ModSecurity] |
-| pagespeed             | See [PageSpeed]   |
-| [uploadprogress]      | 0.9.1             |
-| [stream_geoip]        |                   |
-| [stream_realip]       |                   |
-| [stream_ssl]          |                   |
-| [stream_ssl_preread]  |                   |
+| Name                  | Version           | Dynamic |
+| --------------------- | ----------------  | ------- |
+| [http_addition]       |                   |         |
+| [http_auth_request]   |                   |         |
+| [http_dav]            |                   |         |
+| [http_flv]            |                   |         |
+| [http_geoip2]         | 3.2, see [GeoIP2] |         |
+| [http_gunzip]         |                   |         |
+| [http_gzip_static]    |                   |         |
+| [http_image_filter]   |                   | ✓       |
+| http_modsecurity      | See [ModSecurity] | ✓       |
+| [http_mp4]            |                   |         |
+| [http_random_index]   |                   |         |
+| [http_realip]         |                   |         |
+| [http_secure_link]    |                   |         |
+| [http_slice]          |                   |         |
+| [http_ssl]            |                   |         |
+| [http_stub_status]    |                   |         |
+| [http_sub]            |                   |         |
+| [http_uploadprogress] | 0.9.1             |         |
+| [http_v2]             |                   |         |
+| [http_xslt]           |                   | ✓       |
+| [mail_ssl]            |                   |         |
+| pagespeed             | See [PageSpeed]   | ✓       |
+| [stream_geoip2]       |                   |         |
+| [stream_realip]       |                   |         |
+| [stream_ssl]          |                   |         |
+| [stream_ssl_preread]  |                   |         |
 
 ### Pagespeed
 
@@ -177,7 +178,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [PageSpeed Nginx module] | 1.13.35.2 |
 | [PageSpeed Library]      | 1.13.35.2 |
 
-To enable [Apache PageSpeed module](https://www.modpagespeed.com/) set `$NGINX_PAGESPEED_ENABLED` to any value. Additionally, you can change module status via `$NGINX_PAGESPEED` (set to `on` by default) and configure it via `$NGINX_PAGESPEED_` environment variables.
+Compiled as a dynamic module, disabled by default. To enable [Apache PageSpeed module](https://www.modpagespeed.com/) set `$NGINX_PAGESPEED_ENABLED` to any value. Additionally, you can change module status via `$NGINX_PAGESPEED` (set to `on` by default) and configure it via `$NGINX_PAGESPEED_` environment variables.
 
 ### ModSecurity
 
@@ -187,7 +188,19 @@ To enable [Apache PageSpeed module](https://www.modpagespeed.com/) set `$NGINX_P
 | [ModSecurity Library]      | 3.0.3   |
 | [OWASP CRS]                | 3.1.0   |
 
-ModSecurity is disabled by default, to enable set `$NGINX_MODSECURITY_ENABLED` to any value. Additionally, you can enable [OWASP Core Rule Set (CRS)](https://modsecurity.org/crs/) by setting `$NGINX_MODSECURITY_USE_OWASP_CRS` to any value, ️be wary since it may [block some requests](https://github.com/wodby/nginx/pull/14#issuecomment-447404035) with the default configuration. See env vars starting with `$NGINX_MODSECURITY_` for advanced configuration.  
+Compiled as a dynamic module, disabled by default. To enable set `$NGINX_MODSECURITY_ENABLED` to any value. Additionally, you can enable [OWASP Core Rule Set (CRS)](https://modsecurity.org/crs/) by setting `$NGINX_MODSECURITY_USE_OWASP_CRS` to any value, ️be wary since it may [block some requests](https://github.com/wodby/nginx/pull/14#issuecomment-447404035) with the default configuration. See env vars starting with `$NGINX_MODSECURITY_` for advanced configuration.
+
+### GeoIP2
+
+Nginx [http_geoip2] module enabled by default and will identify city, country code and country name based on the request IP and MaxMind databases. The following variables can be used in Nginx configs and will be passes as fastcgi params:
+
+```
+fastcgi_param COUNTRY_CODE $geoip2_data_country_code;
+fastcgi_param COUNTRY_NAME $geoip2_data_country_name;
+fastcgi_param CITY_NAME    $geoip2_data_city_name;
+```  
+
+If GeoIP fails identify a location the values will be empty.
 
 ## Virtual hosts presets
 
@@ -303,11 +316,12 @@ default params values:
     branch ""    
 ```
 
+[GeoIP2]: #geoip2
 [http_addition]: http://nginx.org/en/docs/http/ngx_http_addition_module.html
 [http_auth_request]: http://nginx.org/en/docs/http/ngx_http_auth_request_module.html
 [http_dav]: http://nginx.org/en/docs/http/ngx_http_dav_module.html
 [http_flv]: http://nginx.org/en/docs/http/ngx_http_flv_module.html
-[http_geoip]: http://nginx.org/en/docs/http/ngx_http_geoip_module.html
+[http_geoip2]: https://github.com/leev/ngx_http_geoip2_module
 [http_gunzip]: http://nginx.org/en/docs/http/ngx_http_gunzip_module.html
 [http_gzip_static]: http://nginx.org/en/docs/http/ngx_http_gzip_static_module.html
 [http_image_filter]: http://nginx.org/en/docs/http/ngx_http_image_filter_module.html
@@ -319,6 +333,7 @@ default params values:
 [http_ssl]: http://nginx.org/en/docs/http/ngx_http_ssl_module.html
 [http_stub_status]: http://nginx.org/en/docs/http/ngx_http_stub_status_module.html
 [http_sub]: http://nginx.org/en/docs/http/ngx_http_sub_module.html
+[http_uploadprogress]: https://github.com/masterzen/nginx-upload-progress-module
 [http_v2]: http://nginx.org/en/docs/http/ngx_http_v2_module.html
 [http_xslt]: http://nginx.org/en/docs/http/ngx_http_xslt_module.html
 [mail_ssl]: http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html
@@ -329,8 +344,7 @@ default params values:
 [PageSpeed Library]: https://www.modpagespeed.com/
 [PageSpeed Nginx module]: https://github.com/apache/incubator-pagespeed-ngx
 [PageSpeed]: #pagespeed
-[stream_geoip]: http://nginx.org/en/docs/stream/ngx_stream_geoip_module.html
+[stream_geoip2]: https://github.com/leev/ngx_http_geoip2_module
 [stream_realip]: http://nginx.org/en/docs/stream/ngx_stream_realip_module.html
 [stream_ssl]: http://nginx.org/en/docs/stream/ngx_stream_ssl_module.html
 [stream_ssl_preread]: http://nginx.org/en/docs/stream/ngx_stream_ssl_preread_module.html
-[uploadprogress]: https://github.com/masterzen/nginx-upload-progress-module

@@ -30,7 +30,7 @@ echo -n "Checking Nginx version... "
 2>&1 nginx -v | grep -q "nginx/${NGINX_VER}"
 echo "OK"
 
-2>&1 nginx -V | tr -- - '\n' | grep -E "_module|module=" | sed -E 's#=dynamic|_module|module=/tmp/##g' | sed 's/[ \t]*$//' | sort > /tmp/nginx_modules
+2>&1 nginx -V | tr -- - '\n' | grep -E "_module|module=" | sed -E 's#ngx_|=dynamic|_module|module=/tmp/##g' | sed 's/[ \t]*$//' | sort > /tmp/nginx_modules
 
 echo -n "Checking Nginx modules... "
 if ! cmp -s /tmp/nginx_modules /home/wodby/nginx_modules; then

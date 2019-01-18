@@ -20,7 +20,6 @@ http_v2
 http_xslt
 mail_ssl
 pagespeed
-stream_geoip2
 stream_realip
 stream_ssl
 stream_ssl_preread

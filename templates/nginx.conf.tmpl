@@ -55,11 +55,12 @@ http {
     gzip_disable                {{ getenv "NGINX_GZIP_DISABLE" "msie6" }};
 
     {{ if getenv "NGINX_PAGESPEED_ENABLED" }}
-    pagespeed                       {{ getenv "NGINX_PAGESPEED" "on" }};
-    pagespeed FileCachePath         {{ getenv "NGINX_PAGESPEED_FILE_CACHE_PATH" "/var/cache/ngx_pagespeed/" }};
-    pagespeed PreserveUrlRelativity {{ getenv "NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY" "on" }};
-    pagespeed RewriteLevel          {{ getenv "NGINX_PAGESPEED_REWRITE_LEVEL" "CoreFilters" }};
-    pagespeed StaticAssetPrefix     {{ getenv "NGINX_PAGESPEED_STATIC_ASSET_PREFIX" "/pagespeed_static" }};
+    pagespeed                           {{ getenv "NGINX_PAGESPEED" "on" }};
+    pagespeed FileCachePath             {{ getenv "NGINX_PAGESPEED_FILE_CACHE_PATH" "/var/cache/ngx_pagespeed/" }};
+    pagespeed PreserveUrlRelativity     {{ getenv "NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY" "on" }};
+    pagespeed RewriteLevel              {{ getenv "NGINX_PAGESPEED_REWRITE_LEVEL" "CoreFilters" }};
+    pagespeed StaticAssetPrefix         {{ getenv "NGINX_PAGESPEED_STATIC_ASSET_PREFIX" "/pagespeed_static" }};
+    pagespeed RespectXForwardedProto    {{ getenv "NGINX_PAGESPEED_RESPECT_X_FORWARDED_PROTO" "on" }};
     {{ end }}
 
     {{ if getenv "NGINX_SET_REAL_IP_FROM" }}

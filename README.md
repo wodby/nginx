@@ -101,6 +101,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_PAGESPEED_ENABLED`                            |                             | See [PageSpeed]                     |
 | `NGINX_PAGESPEED_FILE_CACHE_PATH`                    | `/var/cache/ngx_pagespeed/` |                                     |
 | `NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY`            | `on`                        |                                     |
+| `NGINX_PAGESPEED_RESPECT_X_FORWARDED_PROTO`          | `on`                        |                                     |
 | `NGINX_PAGESPEED_REWRITE_LEVEL`                      | `CoreFilters`               |                                     |
 | `NGINX_PAGESPEED_STATIC_ASSET_PREFIX`                | `/pagespeed_static`         |                                     |
 | `NGINX_PAGESPEED`                                    | `on`                        | See [PageSpeed]                     |

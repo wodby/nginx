@@ -10,7 +10,9 @@
 * [Nginx modules](#nginx-modules)
     * [PageSpeed]
     * [ModSecurity]
-    * [GeoIP2]
+    * [GeoIP2]  
+* [Default behaviour](#default-behavior)    
+* [Customization](#customization)      
 * [Virtual hosts presets](#virtual-hosts-presets)
     * [HTML](#html)
     * [HTTP proxy (application server)](#http-proxy-application-server)
@@ -21,7 +23,6 @@
         * [Drupal](#drupal)
     * [Custom preset](#custom-preset)
     * [No preset](#no-preset)
-* [Customization](#customization)
 * [Orchestration actions](#orchestration-actions)
 
 ## Docker Images
@@ -202,6 +203,29 @@ fastcgi_param CITY_NAME    $geoip2_data_city_name;
 
 If GeoIP fails identify a location the values will be empty.
 
+## Default behavior
+
+Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS`:
+
+* `./well-known/` location supported
+* `robots.txt` allowed
+* `favicon.ico` allowed
+* `.flv`, `.m4a`, `.mp4`, `.mov` locations supported and handled with appropriate modules
+*  `./healthz` location supported, requests not shown in access log
+
+## Customization
+
+* Pass real IP from a reverse proxy via `$NGINX_SET_REAL_IP_FROM`, e.g. `172.17.0.0/16` for docker network 
+* Customize the header which value will be used to replace the client address via `$NGINX_REAL_IP_HEADER`
+* Default recommended headers can be disabled via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
+* Error page file can be customized for HTTP errors `403` (`$NGINX_ERROR_403_URI`) and `404` (`$NGINX_ERROR_404_URI`)
+* Default error page for HTTP errors `500`, `502`, `503`, `504` can be disabled via `$NGINX_HIDE_50x_ERRORS`
+* Access to hidden files (starting with `.`) can be allowed via `$NGINX_ALLOW_ACCESS_HIDDEN_FILES`
+* Caching can be disabled via `$NGINX_DISABLE_CACHING`
+* Add extra locations via `$NGINX_SERVER_EXTRA_CONF_FILEPATH=/filepath/to/nginx-locations.conf`, the file will be included at the end of default rules (`server` context)
+* Completely override include of the virtual host config by overriding `NGINX_CONF_INCLUDE`, it will be included in `nginx.conf`
+* Define [custom preset](#custom-preset)
+
 ## Virtual hosts presets
 
 By default will be used `html` virtual host preset, you can change it via env var `$NGINX_VHOST_PRESET`. The list of available presets:
@@ -288,13 +312,9 @@ You can use a custom by preset by mounting your preset to `/etc/gotpl/presets/[m
 
 To disable presets set `$NGINX_VHOST_PRESET=""`
 
-## Customization
+## Maintenance
 
-* Disable default recommended headers via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
-* Disable default rules included in virtual host via `$NGINX_VHOST_NO_DEFAULTS` 
-* Add extra locations via `$NGINX_SERVER_EXTRA_CONF_FILEPATH=/filepath/to/nginx-locations.conf`, the file will be included at the end of virtual host config (`server` context)
-* Define [custom preset](#custom-preset)
-* Completely override include of the virtual host config by overriding `NGINX_CONF_INCLUDE`, it will be included in `nginx.conf`
+Updates to Nginx and base image automated via [wodby/images](https://github.com/wodby/images).
 
 ## Orchestration actions
 

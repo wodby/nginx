@@ -13,8 +13,7 @@ ENV NGINX_VER="${NGINX_VER}" \
     NGINX_VHOST_PRESET="html" \
     NGX_MODSECURITY_VER="1.0.0" \
     MODSECURITY_VER="3.0.3" \
-    OWASP_CRS_VER="3.1.0" \
-    GEOIP2_VER="3.2"
+    OWASP_CRS_VER="3.1.0"
 
 RUN set -ex; \
     \
@@ -37,13 +36,11 @@ RUN set -ex; \
         apr-util-dev \
         build-base \
         gd-dev \
-        geoip-dev\
         git \
         gnupg \
         gperf \
         icu-dev \
         libjpeg-turbo-dev \
-        libmaxminddb-dev \
         libpng-dev \
         libressl-dev \
         libtool \
@@ -59,7 +56,6 @@ RUN set -ex; \
         curl \
         flex \
         g++ \
-        geoip \
         git \
         libmaxminddb-dev \
         libstdc++ \
@@ -110,14 +106,6 @@ RUN set -ex; \
           -j$(getconf _NPROCESSORS_ONLN) \
           https://github.com/apache/incubator-pagespeed-ngx.git \
           /tmp/ngx_pagespeed; \
-    \
-    # Get nginx geoip2 module and databases.
-    mkdir -p /tmp/ngx_http_geoip2_module /usr/share/maxmind; \
-    url="https://github.com/leev/ngx_http_geoip2_module/archive/${GEOIP2_VER}.tar.gz"; \
-    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_geoip2_module; \
-    wget -P /usr/share/maxmind http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz; \
-    wget -P /usr/share/maxmind http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.mmdb.gz; \
-    gunzip /usr/share/maxmind/*.gz; \
     \
     # Get psol for alpine.
     url="https://github.com/wodby/nginx-alpine-psol/releases/download/${MOD_PAGESPEED_VER}/psol.tar.gz"; \
@@ -179,7 +167,6 @@ RUN set -ex; \
 		--with-stream_realip_module \
         --with-threads \
         --add-module=/tmp/ngx_http_uploadprogress_module \
-        --add-module=/tmp/ngx_http_geoip2_module \
         --add-dynamic-module=/tmp/ngx_pagespeed \
         --add-dynamic-module=/tmp/ngx_http_modsecurity_module; \
     \

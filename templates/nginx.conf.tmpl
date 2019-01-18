@@ -84,16 +84,5 @@ http {
         ~^/(?<no_slash>.*)$ $no_slash;
     }
 
-    geoip2 /usr/share/maxmind/GeoLite2-Country.mmdb {
-        auto_reload 5m;
-        $geoip2_metadata_country_build metadata build_epoch;
-        $geoip2_data_country_code country iso_code;
-        $geoip2_data_country_name country names en;
-    }
-
-    geoip2 /usr/share/maxmind/GeoLite2-City.mmdb {
-        $geoip2_data_city_name city names en;
-    }
-
     include {{ getenv "NGINX_CONF_INCLUDE" "conf.d/*.conf" }};
 }

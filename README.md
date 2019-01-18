@@ -10,7 +10,6 @@
 * [Nginx modules](#nginx-modules)
     * [PageSpeed]
     * [ModSecurity]
-    * [GeoIP2]  
 * [Default behaviour](#default-behavior)    
 * [Customization](#customization)      
 * [Virtual hosts presets](#virtual-hosts-presets)
@@ -150,7 +149,6 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_auth_request]   |                   |         |
 | [http_dav]            |                   |         |
 | [http_flv]            |                   |         |
-| [http_geoip2]         | 3.2, see [GeoIP2] |         |
 | [http_gunzip]         |                   |         |
 | [http_gzip_static]    |                   |         |
 | [http_image_filter]   |                   | ✓       |
@@ -168,7 +166,6 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_xslt]           |                   | ✓       |
 | [mail_ssl]            |                   |         |
 | pagespeed             | See [PageSpeed]   | ✓       |
-| [stream_geoip2]       |                   |         |
 | [stream_realip]       |                   |         |
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
@@ -191,18 +188,6 @@ Compiled as a dynamic module, disabled by default. To enable [Apache PageSpeed m
 | [OWASP CRS]                | 3.1.0   |
 
 Compiled as a dynamic module, disabled by default. To enable set `$NGINX_MODSECURITY_ENABLED` to any value. Additionally, you can enable [OWASP Core Rule Set (CRS)](https://modsecurity.org/crs/) by setting `$NGINX_MODSECURITY_USE_OWASP_CRS` to any value, ️be wary since it may [block some requests](https://github.com/wodby/nginx/pull/14#issuecomment-447404035) with the default configuration. See env vars starting with `$NGINX_MODSECURITY_` for advanced configuration.
-
-### GeoIP2
-
-Nginx [http_geoip2] module enabled by default and will identify city, country code and country name based on the request IP and MaxMind databases. The following variables can be used in Nginx configs and will be passes as fastcgi params:
-
-```
-fastcgi_param COUNTRY_CODE $geoip2_data_country_code;
-fastcgi_param COUNTRY_NAME $geoip2_data_country_name;
-fastcgi_param CITY_NAME    $geoip2_data_city_name;
-```  
-
-If GeoIP fails identify a location the values will be empty.
 
 ## Default behavior
 
@@ -337,12 +322,10 @@ default params values:
     branch ""    
 ```
 
-[GeoIP2]: #geoip2
 [http_addition]: http://nginx.org/en/docs/http/ngx_http_addition_module.html
 [http_auth_request]: http://nginx.org/en/docs/http/ngx_http_auth_request_module.html
 [http_dav]: http://nginx.org/en/docs/http/ngx_http_dav_module.html
 [http_flv]: http://nginx.org/en/docs/http/ngx_http_flv_module.html
-[http_geoip2]: https://github.com/leev/ngx_http_geoip2_module
 [http_gunzip]: http://nginx.org/en/docs/http/ngx_http_gunzip_module.html
 [http_gzip_static]: http://nginx.org/en/docs/http/ngx_http_gzip_static_module.html
 [http_image_filter]: http://nginx.org/en/docs/http/ngx_http_image_filter_module.html
@@ -365,7 +348,6 @@ default params values:
 [PageSpeed Library]: https://www.modpagespeed.com/
 [PageSpeed Nginx module]: https://github.com/apache/incubator-pagespeed-ngx
 [PageSpeed]: #pagespeed
-[stream_geoip2]: https://github.com/leev/ngx_http_geoip2_module
 [stream_realip]: http://nginx.org/en/docs/stream/ngx_stream_realip_module.html
 [stream_ssl]: http://nginx.org/en/docs/stream/ngx_stream_ssl_module.html
 [stream_ssl_preread]: http://nginx.org/en/docs/stream/ngx_stream_ssl_preread_module.html

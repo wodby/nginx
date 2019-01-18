@@ -2,7 +2,6 @@ http_addition
 http_auth_request
 http_dav
 http_flv
-http_geoip2
 http_gunzip
 http_gzip_static
 http_image_filter

@@ -17,14 +17,12 @@ http {
     include                     /etc/nginx/mime.types;
     default_type                application/octet-stream;
 
-    {{ $access_log_format := "combined" }}
-
     {{ if getenv "NGINX_LOG_FORMAT_OVERRIDE" }}
     log_format                  custom '{{ getenv "NGINX_LOG_FORMAT_OVERRIDE" }}';
-    {{ $access_log_format := "custom" }}
+    access_log                  /proc/self/fd/1 custom;
+    {{ else}}
+    access_log                  /proc/self/fd/1 combined;
     {{ end }}
-
-    access_log                  /proc/self/fd/1 {{ $access_log_format }};
 
     send_timeout                {{ getenv "NGINX_SEND_TIMEOUT" "60s" }};
     sendfile                    {{ getenv "NGINX_SENDFILE" "on" }};

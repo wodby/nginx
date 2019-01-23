@@ -10,3 +10,4 @@ services:
       NGINX_PAGESPEED_ENABLED: "1"
       NGINX_MODSECURITY_ENABLED: "1"
       NGINX_MODSECURITY_USE_OWASP_CRS: "1"
+      NGINX_LOG_FORMAT_OVERRIDE: "$$http_x_real_ip - $$request - $$status"

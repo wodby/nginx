@@ -26,6 +26,12 @@ echo "OK"
 
 rm /var/www/html/index.html
 
+echo -n "Checking custom log format override .."
+grep "log_format" /etc/nginx/nginx.conf | grep -q "custom"
+grep "log_format" /etc/nginx/nginx.conf | grep -q '$http_x_real_ip - $request - $status'
+grep "access_log" /etc/nginx/nginx.conf | grep -q "custom"
+echo "Ok"
+
 echo -n "Checking Nginx version... "
 2>&1 nginx -v | grep -q "nginx/${NGINX_VER}"
 echo "OK"

@@ -136,7 +136,7 @@ Supported tags and respective `Dockerfile` links:
 
 Static files extension defined via the regex and can be overridden via the env var `NGINX_STATIC_EXT_REGEX`, default:
 ```
-css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt
+css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map
 ```
 
 Some environment variables can be overridden or added per [preset](#virtual-hosts-presets). 

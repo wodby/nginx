@@ -12,6 +12,8 @@ services:
       - codebase:/var/www/html
   wordpress:
     image: wodby/wordpress
+    environment:
+      WODBY_APP_NAME: test
     volumes:
       - codebase:/var/www/html
 

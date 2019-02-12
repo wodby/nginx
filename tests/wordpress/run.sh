@@ -6,18 +6,15 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
-nginx_exec() {
-    docker-compose exec nginx "${@}"
-}
-
 check_endpoint() {
-    nginx_exec curl -s -I "localhost/${1}" | grep -q "${2}"
+    docker-compose exec nginx curl -s -I "localhost/${1}" | grep -q "${2}"
     echo "OK"
 }
 
 docker-compose up -d
 
-nginx_exec make check-ready -f /usr/local/bin/actions.mk
+docker-compose exec nginx make check-ready -f /usr/local/bin/actions.mk
+docker-compose exec wordpress make init -f /usr/local/bin/actions.mk
 
 echo -n "Checking homepage endpoint... "
 check_endpoint "" "302 Found"

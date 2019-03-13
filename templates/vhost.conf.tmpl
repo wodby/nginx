@@ -18,4 +18,8 @@ server {
     {{ if not (getenv "NGINX_VHOST_NO_DEFAULTS") }}
     include defaults.conf;
     {{ end }}
+
+    {{ if getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }}
+    include {{ getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }};
+    {{ end }}
 }

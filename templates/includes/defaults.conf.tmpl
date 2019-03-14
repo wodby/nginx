@@ -73,7 +73,3 @@ error_page 403 {{ getenv "NGINX_ERROR_403_URI" }};
 {{ if getenv "NGINX_ERROR_404_URI" }}
 error_page 404 {{ getenv "NGINX_ERROR_404_URI" }};
 {{ end }}
-
-{{ if getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }}
-include {{ getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }};
-{{ end }}

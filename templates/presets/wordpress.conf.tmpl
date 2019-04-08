@@ -18,7 +18,7 @@ location / {
 
     location ~* /wp-content/uploads/.+\.txt {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
-        expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
         tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};
         open_file_cache {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE" "max=1000 inactive=30s" }};
         open_file_cache_valid {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_VALID" "30s" }};
@@ -37,7 +37,7 @@ location / {
     location ~* ^.+\.(?:{{ $static }})$ {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
         tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};
-        expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
 
         add_header Pragma "cache";
         add_header Cache-Control "public";

@@ -5,7 +5,7 @@ services:
 
 env:
   global:
-    - BASE_IMAGE_STABILITY_TAG=2.2.1
+    - BASE_IMAGE_STABILITY_TAG=2.2.2
     - ALPINE_VER=3.8
   matrix:
     - NGINX_VER=1.15.10 TAGS=1.15,1,latest

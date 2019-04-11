@@ -8,7 +8,7 @@ env:
     - BASE_IMAGE_STABILITY_TAG=2.2.2
     - ALPINE_VER=3.8
   matrix:
-    - NGINX_VER=1.15.10 TAGS=1.15,1,latest
+    - NGINX_VER=1.15.11 TAGS=1.15,1,latest
     - NGINX_VER=1.14.2 TAGS=1.14
     - NGINX_VER=1.13.12 TAGS=1.13
 

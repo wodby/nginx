@@ -5,22 +5,22 @@ services:
 
 env:
   global:
-    - BASE_IMAGE_STABILITY_TAG=2.2.2
-    - ALPINE_VER=3.8
+  - BASE_IMAGE_STABILITY_TAG=2.2.2
+  - ALPINE_VER=3.8
   matrix:
-    - NGINX_VER=1.15.11 TAGS=1.15,1,latest
-    - NGINX_VER=1.14.2 TAGS=1.14
-    - NGINX_VER=1.13.12 TAGS=1.13
+  - NGINX_VER=1.15.11 TAGS=1.15,1,latest
+  - NGINX_VER=1.14.2 TAGS=1.14
+  - NGINX_VER=1.13.12 TAGS=1.13
 
 script:
-  - make && make test
+- make && make test
 
 after_success:
-  - . "${TRAVIS_BUILD_DIR}/release.sh"
+- . "${TRAVIS_BUILD_DIR}/release.sh"
 
 notifications:
   email:
     recipients:
-      - $NOTIFICATIONS_EMAIL
+    - travisci@wodby.com
     on_success: never
     on_failure: always

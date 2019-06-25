@@ -1,6 +1,6 @@
 -include env_make
 
-NGINX_VER ?= 1.17.0
+NGINX_VER ?= 1.17.1
 NGINX_MINOR_VER ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 TAG ?= $(NGINX_MINOR_VER)

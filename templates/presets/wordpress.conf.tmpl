@@ -11,6 +11,13 @@ add_header  X-Content-Type-Options nosniff;
 add_header  Cache-Control "store, must-revalidate, post-check=0, pre-check=0";
 {{ end }}
 
+{{ if getenv "NGINX_WP_GOOGLE_XML_SITEMAP" }}
+rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml$ "/index.php?xml_sitemap=params=$2" last;
+rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml\.gz$ "/index.php?xml_sitemap=params=$2;zip=true" last;
+rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html$ "/index.php?xml_sitemap=params=$2;html=true" last;
+rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
+{{ end }}
+
 location / {
     location = /readme.html {
         return 404;
@@ -34,6 +41,7 @@ location / {
         deny all;
     }
 
+    {{ if getenv "NGINX_WP_YOAST_XML_SITEMAP" }}
     location ~ ([^/]*)sitemap(.*).x(m|s)l$ {
         rewrite ^/sitemap.xml$ /sitemap_index.xml permanent;
         rewrite ^/([a-z]+)?-?sitemap.xsl$ /index.php?yoast-sitemap-xsl=$1 last;
@@ -44,6 +52,7 @@ location / {
         rewrite ^/geo-sitemap.xml$ /index.php?sitemap=wpseo_local last;
         rewrite ^/video-sitemap.xsl$ /index.php?yoast-sitemap-xsl=video last;
     }
+    {{ end }}
 
     location ~* ^.+\.(?:{{ $static }})$ {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};

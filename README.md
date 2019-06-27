@@ -5,43 +5,43 @@
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 [![Docker Layers](https://images.microbadger.com/badges/image/wodby/nginx.svg)](https://microbadger.com/images/wodby/nginx)
 
-* [Docker images](#docker-images)
-* [Environment variables](#environment-variables)
-* [Nginx modules](#nginx-modules)
-    * [PageSpeed]
-    * [ModSecurity]
-* [Default behaviour](#default-behavior)    
-* [Customization](#customization)      
-* [Virtual hosts presets](#virtual-hosts-presets)
-    * [HTML](#html)
-    * [HTTP proxy (application server)](#http-proxy-application-server)
-    * [Django](#django)
-    * [PHP-based (FastCGI)](#PHP-based-fastcgi)
-        * [PHP](#php)
-        * [WordPress](#wordpress)
-        * [Drupal](#drupal)
-    * [Custom preset](#custom-preset)
-    * [No preset](#no-preset)
-* [Orchestration actions](#orchestration-actions)
+- [Docker images](#docker-images)
+- [Environment variables](#environment-variables)
+- [Nginx modules](#nginx-modules)
+    - [PageSpeed]
+    - [ModSecurity]
+- [Default behaviour](#default-behavior)    
+- [Customization](#customization)      
+- [Virtual hosts presets](#virtual-hosts-presets)
+    - [HTML](#html)
+    - [HTTP proxy (application server)](#http-proxy-application-server)
+    - [Django](#django)
+    - [PHP-based (FastCGI)](#PHP-based-fastcgi)
+        - [PHP](#php)
+        - [WordPress](#wordpress)
+        - [Drupal](#drupal)
+    - [Custom preset](#custom-preset)
+    - [No preset](#no-preset)
+- [Orchestration actions](#orchestration-actions)
 
 ## Docker Images
 
-❗For better reliability we release images with stability tags (`wodby/nginx:1.15-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags. 
+❗For better reliability we release images with stability tags (`wodby/nginx:1.17-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags. 
 
 Overview:
 
-* All images are based on Alpine Linux
-* Base image: [wodby/alpine](https://github.com/wodby/alpine)
-* [Travis CI builds](https://travis-ci.org/wodby/nginx) 
-* [Docker Hub](https://hub.docker.com/r/wodby/nginx)
+- All images are based on Alpine Linux
+- Base image: [wodby/alpine](https://github.com/wodby/alpine)
+- [Travis CI builds](https://travis-ci.org/wodby/nginx) 
+- [Docker Hub](https://hub.docker.com/r/wodby/nginx)
 
 Supported tags and respective `Dockerfile` links:
 
-* `1.17`, `1`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-* `1.16` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-* `1.15` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-* `1.14` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-* `1.13` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.17`, `1`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.16` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.15` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.14` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.13` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 
 ## Environment Variables
 
@@ -135,6 +135,8 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_VHOST_PRESET`                                 | `html`                      |                                     |
 | `NGINX_WORKER_CONNECTIONS`                           | `1024`                      |                                     |
 | `NGINX_WORKER_PROCESSES`                             | `auto`                      |                                     |
+| `NGINX_WP_GOOGLE_XML_SITEMAP`                        |                             | See [WordPress]                     |
+| `NGINX_WP_YOAST_XML_SITEMAP`                         |                             | See [WordPress]                     |
 
 Static files extension defined via the regex and can be overridden via the env var `NGINX_STATIC_EXT_REGEX`, default:
 ```
@@ -195,24 +197,24 @@ Compiled as a dynamic module, disabled by default. To enable set `$NGINX_MODSECU
 
 Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS`:
 
-* `./well-known/` location supported
-* `robots.txt` allowed
-* `favicon.ico` allowed
-* `.flv`, `.m4a`, `.mp4`, `.mov` locations supported and handled with appropriate modules
-*  `./healthz` location supported, requests not shown in access log
+- `./well-known/` location supported
+- `robots.txt` allowed
+- `favicon.ico` allowed
+- `.flv`, `.m4a`, `.mp4`, `.mov` locations supported and handled with appropriate modules
+-  `./healthz` location supported, requests not shown in access log
 
 ## Customization
 
-* Pass real IP from a reverse proxy via `$NGINX_SET_REAL_IP_FROM`, e.g. `172.17.0.0/16` for docker network 
-* Customize the header which value will be used to replace the client address via `$NGINX_REAL_IP_HEADER`
-* Default recommended headers can be disabled via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
-* Error page file can be customized for HTTP errors `403` (`$NGINX_ERROR_403_URI`) and `404` (`$NGINX_ERROR_404_URI`)
-* Default error page for HTTP errors `500`, `502`, `503`, `504` can be disabled via `$NGINX_HIDE_50x_ERRORS`
-* Access to hidden files (starting with `.`) can be allowed via `$NGINX_ALLOW_ACCESS_HIDDEN_FILES`
-* Caching can be disabled via `$NGINX_DISABLE_CACHING`
-* Add extra locations via `$NGINX_SERVER_EXTRA_CONF_FILEPATH=/filepath/to/nginx-locations.conf`, the file will be included at the end of default rules (`server` context)
-* Completely override include of the virtual host config by overriding `NGINX_CONF_INCLUDE`, it will be included in `nginx.conf`
-* Define [custom preset](#custom-preset)
+- Pass real IP from a reverse proxy via `$NGINX_SET_REAL_IP_FROM`, e.g. `172.17.0.0/16` for docker network 
+- Customize the header which value will be used to replace the client address via `$NGINX_REAL_IP_HEADER`
+- Default recommended headers can be disabled via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
+- Error page file can be customized for HTTP errors `403` (`$NGINX_ERROR_403_URI`) and `404` (`$NGINX_ERROR_404_URI`)
+- Default error page for HTTP errors `500`, `502`, `503`, `504` can be disabled via `$NGINX_HIDE_50x_ERRORS`
+- Access to hidden files (starting with `.`) can be allowed via `$NGINX_ALLOW_ACCESS_HIDDEN_FILES`
+- Caching can be disabled via `$NGINX_DISABLE_CACHING`
+- Add extra locations via `$NGINX_SERVER_EXTRA_CONF_FILEPATH=/filepath/to/nginx-locations.conf`, the file will be included at the end of default rules (`server` context)
+- Completely override include of the virtual host config by overriding `NGINX_CONF_INCLUDE`, it will be included in `nginx.conf`
+- Define [custom preset](#custom-preset)
 
 ## Virtual hosts presets
 
@@ -220,8 +222,8 @@ By default will be used `html` virtual host preset, you can change it via env va
 
 ### HTML
 
-* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/html.conf.tmpl)
-* Usage: this preset selected by default
+- [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/html.conf.tmpl)
+- Usage: this preset selected by default
 
 Overridden default values:
 
@@ -231,8 +233,8 @@ Overridden default values:
 
 ### HTTP proxy (application server)
 
-* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/http-proxy.conf.tmpl)
-* Usage: add `NGINX_VHOST_PRESET=http-proxy` and `NGINX_BACKEND_HOST=[HOST]` 
+- [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/http-proxy.conf.tmpl)
+- Usage: add `NGINX_VHOST_PRESET=http-proxy` and `NGINX_BACKEND_HOST=[HOST]` 
 
 Overridden default values:
 
@@ -245,8 +247,8 @@ Overridden default values:
 
 Same as HTTP proxy but with additional media/static locations for Django.
 
-* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/django.conf.tmpl)
-* Usage: add `NGINX_VHOST_PRESET=django` 
+- [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/django.conf.tmpl)
+- Usage: add `NGINX_VHOST_PRESET=django` 
 
 Overridden default values:
 
@@ -277,16 +279,19 @@ Overridden default values:
 
 #### WordPress
 
-* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
-* Usage: add `NGINX_VHOST_PRESET=wordpress`, optionally modify `NGINX_BACKEND_HOST`  
-* Access to `*.txt` files allowed only if they are located in uploads directory
+- [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
+- Usage: add `NGINX_VHOST_PRESET=wordpress`, optionally modify `NGINX_BACKEND_HOST`  
+- Access to `*.txt` files allowed only if they are located in uploads directory
+- There are 2 ways to add sitemap.xml locations:
+    - For plugin [Google XML Sitemap](https://wordpress.org/plugins/google-sitemap-generator/) add `$NGINX_WP_GOOGLE_XML_SITEMAP=1`
+    - For plugin [Yoast SEO](https://kb.yoast.com/kb/xml-sitemaps-nginx/) add `$NGINX_WP_YOAST_XML_SITEMAP=1`
 
 #### Drupal
 
-* Preset templates: [Drupal 8], [Drupal 7], [Drupal 6]
-* Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal8`, `drupal7` or `drupal6`. Optionally modify `NGINX_BACKEND_HOST`
-* If you want to use [stage_file_proxy](https://www.drupal.org/project/stage_file_proxy) module, set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
-* Access to `*.txt` files allowed only if they are located in files directory 
+- Preset templates: [Drupal 8], [Drupal 7], [Drupal 6]
+- Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal8`, `drupal7` or `drupal6`. Optionally modify `NGINX_BACKEND_HOST`
+- If you want to use [stage_file_proxy](https://www.drupal.org/project/stage_file_proxy) module, set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
+- Access to `*.txt` files allowed only if they are located in files directory 
 
 [Drupal 8]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl
 [Drupal 7]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl
@@ -350,6 +355,7 @@ default params values:
 [PageSpeed Library]: https://www.modpagespeed.com/
 [PageSpeed Nginx module]: https://github.com/apache/incubator-pagespeed-ngx
 [PageSpeed]: #pagespeed
+[WordPress]: #wordpress
 [stream_realip]: http://nginx.org/en/docs/stream/ngx_stream_realip_module.html
 [stream_ssl]: http://nginx.org/en/docs/stream/ngx_stream_ssl_module.html
 [stream_ssl_preread]: http://nginx.org/en/docs/stream/ngx_stream_ssl_preread_module.html

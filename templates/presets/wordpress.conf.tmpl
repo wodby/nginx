@@ -11,6 +11,13 @@ add_header  X-Content-Type-Options nosniff;
 add_header  Cache-Control "store, must-revalidate, post-check=0, pre-check=0";
 {{ end }}
 
+{{ if getenv "NGINX_WP_GOOGLE_XML_SITEMAP" }}
+rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml$ "/index.php?xml_sitemap=params=$2" last;
+rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml\.gz$ "/index.php?xml_sitemap=params=$2;zip=true" last;
+rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html$ "/index.php?xml_sitemap=params=$2;html=true" last;
+rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
+{{ end }}
+
 location / {
     location = /readme.html {
         return 404;
@@ -18,7 +25,7 @@ location / {
 
     location ~* /wp-content/uploads/.+\.txt {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
-        expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
         tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};
         open_file_cache {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE" "max=1000 inactive=30s" }};
         open_file_cache_valid {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_VALID" "30s" }};
@@ -34,10 +41,23 @@ location / {
         deny all;
     }
 
+    {{ if getenv "NGINX_WP_YOAST_XML_SITEMAP" }}
+    location ~ ([^/]*)sitemap(.*).x(m|s)l$ {
+        rewrite ^/sitemap.xml$ /sitemap_index.xml permanent;
+        rewrite ^/([a-z]+)?-?sitemap.xsl$ /index.php?yoast-sitemap-xsl=$1 last;
+        rewrite ^/sitemap_index.xml$ /index.php?sitemap=1 last;
+        rewrite ^/([^/]+?)-sitemap([0-9]+)?.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
+        rewrite ^/news-sitemap.xml$ /index.php?sitemap=wpseo_news last;
+        rewrite ^/locations.kml$ /index.php?sitemap=wpseo_local_kml last;
+        rewrite ^/geo-sitemap.xml$ /index.php?sitemap=wpseo_local last;
+        rewrite ^/video-sitemap.xsl$ /index.php?yoast-sitemap-xsl=video last;
+    }
+    {{ end }}
+
     location ~* ^.+\.(?:{{ $static }})$ {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
         tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};
-        expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
 
         add_header Pragma "cache";
         add_header Cache-Control "public";

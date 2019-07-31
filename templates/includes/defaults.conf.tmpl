@@ -9,7 +9,7 @@ location ^~ /.well-known/ {
 }
 
 location = /favicon.ico {
-    expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+    expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
     try_files /favicon.ico @empty;
     log_not_found off;
     access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
@@ -22,7 +22,7 @@ location = /robots.txt {
 }
 
 location @empty {
-    expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+    expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
     empty_gif;
 }
 

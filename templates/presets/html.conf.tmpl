@@ -5,7 +5,7 @@ location / {
     location ~* ^.+\.(?:{{ $static }})$ {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
         tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};
-        expires {{ getenv "NGINX_STATIC_EXPIRES" "7d" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
 
         add_header Pragma "cache";
         add_header Cache-Control "public";

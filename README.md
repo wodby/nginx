@@ -197,11 +197,12 @@ Compiled as a dynamic module, disabled by default. To enable set `$NGINX_MODSECU
 
 Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS`:
 
-- `./well-known/` location supported
-- `robots.txt` allowed
-- `favicon.ico` allowed
+- `/.well-known/` location supported
+- `/robots.txt` allowed
+- `/humans.txt` allowed
+- `/favicon.ico` allowed
 - `.flv`, `.m4a`, `.mp4`, `.mov` locations supported and handled with appropriate modules
--  `./healthz` location supported, requests not shown in access log
+-  `/.healthz` location supported, requests not shown in access log
 
 ## Customization
 

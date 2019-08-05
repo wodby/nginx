@@ -21,6 +21,12 @@ location = /robots.txt {
     access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
 }
 
+location = /humans.txt {
+    allow all;
+    log_not_found off;
+    access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+}
+
 location @empty {
     expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
     empty_gif;

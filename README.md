@@ -135,6 +135,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_VHOST_PRESET`                                 | `html`                      |                                     |
 | `NGINX_WORKER_CONNECTIONS`                           | `1024`                      |                                     |
 | `NGINX_WORKER_PROCESSES`                             | `auto`                      |                                     |
+| `NGINX_WP_FILE_PROXY_URL`                            |                             | e.g. `http://dev.example.com`       |
 | `NGINX_WP_GOOGLE_XML_SITEMAP`                        |                             | See [WordPress]                     |
 | `NGINX_WP_YOAST_XML_SITEMAP`                         |                             | See [WordPress]                     |
 

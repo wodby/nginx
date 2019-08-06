@@ -19,6 +19,12 @@ rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/index.php?xml_sitemap=params=
 {{ end }}
 
 location / {
+    {{ if getenv "NGINX_WP_FILE_PROXY_URL" }}
+    location ~* /wp-content/uploads {
+        try_files $uri @file_proxy;
+    }
+    {{ end }}
+
     location = /readme.html {
         return 404;
     }
@@ -79,6 +85,12 @@ location / {
 
     try_files $uri $uri/ /index.php?$args;
 }
+
+{{ if getenv "NGINX_WP_FILE_PROXY_URL" }}
+location @file_proxy {
+    rewrite ^ {{ getenv "NGINX_WP_FILE_PROXY_URL" }}$request_uri? permanent;
+}
+{{ end }}
 
 # Admin for subdir multisite.
 if (!-e $request_filename) {

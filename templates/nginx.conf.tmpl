@@ -42,15 +42,79 @@ http {
 
     upload_progress             {{ getenv "NGINX_UPLOAD_PROGRESS" "uploads 1m" }};
 
+    brotli                      {{ getenv "NGINX_BROTLI" "on" }};
+    brotli_static               {{ getenv "NGINX_BROTLI_STATIC" "on" }};
+    brotli_comp_level           {{ getenv "NGINX_BROTLI_COMP_LEVEL" "6" }};
+    brotli_types                application/atom+xml
+                                application/geo+json
+                                application/javascript
+                                application/json
+                                application/ld+json
+                                application/manifest+json
+                                application/rdf+xml
+                                application/rss+xml
+                                application/vnd.ms-fontobject
+                                application/wasm
+                                application/x-font-opentype
+                                application/x-font-truetype
+                                application/x-font-ttf
+                                font/eot
+                                font/opentype
+                                font/otf
+                                image/bmp
+                                image/svg+xml
+                                image/vnd.microsoft.icon
+                                image/x-icon
+                                image/x-win-bitmap
+                                text/cache-manifest
+                                text/css
+                                text/javascript
+                                text/markdown
+                                text/plain
+                                text/x-component
+                                text/x-cross-domain-policy
+                                text/xml
+                                application/x-javascript
+                                application/x-web-app-manifest+json
+                                application/xhtml+xml
+                                application/xml
+                                application/xml+rss;
+
     gzip                        {{ getenv "NGINX_GZIP" "on" }};
     gzip_buffers                {{ getenv "NGINX_GZIP_BUFFERS" "16 8k" }};
     gzip_comp_level             {{ getenv "NGINX_GZIP_COMP_LEVEL" "1" }};
     gzip_http_version           {{ getenv "NGINX_GZIP_HTTP_VERSION" "1.1" }};
     gzip_min_length             {{ getenv "NGINX_GZIP_MIN_LENGTH" "20" }};
-    gzip_types                  text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/x-icon application/vnd.ms-fontobject font/opentype application/x-font-ttf;
     gzip_vary                   {{ getenv "NGINX_GZIP_VARY" "on" }};
     gzip_proxied                {{ getenv "NGINX_GZIP_PROXIED" "any" }};
     gzip_disable                {{ getenv "NGINX_GZIP_DISABLE" "msie6" }};
+    gzip_types                  application/atom+xml
+                                application/geo+json
+                                application/javascript
+                                application/json
+                                application/ld+json
+                                application/manifest+json
+                                application/rdf+xml
+                                application/rss+xml
+                                application/vnd.ms-fontobject
+                                application/wasm
+                                application/x-web-app-manifest+json
+                                application/xhtml+xml
+                                application/xml
+                                font/otf
+                                image/bmp
+                                image/svg+xml
+                                text/cache-manifest
+                                text/calendar
+                                text/css
+                                text/javascript
+                                text/markdown
+                                text/plain
+                                text/vcard
+                                text/vnd.rim.location.xloc
+                                text/vtt
+                                text/x-component
+                                text/x-cross-domain-policy;
 
     {{ if getenv "NGINX_PAGESPEED_ENABLED" }}
     pagespeed                           {{ getenv "NGINX_PAGESPEED" "on" }};

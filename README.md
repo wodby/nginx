@@ -51,6 +51,9 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_BACKEND_FAIL_TIMEOUT`                         | `0`                         |                                     |
 | `NGINX_BACKEND_HOST`                                 | Varies with a preset        |                                     |
 | `NGINX_BACKEND_PORT`                                 | Varies with a preset        |                                     |
+| `NGINX_BROTLI`                                       | `on`                        |                                     |
+| `NGINX_BROTLI_STATIC`                                | `on`                        |                                     |
+| `NGINX_BROTLI_COMP_LEVEL`                            | `6`                         |                                     |
 | `NGINX_CLIENT_BODY_BUFFER_SIZE`                      | `16k`                       |                                     |
 | `NGINX_CLIENT_BODY_TIMEOUT`                          | `60s`                       |                                     |
 | `NGINX_CLIENT_HEADER_BUFFER_SIZE`                    | `4k`                        |                                     |
@@ -150,6 +153,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 
 | Name                  | Version           | Dynamic |
 | --------------------- | ----------------  | ------- |
+| [brotli]              | Latest            |         |
 | [http_addition]       |                   |         |
 | [http_auth_request]   |                   |         |
 | [http_dav]            |                   |         |
@@ -331,6 +335,7 @@ default params values:
     branch ""    
 ```
 
+[brotli]: https://github.com/google/ngx_brotli
 [http_addition]: http://nginx.org/en/docs/http/ngx_http_addition_module.html
 [http_auth_request]: http://nginx.org/en/docs/http/ngx_http_auth_request_module.html
 [http_dav]: http://nginx.org/en/docs/http/ngx_http_dav_module.html

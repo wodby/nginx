@@ -5,17 +5,18 @@ FROM wodby/alpine:${BASE_IMAGE_TAG}
 ARG NGINX_VER
 
 ENV NGINX_VER="${NGINX_VER}" \
-    NGINX_UP_VER="0.9.1" \
-    MOD_PAGESPEED_VER=1.13.35.2 \
-    NGX_PAGESPEED_VER=1.13.35.2 \
     APP_ROOT="/var/www/html" \
     FILES_DIR="/mnt/files" \
-    NGINX_VHOST_PRESET="html" \
-    NGX_MODSECURITY_VER="1.0.0" \
-    MODSECURITY_VER="3.0.3" \
-    OWASP_CRS_VER="3.1.0"
+    NGINX_VHOST_PRESET="html"
 
 RUN set -ex; \
+    \
+    nginx_up_ver="0.9.1"; \
+    ngx_pagespeed_ver="1.13.35.2"; \
+    mod_pagespeed_ver="1.13.35.2"; \
+    ngx_modsecurity_ver="1.0.0"; \
+    modsecurity_ver="3.0.3"; \
+    owasp_crs_ver="3.1.0"; \
     \
     addgroup -S nginx; \
     adduser -S -D -H -h /var/cache/nginx -s /sbin/nologin -G nginx nginx; \
@@ -67,9 +68,11 @@ RUN set -ex; \
         yajl \
         yajl-dev; \
     \
+    # @todo download from main repo when updated to alpine 3.10.
+    apk add -U --no-cache -t .nginx-edge-build-deps -X http://dl-cdn.alpinelinux.org/alpine/edge/community/ brotli-dev; \
     # Modsecurity lib.
     cd /tmp; \
-    git clone --depth 1 -b "v${MODSECURITY_VER}" --single-branch https://github.com/SpiderLabs/ModSecurity; \
+    git clone --depth 1 -b "v${modsecurity_ver}" --single-branch https://github.com/SpiderLabs/ModSecurity; \
     cd ModSecurity; \
     git submodule init;  \
     git submodule update; \
@@ -83,14 +86,18 @@ RUN set -ex; \
     cp unicode.mapping /etc/nginx/modsecurity/; \
     rsync -a --links /usr/local/modsecurity/lib/libmodsecurity.so* /usr/local/lib/; \
     \
+    # Brotli.
+    cd /tmp; \
+    git clone --depth 1 --single-branch https://github.com/google/ngx_brotli; \
+    \
     # Get ngx modsecurity module.
     mkdir -p /tmp/ngx_http_modsecurity_module; \
-    ver="${NGX_MODSECURITY_VER}"; \
+    ver="${ngx_modsecurity_ver}"; \
     url="https://github.com/SpiderLabs/ModSecurity-nginx/releases/download/v${ver}/modsecurity-nginx-v${ver}.tar.gz"; \
     wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_modsecurity_module; \
     \
     # OWASP.
-    wget -qO- "https://github.com/SpiderLabs/owasp-modsecurity-crs/archive/v${OWASP_CRS_VER}.tar.gz" | tar xz -C /tmp; \
+    wget -qO- "https://github.com/SpiderLabs/owasp-modsecurity-crs/archive/v${owasp_crs_ver}.tar.gz" | tar xz -C /tmp; \
     cd /tmp/owasp-modsecurity-crs-*; \
     sed -i "s#SecRule REQUEST_COOKIES|#SecRule REQUEST_URI|REQUEST_COOKIES|#" rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf; \
     mkdir -p /etc/nginx/modsecurity/crs/; \
@@ -98,7 +105,7 @@ RUN set -ex; \
     mv rules /etc/nginx/modsecurity/crs; \
     \
     # Get ngx pagespeed module.
-    git clone -b "v${NGX_PAGESPEED_VER}-stable" \
+    git clone -b "v${ngx_pagespeed_ver}-stable" \
           --recurse-submodules \
           --shallow-submodules \
           --depth=1 \
@@ -108,12 +115,12 @@ RUN set -ex; \
           /tmp/ngx_pagespeed; \
     \
     # Get psol for alpine.
-    url="https://github.com/wodby/nginx-alpine-psol/releases/download/${MOD_PAGESPEED_VER}/psol.tar.gz"; \
+    url="https://github.com/wodby/nginx-alpine-psol/releases/download/${mod_pagespeed_ver}/psol.tar.gz"; \
     wget -qO- "${url}" | tar xz -C /tmp/ngx_pagespeed; \
     \
     # Get ngx uploadprogress module.
     mkdir -p /tmp/ngx_http_uploadprogress_module; \
-    url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${NGINX_UP_VER}.tar.gz"; \
+    url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
     wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
     \
     # Download nginx.
@@ -167,6 +174,7 @@ RUN set -ex; \
 		--with-stream_realip_module \
         --with-threads \
         --add-module=/tmp/ngx_http_uploadprogress_module \
+        --add-module=/tmp/ngx_brotli \
         --add-dynamic-module=/tmp/ngx_pagespeed \
         --add-dynamic-module=/tmp/ngx_http_modsecurity_module; \
     \
@@ -216,7 +224,7 @@ RUN set -ex; \
     \
     chown wodby:wodby /usr/share/nginx/html/50x.html; \
     \
-    apk del --purge .nginx-build-deps .libmodsecurity-build-deps; \
+    apk del --purge .nginx-build-deps .nginx-edge-build-deps .libmodsecurity-build-deps; \
     rm -rf \
         /tmp/* \
         /usr/local/modsecurity \

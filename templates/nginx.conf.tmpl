@@ -44,7 +44,7 @@ http {
 
     brotli                      {{ getenv "NGINX_BROTLI" "on" }};
     brotli_static               {{ getenv "NGINX_BROTLI_STATIC" "on" }};
-    brotli_comp_level           {{ getenv "NGINX_BROTLI_COMP_LEVEL" "6" }};
+    brotli_comp_level           {{ getenv "NGINX_BROTLI_COMP_LEVEL" "1" }};
     brotli_types                application/atom+xml
                                 application/geo+json
                                 application/javascript

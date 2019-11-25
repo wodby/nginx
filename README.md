@@ -53,7 +53,7 @@ Supported tags and respective `Dockerfile` links:
 | `NGINX_BACKEND_PORT`                                 | Varies with a preset        |                                     |
 | `NGINX_BROTLI`                                       | `on`                        |                                     |
 | `NGINX_BROTLI_STATIC`                                | `on`                        |                                     |
-| `NGINX_BROTLI_COMP_LEVEL`                            | `6`                         |                                     |
+| `NGINX_BROTLI_COMP_LEVEL`                            | `1`                         |                                     |
 | `NGINX_CLIENT_BODY_BUFFER_SIZE`                      | `16k`                       |                                     |
 | `NGINX_CLIENT_BODY_TIMEOUT`                          | `60s`                       |                                     |
 | `NGINX_CLIENT_HEADER_BUFFER_SIZE`                    | `4k`                        |                                     |

@@ -61,6 +61,14 @@ location ~ /\.(!?well-known) {
 }
 {{ end }}
 
+location ~ /wodby\.yml {
+    deny all;
+}
+
+location ~ /Makefile {
+    deny all;
+}
+
 {{ if getenv "NGINX_HIDE_50x_ERRORS" }}
 error_page 500 502 503 504 /50x.html;
 location = /50x.html {

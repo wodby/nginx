@@ -4,10 +4,6 @@ add_header Pragma "no-cache";
 add_header Cache-Control "no-store, no-cache, must-revalicate, post-check=0 pre-check=0";
 {{ end }}
 
-location ^~ /.well-known/ {
-    allow all;
-}
-
 location = /favicon.ico {
     expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
     try_files /favicon.ico @empty;
@@ -16,6 +12,12 @@ location = /favicon.ico {
 }
 
 location = /robots.txt {
+    allow all;
+    log_not_found off;
+    access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+}
+
+location = /humans.txt {
     allow all;
     log_not_found off;
     access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
@@ -54,10 +56,18 @@ location ~ "^/ngx_pagespeed_beacon$" { }
 {{ end }}
 
 {{ if not (getenv "NGINX_ALLOW_ACCESS_HIDDEN_FILES") }}
-location ~ /\. {
+location ~ /\.(!?well-known) {
     deny all;
 }
 {{ end }}
+
+location ~ /wodby\.yml {
+    deny all;
+}
+
+location ~ /Makefile {
+    deny all;
+}
 
 {{ if getenv "NGINX_HIDE_50x_ERRORS" }}
 error_page 500 502 503 504 /50x.html;

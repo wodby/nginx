@@ -203,6 +203,7 @@ Compiled as a dynamic module, disabled by default. To enable set `$NGINX_MODSECU
 Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS`:
 
 - `/.well-known/` location supported
+- `/ads.txt` allowed
 - `/robots.txt` allowed
 - `/humans.txt` allowed
 - `/favicon.ico` allowed

@@ -142,6 +142,10 @@ location = /core/install.php {
     fastcgi_pass php;
 }
 
+location = /core/rebuild.php {
+    fastcgi_pass php;
+}
+
 location ~* ^/core/authorize.php {
     include fastcgi.conf;
     fastcgi_param QUERY_STRING $args;

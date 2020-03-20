@@ -39,6 +39,7 @@ process_templates() {
     _gotpl "nginx.conf.tmpl" "/etc/nginx/nginx.conf"
     _gotpl "vhost.conf.tmpl" "/etc/nginx/conf.d/vhost.conf"
     _gotpl "includes/defaults.conf.tmpl" "/etc/nginx/defaults.conf"
+    _gotpl "includes/fastcgi.conf.tmpl" "/etc/nginx/fastcgi.conf"
 
     if [[ -n "${NGINX_MODSECURITY_ENABLED}" ]]; then
         _gotpl "includes/modsecurity.conf.tmpl" "/etc/nginx/modsecurity/main.conf"
@@ -48,7 +49,6 @@ process_templates() {
         _gotpl "presets/${NGINX_VHOST_PRESET}.conf.tmpl" "/etc/nginx/preset.conf"
 
         if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal8|drupal7|drupal6|wordpress|php$ ]]; then
-            _gotpl "includes/fastcgi.conf.tmpl" "/etc/nginx/fastcgi.conf"
             _gotpl "includes/upstream.php.conf.tmpl" "/etc/nginx/upstream.conf"
         elif [[ "${NGINX_VHOST_PRESET}" =~ ^http-proxy|django$ ]]; then
             if [[ -z "${NGINX_BACKEND_HOST}" && "${NGINX_VHOST_PRESET}" == "django" ]]; then

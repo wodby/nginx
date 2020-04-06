@@ -62,7 +62,7 @@ location ~ "^/ngx_pagespeed_beacon$" { }
 {{ end }}
 
 {{ if not (getenv "NGINX_ALLOW_ACCESS_HIDDEN_FILES") }}
-location ~ /\.(!?well-known) {
+location ~ /^\.(!?well-known) {
     deny all;
 }
 {{ end }}

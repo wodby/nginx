@@ -289,6 +289,7 @@ Overridden default values:
 - [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
 - Usage: add `NGINX_VHOST_PRESET=wordpress`, optionally modify `NGINX_BACKEND_HOST`  
 - Access to `*.txt` files allowed only if they are located in uploads directory
+- Access to `/wp-content/uploads/woocommerce_uploads` disallowed
 - There are 2 ways to add sitemap.xml locations:
     - For plugin [Google XML Sitemap](https://wordpress.org/plugins/google-sitemap-generator/) add `$NGINX_WP_GOOGLE_XML_SITEMAP=1`
     - For plugin [Yoast SEO](https://kb.yoast.com/kb/xml-sitemaps-nginx/) add `$NGINX_WP_YOAST_XML_SITEMAP=1`

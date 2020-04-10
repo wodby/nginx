@@ -29,6 +29,10 @@ location / {
         return 404;
     }
 
+    location ^~ /wp-content/uploads/woocommerce_uploads {
+        deny all;
+    }
+
     location ~* /wp-content/uploads/.+\.txt {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
         expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};

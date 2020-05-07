@@ -69,7 +69,7 @@ RUN set -ex; \
         yajl-dev; \
     \
     # @todo download from main repo when updated to alpine 3.10.
-    apk add -U --no-cache -t .nginx-edge-build-deps -X http://dl-cdn.alpinelinux.org/alpine/edge/community/ brotli-dev; \
+    apk add -U --no-cache -t .nginx-edge-build-deps -X http://dl-cdn.alpinelinux.org/alpine/edge/main/ brotli-dev; \
     # Modsecurity lib.
     cd /tmp; \
     git clone --depth 1 -b "v${modsecurity_ver}" --single-branch https://github.com/SpiderLabs/ModSecurity; \

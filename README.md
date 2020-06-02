@@ -324,17 +324,15 @@ Usage:
 make COMMAND [params ...]
 
 commands:
-    git-clone [url branch]
+    init
     git-checkout [target is_hash]
     check-ready [host max_try wait_seconds delay_seconds]
- 
+
 default params values:
     host localhost
     max_try 1
     wait_seconds 1
     delay_seconds 0
-    is_hash 0
-    branch ""    
 ```
 
 [brotli]: https://github.com/google/ngx_brotli

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ -n "${DEBUG}" ]]; then
+  set -x
+fi
+
+if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
+  if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal([0-9]+)$ && -n "${DRUPAL_SITE_DIR}" ]]; then
+    files_dir="${DRUPAL_SITE_DIR}/files"
+    if [[ -f "${files_dir}" ]]]; then
+      files_link "${files_dir}"
+    fi
+  fi
+fi

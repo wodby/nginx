@@ -11,6 +11,7 @@ default: check-ready
 
 init:
 	init
+.PHONY: init
 
 check-ready:
     ifeq ($(NGINX_HTTP2),)

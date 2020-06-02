@@ -7,10 +7,22 @@ if [[ -n "${DEBUG}" ]]; then
 fi
 
 if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
-  if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal([0-9]+)$ && -n "${DRUPAL_SITE_DIR}" ]]; then
-    files_dir="${DRUPAL_SITE_DIR}/files"
-    if [[ -f "${files_dir}" ]]]; then
+  if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal([0-9]+)$ ]]; then
+    echo "Running init for Drupal preset"
+
+    if [[ -n "${DRUPAL_SITE}" ]]; then
+      drupal_root=""
+      if [[ -n "${DOCROOT_SUBDIR}" ]]; then
+        drupal_root="${APP_ROOT}/${DOCROOT_SUBDIR}"
+      else
+        drupal_root="${APP_ROOT}"
+      fi
+
+      files_dir="${drupal_root}/sites/${DRUPAL_SITE}/files"
       files_link "${files_dir}"
+    else
+      echo "Missing required env var: DRUPAL_SITE"
+      exit 1
     fi
   fi
 fi

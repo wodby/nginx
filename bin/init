@@ -18,8 +18,9 @@ if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
         drupal_root="${APP_ROOT}"
       fi
 
-      files_dir="${drupal_root}/sites/${DRUPAL_SITE}/files"
-      files_link "${files_dir}"
+      drupal_site_dir="${drupal_root}/sites/${DRUPAL_SITE}"
+      mkdir -p "${drupal_site_dir}"
+      files_link "${drupal_site_dir}/files"
     else
       echo "Missing required env var: DRUPAL_SITE"
       exit 1

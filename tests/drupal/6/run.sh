@@ -28,7 +28,7 @@ nginx_exec curl -I "localhost/install.php?profile=default" | grep '200 OK'
 echo -n "update.php...      "
 nginx_exec curl -s -I "localhost/update.php" | grep '200 OK'
 echo -n ".htaccess...       "
-nginx_exec curl -I "localhost/.htaccess" | grep '404 Not Found'
+nginx_exec curl -I "localhost/.htaccess" | grep '403 Forbidden'
 echo -n "favicon.ico...     "
 nginx_exec curl -I "localhost/favicon.ico" | grep '200 OK'
 echo -n "robots.txt...      "

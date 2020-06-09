@@ -38,7 +38,7 @@ echo -n "Checking static endpoint (txt)... "
 check_endpoint "license.txt" "404 Not Found"
 
 echo -n "Checking .htaccess endpoint... "
-check_endpoint ".htaccess" "404 Not Found"
+check_endpoint ".htaccess" "403 Forbidden"
 
 echo -n "Checking favicon endpoint... "
 check_endpoint "favicon.ico" "200 OK"

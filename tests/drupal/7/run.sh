@@ -32,7 +32,7 @@ nginx_exec curl -I "localhost/update.php" | grep '302 Found'
 echo -n "xmlrpc.php...      "
 nginx_exec curl -I "localhost/xmlrpc.php" | grep '302 Found'
 echo -n ".htaccess...       "
-nginx_exec curl -I "localhost/.htaccess" | grep '404 Not Found'
+nginx_exec curl -I "localhost/.htaccess" | grep '403 Forbidden'
 echo -n "favicon.ico...     "
 nginx_exec curl -I "localhost/favicon.ico" | grep '200 OK'
 echo -n "robots.txt...      "

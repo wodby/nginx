@@ -43,7 +43,7 @@ location / {
         open_file_cache_errors {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_ERRORS" "off" }};
     }
 
-    location ~* ^.*(\.(?:git|svn|htaccess|txt|pot?))$ {
+    location ~* .+\.(?:txt|pot|sh|.*sql?)$ {
         return 404;
     }
 

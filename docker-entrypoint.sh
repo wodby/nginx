@@ -56,6 +56,10 @@ process_templates() {
             fi
 
             _gotpl "includes/upstream.http-proxy.conf.tmpl" "/etc/nginx/upstream.conf"
+        elif [[ -f "includes/upstream.${NGINX_VHOST_PRESET}.conf.tmpl" ]]; then
+            _gotpl "includes/upstream.${NGINX_VHOST_PRESET}.conf.tmpl" "/etc/nginx/upstream.conf"
+        else
+            touch /etc/nginx/upstream.conf
         fi
     fi
 

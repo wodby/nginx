@@ -35,6 +35,8 @@ test:
 	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/php && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/wordpress && IMAGE=$(REPO):$(TAG) ./run.sh
+	# no Drupal9 docker image yet.
+	#cd ./tests/drupal/9 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/8 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/7 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/6 && IMAGE=$(REPO):$(TAG) ./run.sh

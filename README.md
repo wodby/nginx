@@ -296,11 +296,12 @@ Overridden default values:
 
 #### Drupal
 
-- Preset templates: [Drupal 8], [Drupal 7], [Drupal 6]
-- Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal8`, `drupal7` or `drupal6`. Optionally modify `NGINX_BACKEND_HOST`
+- Preset templates: [Drupal 9], [Drupal 8], [Drupal 7], [Drupal 6]
+- Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal9`, `drupal8`, `drupal7` or `drupal6`. Optionally modify `NGINX_BACKEND_HOST`
 - If you want to use [stage_file_proxy](https://www.drupal.org/project/stage_file_proxy) module, set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
 - Access to `*.txt` files allowed only if they are located in files directory 
 
+[Drupal 9]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal9.conf.tmpl
 [Drupal 8]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl
 [Drupal 7]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl
 [Drupal 6]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal6.conf.tmpl

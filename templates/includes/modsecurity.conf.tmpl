@@ -4,7 +4,7 @@ Include /etc/nginx/modsecurity/recommended.conf
 Include /etc/nginx/modsecurity/crs/setup.conf
 {{ end }}
 
-{{ if or (eq (getenv "NGINX_VHOST_PRESET") "drupal8") (eq (getenv "NGINX_VHOST_PRESET") "drupal7") (eq (getenv "NGINX_VHOST_PRESET") "drupal6") }}
+{{ if or ((eq (getenv "NGINX_VHOST_PRESET") "drupal9") eq (getenv "NGINX_VHOST_PRESET") "drupal8") (eq (getenv "NGINX_VHOST_PRESET") "drupal7") (eq (getenv "NGINX_VHOST_PRESET") "drupal6") }}
 SecAction \
  "id:900130,\
   phase:1,\

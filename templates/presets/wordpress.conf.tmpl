@@ -18,6 +18,12 @@ rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html$ "/index.php?xml_sitemap=params=$2;
 rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
 {{ end }}
 
+location = /robots.txt {
+    try_files $uri $uri/ /index.php?$args;
+    access_log off;
+    log_not_found off;
+}
+
 location / {
     {{ if getenv "NGINX_WP_FILE_PROXY_URL" }}
     location ~* /wp-content/uploads {

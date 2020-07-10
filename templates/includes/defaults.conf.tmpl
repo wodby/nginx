@@ -11,7 +11,7 @@ location = /favicon.ico {
     access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
 }
 
-location = /robots.txt {
+location ^~ /robots.txt {
     allow all;
     log_not_found off;
     access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};

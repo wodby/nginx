@@ -293,7 +293,8 @@ Overridden default values:
 - Access to `*.txt` files allowed only if they are located in uploads directory
 - Access to `/wp-content/uploads/woocommerce_uploads` disallowed
 - Dynamic generated `/robots.txt` supported
-- There are 2 ways to add sitemap.xml locations:
+- Supports `/wp-sitemap.xml` endpoint
+- Alternative `sitemap.xml` endpoints:
     - For plugin [Google XML Sitemap](https://wordpress.org/plugins/google-sitemap-generator/) add `$NGINX_WP_GOOGLE_XML_SITEMAP=1`
     - For plugin [Yoast SEO](https://kb.yoast.com/kb/xml-sitemaps-nginx/) add `$NGINX_WP_YOAST_XML_SITEMAP=1`
 

@@ -39,6 +39,10 @@ location / {
         deny all;
     }
 
+    location ~ ^/wp-sitemap(-+([a-zA-Z0-9_-]+))?\.xml$ {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
     location ~* /wp-content/uploads/.+\.txt {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
         expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};

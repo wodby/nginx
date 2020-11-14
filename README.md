@@ -30,7 +30,7 @@
 
 Overview:
 
-- All images are based on Alpine Linux
+- All images based on Alpine Linux
 - Base image: [wodby/alpine](https://github.com/wodby/alpine)
 - [GitHub actions builds](https://github.com/wodby/nginx/actions) 
 - [Docker Hub](https://hub.docker.com/r/wodby/nginx)

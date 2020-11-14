@@ -1,6 +1,6 @@
 # Nginx Docker Container Images
 
-[![Build Status](https://travis-ci.org/wodby/nginx.svg?branch=master)](https://travis-ci.org/wodby/nginx)
+[![Build Status](https://github.com/wodby/nginx/workflows/Build%20docker%20image/badge.svg)](https://github.com/wodby/nginx/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 [![Docker Layers](https://images.microbadger.com/badges/image/wodby/nginx.svg)](https://microbadger.com/images/wodby/nginx)
@@ -32,7 +32,7 @@ Overview:
 
 - All images are based on Alpine Linux
 - Base image: [wodby/alpine](https://github.com/wodby/alpine)
-- [Travis CI builds](https://travis-ci.org/wodby/nginx) 
+- [GitHub actions builds](https://github.com/wodby/nginx/actions) 
 - [Docker Hub](https://hub.docker.com/r/wodby/nginx)
 
 Supported tags and respective `Dockerfile` links:

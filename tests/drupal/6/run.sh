@@ -7,7 +7,7 @@ if [[ -n "${DEBUG}" ]]; then
 fi
 
 nginx_exec() {
-    docker-compose exec nginx "${@}"
+    docker-compose exec -T nginx "${@}"
 }
 
 docker-compose up -d

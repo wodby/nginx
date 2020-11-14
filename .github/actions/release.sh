@@ -2,11 +2,11 @@
 
 set -e
 
-if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
+if [[ "${GITHUB_REF}" == refs/heads/master || "${GITHUB_REF}" == refs/tags/* ]]; then
     docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
-    if [[ -n "${TRAVIS_TAG}" ]]; then
-        export STABILITY_TAG="${TRAVIS_TAG}"
+    if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+      export STABILITY_TAG="${GITHUB_REF##*/}"
     fi
 
     IFS=',' read -ra tags <<< "${TAGS}"

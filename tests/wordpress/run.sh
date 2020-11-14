@@ -13,8 +13,8 @@ check_endpoint() {
 
 docker-compose up -d
 
-docker-compose exec nginx make check-ready -f /usr/local/bin/actions.mk
-docker-compose exec wordpress make init -f /usr/local/bin/actions.mk
+docker-compose exec -T nginx make check-ready -f /usr/local/bin/actions.mk
+docker-compose exec -T wordpress make init -f /usr/local/bin/actions.mk
 
 echo -n "Checking homepage endpoint... "
 check_endpoint "" "302 Found"

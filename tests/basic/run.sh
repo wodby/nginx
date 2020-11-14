@@ -11,12 +11,12 @@ git_url=https://github.com/wodby/nginx.git
 docker-compose up -d
 
 run_action() {
-    docker-compose exec nginx make "${@:2}" -f /usr/local/bin/actions.mk
+    docker-compose exec -T nginx make "${@:2}" -f /usr/local/bin/actions.mk
 }
 
 run_action check-ready max_try=10
 
-docker-compose exec nginx tests.sh
+docker-compose exec -T nginx tests.sh
 docker-compose down
 
 cid="$(docker run -d -e NGINX_HTTP2=1 --name "nginx" "${IMAGE}")"

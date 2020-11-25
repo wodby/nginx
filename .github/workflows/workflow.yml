@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions
       with:
-        version: 1.19.4
+        version: 1.19.5
         tags: 1.19,1,latest
         base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
         alpine_ver: ${{ env.ALPINE_VER }}

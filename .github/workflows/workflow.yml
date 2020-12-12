@@ -9,7 +9,7 @@ on:
     - '*'
 
 env:
-  BASE_IMAGE_STABILITY_TAG: 2.5.1
+  BASE_IMAGE_STABILITY_TAG: 2.5.2
   ALPINE_VER: 3.8
 
 jobs:

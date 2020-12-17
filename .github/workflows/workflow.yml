@@ -25,84 +25,75 @@ jobs:
         alpine_ver: ${{ env.ALPINE_VER }}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Start SSH via Ngrok
-      if: ${{ failure() }}
-      run: curl -sL https://gist.githubusercontent.com/retyui/7115bb6acf151351a143ec8f96a7c561/raw/7099b9db76729dc5761da72aa8525f632d8875c9/debug-github-actions.sh | bash
-      env:
-        NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
-        USER_PASS: ${{ secrets.USER_PASS }}
-    - name: Don't kill instace
-      if: ${{ failure() }}
-      run: sleep 1h
-#  nginx-118:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#    - uses: ./.github/actions
-#      with:
-#        version: 1.18.0
-#        tags: 1.18
-#        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-#        alpine_ver: ${{ env.ALPINE_VER }}
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#  nginx-117:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#    - uses: ./.github/actions
-#      with:
-#        version: 1.17.10
-#        tags: 1.17
-#        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-#        alpine_ver: ${{ env.ALPINE_VER }}
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#  nginx-116:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#    - uses: ./.github/actions
-#      with:
-#        version: 1.16.1
-#        tags: 1.16
-#        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-#        alpine_ver: ${{ env.ALPINE_VER }}
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#  nginx-115:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#    - uses: ./.github/actions
-#      with:
-#        version: 1.15.12
-#        tags: 1.15
-#        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-#        alpine_ver: ${{ env.ALPINE_VER }}
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#  nginx-114:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#    - uses: ./.github/actions
-#      with:
-#        version: 1.14.2
-#        tags: 1.14
-#        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-#        alpine_ver: ${{ env.ALPINE_VER }}
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#  nginx-113:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#    - uses: ./.github/actions
-#      with:
-#        version: 1.13.12
-#        tags: 1.13
-#        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-#        alpine_ver: ${{ env.ALPINE_VER }}
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
+  nginx-118:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 1.18.0
+        tags: 1.18
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+  nginx-117:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 1.17.10
+        tags: 1.17
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+  nginx-116:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 1.16.1
+        tags: 1.16
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+  nginx-115:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 1.15.12
+        tags: 1.15
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+  nginx-114:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 1.14.2
+        tags: 1.14
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+  nginx-113:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 1.13.12
+        tags: 1.13
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        alpine_ver: ${{ env.ALPINE_VER }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}

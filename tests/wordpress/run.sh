@@ -23,13 +23,13 @@ echo -n "Checking setup page endpoint... "
 check_endpoint "wp-admin/setup-config.php" "200 OK"
 
 echo -n "Checking static endpoint (jpg)... "
-check_endpoint "wp-content/themes/twentyseventeen/assets/images/coffee.jpg" "200 OK"
+check_endpoint "wp-content/themes/twentytwentyone/assets/images/Reading.jpg" "200 OK"
 
 echo -n "Checking static endpoint (js)... "
-check_endpoint "wp-content/themes/twentyseventeen/assets/js/global.js" "200 OK"
+check_endpoint "wp-content/themes/twentytwentyone/assets/js/editor.js" "200 OK"
 
 echo -n "Checking static endpoint (css)... "
-check_endpoint "wp-content/themes/twentyseventeen/assets/css/editor-style.css" "200 OK"
+check_endpoint "wp-content/themes/twentytwentyone/assets/css/print.css" "200 OK"
 
 echo -n "Checking readme.html endpoint... "
 check_endpoint "readme.html" "404 Not Found"

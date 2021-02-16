@@ -49,6 +49,17 @@ location ~ ^/\.healthz$ {
     return 204;
 }
 
+{{ if getenv "NGINX_STATUS_ENABLED" }}
+location = /.statusz {
+    stub_status;
+    allow 127.0.0.1;
+    {{ if getenv "NGINX_STATUS_ALLOW_FROM" }}
+    allow {{ getenv "NGINX_STATUS_ALLOW_FROM" }};
+    {{ end }}
+    deny all;
+}
+{{ end }}
+
 {{ if getenv "NGINX_PAGESPEED_ENABLED" }}
 {{ $pagespeed := (getenv "NGINX_PAGESPEED" "on") }}
 {{ if (eq $pagespeed "on") }}

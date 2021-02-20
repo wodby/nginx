@@ -20,7 +20,7 @@ runs:
       TAGS: ${{ inputs.tags }}
     run: |
       set -e
-      make build-build
+      make buildx-build
       make test
       . $GITHUB_ACTION_PATH/release.sh
     shell: bash

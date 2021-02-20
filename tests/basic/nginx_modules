@@ -19,7 +19,6 @@ http_uploadprogress
 http_v2
 http_xslt
 mail_ssl
-pagespeed
 stream_realip
 stream_ssl
 stream_ssl_preread

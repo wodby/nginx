@@ -8,7 +8,6 @@
 - [Docker images](#docker-images)
 - [Environment variables](#environment-variables)
 - [Nginx modules](#nginx-modules)
-    - [PageSpeed]
     - [ModSecurity]
 - [Default behaviour](#default-behavior)    
 - [Customization](#customization)      
@@ -100,14 +99,6 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_MODSECURITY_USE_OWASP_CRS`                    |                             | See [ModSecurity]                   |
 | `NGINX_MULTI_ACCEPT`                                 | `on`                        |                                     |
 | `NGINX_NO_DEFAULT_HEADERS`                           |                             |                                     |
-| `NGINX_PAGESPEED_ENABLE_FILTERS`                     |                             |                                     |
-| `NGINX_PAGESPEED_ENABLED`                            |                             | See [PageSpeed]                     |
-| `NGINX_PAGESPEED_FILE_CACHE_PATH`                    | `/var/cache/ngx_pagespeed/` |                                     |
-| `NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY`            | `on`                        |                                     |
-| `NGINX_PAGESPEED_RESPECT_X_FORWARDED_PROTO`          | `on`                        |                                     |
-| `NGINX_PAGESPEED_REWRITE_LEVEL`                      | `CoreFilters`               |                                     |
-| `NGINX_PAGESPEED_STATIC_ASSET_PREFIX`                | `/pagespeed_static`         |                                     |
-| `NGINX_PAGESPEED`                                    | `on`                        | See [PageSpeed]                     |
 | `NGINX_REAL_IP_HEADER`                               | `X-Real-IP`                 |                                     |
 | `NGINX_REAL_IP_RECURSIVE`                            | `off`                       |                                     |
 | `NGINX_RESET_TIMEDOUT_CONNECTION`                    | `off`                       |                                     |
@@ -175,19 +166,9 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_v2]             |                   |         |
 | [http_xslt]           |                   | ✓       |
 | [mail_ssl]            |                   |         |
-| pagespeed             | See [PageSpeed]   | ✓       |
 | [stream_realip]       |                   |         |
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
-
-### Pagespeed
-
-| Component                | Version   |
-| ------------------------ | -------   |
-| [PageSpeed Nginx module] | 1.13.35.2 |
-| [PageSpeed Library]      | 1.13.35.2 |
-
-Compiled as a dynamic module, disabled by default. To enable [Apache PageSpeed module](https://www.modpagespeed.com/) set `$NGINX_PAGESPEED_ENABLED` to any value. Additionally, you can change module status via `$NGINX_PAGESPEED` (set to `on` by default) and configure it via `$NGINX_PAGESPEED_` environment variables.
 
 ### ModSecurity
 
@@ -363,9 +344,6 @@ default params values:
 [ModSecurity Nginx module]: https://github.com/SpiderLabs/ModSecurity-nginx
 [ModSecurity]: #modsecurity
 [OWASP CRS]: https://modsecurity.org/crs/
-[PageSpeed Library]: https://www.modpagespeed.com/
-[PageSpeed Nginx module]: https://github.com/apache/incubator-pagespeed-ngx
-[PageSpeed]: #pagespeed
 [WordPress]: #wordpress
 [stream_realip]: http://nginx.org/en/docs/stream/ngx_stream_realip_module.html
 [stream_ssl]: http://nginx.org/en/docs/stream/ngx_stream_ssl_module.html

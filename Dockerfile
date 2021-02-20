@@ -12,8 +12,6 @@ ENV NGINX_VER="${NGINX_VER}" \
 RUN set -ex; \
     \
     nginx_up_ver="0.9.1"; \
-    ngx_pagespeed_ver="1.13.35.2"; \
-    mod_pagespeed_ver="1.13.35.2"; \
     ngx_modsecurity_ver="1.0.0"; \
     modsecurity_ver="3.0.3"; \
     owasp_crs_ver="3.1.0"; \
@@ -104,20 +102,6 @@ RUN set -ex; \
     mv crs-setup.conf.example /etc/nginx/modsecurity/crs/setup.conf; \
     mv rules /etc/nginx/modsecurity/crs; \
     \
-    # Get ngx pagespeed module.
-    git clone -b "v${ngx_pagespeed_ver}-stable" \
-          --recurse-submodules \
-          --shallow-submodules \
-          --depth=1 \
-          -c advice.detachedHead=false \
-          -j$(getconf _NPROCESSORS_ONLN) \
-          https://github.com/apache/incubator-pagespeed-ngx.git \
-          /tmp/ngx_pagespeed; \
-    \
-    # Get psol for alpine.
-    url="https://github.com/wodby/nginx-alpine-psol/releases/download/${mod_pagespeed_ver}/psol.tar.gz"; \
-    wget -qO- "${url}" | tar xz -C /tmp/ngx_pagespeed; \
-    \
     # Get ngx uploadprogress module.
     mkdir -p /tmp/ngx_http_uploadprogress_module; \
     url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
@@ -175,7 +159,6 @@ RUN set -ex; \
         --with-threads \
         --add-module=/tmp/ngx_http_uploadprogress_module \
         --add-module=/tmp/ngx_brotli \
-        --add-dynamic-module=/tmp/ngx_pagespeed \
         --add-dynamic-module=/tmp/ngx_http_modsecurity_module; \
     \
     make -j$(getconf _NPROCESSORS_ONLN); \
@@ -191,11 +174,6 @@ RUN set -ex; \
     \
     touch /etc/nginx/upstream.conf; \
     chown -R wodby:wodby /etc/nginx; \
-    \
-    install -g nginx -o nginx -d \
-        /var/cache/ngx_pagespeed \
-        /pagespeed_static \
-        /ngx_pagespeed_beacon; \
     \
     install -m 400 -d /etc/nginx/pki; \
     strip /usr/sbin/nginx*; \

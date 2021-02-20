@@ -5,9 +5,7 @@ error_log                       /proc/self/fd/2 {{ getenv "NGINX_ERROR_LOG_LEVEL
 {{ if getenv "NGINX_MODSECURITY_ENABLED" }}
 load_module                     modules/ngx_http_modsecurity_module.so;
 {{ end }}
-{{ if getenv "NGINX_PAGESPEED_ENABLED" }}
-load_module                     modules/ngx_pagespeed.so;
-{{ end }}
+
 events {
     worker_connections          {{ getenv "NGINX_WORKER_CONNECTIONS" "1024" }};
     multi_accept                {{ getenv "NGINX_MULTI_ACCEPT" "on" }};
@@ -116,26 +114,12 @@ http {
                                 text/x-component
                                 text/x-cross-domain-policy;
 
-    {{ if getenv "NGINX_PAGESPEED_ENABLED" }}
-    pagespeed                           {{ getenv "NGINX_PAGESPEED" "on" }};
-    pagespeed FileCachePath             {{ getenv "NGINX_PAGESPEED_FILE_CACHE_PATH" "/var/cache/ngx_pagespeed/" }};
-    pagespeed PreserveUrlRelativity     {{ getenv "NGINX_PAGESPEED_PRESERVE_URL_RELATIVITY" "on" }};
-    pagespeed RewriteLevel              {{ getenv "NGINX_PAGESPEED_REWRITE_LEVEL" "CoreFilters" }};
-    pagespeed StaticAssetPrefix         {{ getenv "NGINX_PAGESPEED_STATIC_ASSET_PREFIX" "/pagespeed_static" }};
-    pagespeed RespectXForwardedProto    {{ getenv "NGINX_PAGESPEED_RESPECT_X_FORWARDED_PROTO" "on" }};
-    pagespeed XHeaderValue              {{ getenv "NGINX_PAGESPEED_X_HEADER_VALUE" "PageSpeed" }};
-    {{ end }}
-
     {{ if getenv "NGINX_SET_REAL_IP_FROM" }}
     set_real_ip_from {{ getenv "NGINX_SET_REAL_IP_FROM" }};
     {{ end }}
 
     real_ip_header {{ getenv "NGINX_REAL_IP_HEADER" "X-Real-IP" }};
     real_ip_recursive {{ getenv "NGINX_REAL_IP_RECURSIVE" "off" }};
-
-    {{ if getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }}
-    pagespeed EnableFilters         {{ getenv "NGINX_PAGESPEED_ENABLE_FILTERS" }};
-    {{ end }}
 
     {{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
     add_header                  X-XSS-Protection '1; mode=block';

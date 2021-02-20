@@ -22,7 +22,7 @@ ifneq ($(STABILITY_TAG),)
     endif
 endif
 
-.PHONY: build test push shell run start stop logs clean release
+.PHONY: build buildx-build buildx-push test push shell run start stop logs clean release
 
 default: build
 
@@ -30,6 +30,17 @@ build:
 	docker build -t $(REPO):$(TAG) \
         --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 	    --build-arg NGINX_VER=$(NGINX_VER) ./
+
+buildx-build:
+	docker buildx build --platform $(PLATFORM) \
+		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+		--build-arg NGINX_VER=$(NGINX_VER) -t $(REPO):$(TAG) ./
+
+buildx-push:
+	docker buildx build --platform $(PLATFORM) \
+		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+		--build-arg NGINX_VER=$(NGINX_VER) \
+		--push -t $(REPO):$(TAG) ./
 
 test:
 	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh

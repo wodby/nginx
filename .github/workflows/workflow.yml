@@ -11,32 +11,42 @@ on:
 env:
   BASE_IMAGE_STABILITY_TAG: 2.6.2
   ALPINE_VER: 3.8
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
   nginx-119:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: ['linux/amd64','linux/arm64']
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: ${{ matrix.platform }}
+    - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
         version: 1.19.7
         tags: 1.19,1,latest
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        platform: ${{ matrix.platform }}
   nginx-118:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: ['linux/amd64','linux/arm64']
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: ${{ matrix.platform }}
+    - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
         version: 1.18.0
         tags: 1.18
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        platform: ${{ matrix.platform }}
   nginx-117:
     runs-on: ubuntu-latest
     steps:
@@ -45,10 +55,6 @@ jobs:
       with:
         version: 1.17.10
         tags: 1.17
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
   nginx-116:
     runs-on: ubuntu-latest
     steps:
@@ -57,10 +63,6 @@ jobs:
       with:
         version: 1.16.1
         tags: 1.16
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
   nginx-115:
     runs-on: ubuntu-latest
     steps:
@@ -69,10 +71,6 @@ jobs:
       with:
         version: 1.15.12
         tags: 1.15
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
   nginx-114:
     runs-on: ubuntu-latest
     steps:
@@ -81,10 +79,6 @@ jobs:
       with:
         version: 1.14.2
         tags: 1.14
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
   nginx-113:
     runs-on: ubuntu-latest
     steps:
@@ -93,7 +87,3 @@ jobs:
       with:
         version: 1.13.12
         tags: 1.13
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        alpine_ver: ${{ env.ALPINE_VER }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}

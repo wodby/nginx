@@ -4,35 +4,23 @@ inputs:
   version:
     description: version
     required: true
-  alpine_ver:
-    description: alpine version
-    required: true
   tags:
     description: image tags
     required: true
-  username:
-    description: docker username
-    required: true
-  password:
-    description: docker password
-    required: true
-  base_image_stability_tag:
-    description: base image stability tag
-    required: true
+  platform:
+    description: docker platform
+    required: false
+    default: linux/amd64
 runs:
   using: "composite"
   steps:
   - name: Build image
     env:
       NGINX_VER: ${{ inputs.version }}
-      ALPINE_VER: ${{ inputs.alpine_ver }}
-      BASE_IMAGE_STABILITY_TAG: ${{ inputs.base_image_stability_tag }}
-      DOCKER_USERNAME: ${{ inputs.username }}
-      DOCKER_PASSWORD: ${{ inputs.password }}
       TAGS: ${{ inputs.tags }}
     run: |
       set -e
-      make
+      make build-build
       make test
       . $GITHUB_ACTION_PATH/release.sh
     shell: bash

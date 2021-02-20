@@ -18,6 +18,7 @@ runs:
     env:
       NGINX_VER: ${{ inputs.version }}
       TAGS: ${{ inputs.tags }}
+      PLATFORM: ${{ inputs.platform }}
     run: |
       set -e
       make buildx-build

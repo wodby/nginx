@@ -7,6 +7,8 @@ TAG ?= $(NGINX_MINOR_VER)
 
 ALPINE_VER ?= 3.8
 
+PLATFORM ?= linux/amd64
+
 ifeq ($(BASE_IMAGE_STABILITY_TAG),)
     BASE_IMAGE_TAG := $(ALPINE_VER)
 else

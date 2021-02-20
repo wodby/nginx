@@ -24,7 +24,7 @@ ifneq ($(STABILITY_TAG),)
     endif
 endif
 
-.PHONY: build buildx-build buildx-push test push shell run start stop logs clean release
+.PHONY: build buildx-build buildx-push buildx-build-amd64 test push shell run start stop logs clean release
 
 default: build
 

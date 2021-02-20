@@ -21,7 +21,8 @@ runs:
       PLATFORM: ${{ inputs.platform }}
     run: |
       set -e
-      make buildx-build
+      make
       make test
+      make buildx-build
       . $GITHUB_ACTION_PATH/release.sh
     shell: bash

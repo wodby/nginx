@@ -36,7 +36,11 @@ build:
 buildx-build:
 	docker buildx build --platform $(PLATFORM) \
 		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
-		--build-arg NGINX_VER=$(NGINX_VER) -t $(REPO):$(TAG) ./
+		--build-arg NGINX_VER=$(NGINX_VER) \
+		--cache-from "type=local,src=/tmp/.buildx-cache" \
+		--cache-to "type=local,dest=/tmp/.buildx-cache" \
+		--output "type=docker" \
+		-t $(REPO):$(TAG) ./
 
 buildx-push:
 	docker buildx build --platform $(PLATFORM) \

@@ -24,13 +24,6 @@ ifneq ($(STABILITY_TAG),)
     endif
 endif
 
-check_defined = \
-    $(strip $(foreach 1,$1, \
-        $(call __check_defined,$1,$(strip $(value 2)))))
-__check_defined = \
-    $(if $(value $1),, \
-      $(error Required parameter is missing: $1$(if $2, ($2))))
-
 .PHONY: build buildx-build buildx-push buildx-build-amd64 test push shell run start stop logs clean release
 
 default: build
@@ -53,7 +46,6 @@ buildx-build:
 	docker buildx build --platform $(PLATFORM) \
 		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 		--build-arg NGINX_VER=$(NGINX_VER) \
-		--load \
 		-t $(REPO):$(TAG) ./
 
 buildx-push:
@@ -61,11 +53,6 @@ buildx-push:
 		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 		--build-arg NGINX_VER=$(NGINX_VER) \
 		--push -t $(REPO):$(TAG) ./
-
-create-multiarch-manifest:
-	$(call check_defined, AMD64TAG, ARM64TAG)
-	docker manifest create $(REPO):$(TAG) $(REPO):$(AMD64TAG) $(REPO):$(ARM64TAG)
-	docker manifest push --purge $(REPO):$(TAG)
 
 test:
 	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh

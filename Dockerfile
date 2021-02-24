@@ -13,7 +13,7 @@ RUN set -ex; \
     \
     nginx_up_ver="0.9.1"; \
     ngx_modsecurity_ver="1.0.0"; \
-    modsecurity_ver="3.0.3"; \
+    modsecurity_ver="3.0.4"; \
     owasp_crs_ver="3.1.0"; \
     \
     addgroup -S nginx; \
@@ -34,6 +34,7 @@ RUN set -ex; \
         apr-dev \
         apr-util-dev \
         build-base \
+        brotli-dev \
         gd-dev \
         git \
         gnupg \
@@ -66,8 +67,6 @@ RUN set -ex; \
         yajl \
         yajl-dev; \
     \
-    # @todo download from main repo when updated to alpine 3.10.
-    apk add -U --no-cache -t .nginx-edge-build-deps -X http://dl-cdn.alpinelinux.org/alpine/edge/main/ brotli-dev; \
     # Modsecurity lib.
     cd /tmp; \
     git clone --depth 1 -b "v${modsecurity_ver}" --single-branch https://github.com/SpiderLabs/ModSecurity; \
@@ -202,7 +201,7 @@ RUN set -ex; \
     \
     chown wodby:wodby /usr/share/nginx/html/50x.html; \
     \
-    apk del --purge .nginx-build-deps .nginx-edge-build-deps .libmodsecurity-build-deps; \
+    apk del --purge .nginx-build-deps .libmodsecurity-build-deps; \
     rm -rf \
         /tmp/* \
         /usr/local/modsecurity \

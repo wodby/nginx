@@ -25,7 +25,7 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: 1.19.8
+        version: 1.19.9
         tags: 1.19,1,latest
         platform: linux/amd64,linux/arm64
   nginx-118:

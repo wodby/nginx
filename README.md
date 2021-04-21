@@ -25,7 +25,7 @@
 
 ## Docker Images
 
-❗For better reliability we release images with stability tags (`wodby/nginx:1.19-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags. 
+❗For better reliability we release images with stability tags (`wodby/nginx:1.20-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags. 
 
 Overview:
 
@@ -36,7 +36,8 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-- `1.19`, `1`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.20`, `1`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.19` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 - `1.18` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 
 All images built for `linux/amd64` and `linux/arm64`

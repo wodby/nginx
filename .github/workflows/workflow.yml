@@ -15,6 +15,19 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
+  nginx-120:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: 1.20.0
+        tags: 1.20,1,latest
+        platform: linux/amd64,linux/arm64
   nginx-119:
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +39,7 @@ jobs:
     - uses: ./.github/actions
       with:
         version: 1.19.10
-        tags: 1.19,1,latest
+        tags: 1.19
         platform: linux/amd64,linux/arm64
   nginx-118:
     runs-on: ubuntu-latest

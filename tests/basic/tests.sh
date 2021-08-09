@@ -20,9 +20,9 @@ echo -n "Checking LFI .. "
 curl -s "localhost?template=../../etc/passwd" | grep -q "403 Forbidden"
 echo "OK"
 
-echo -n "Checking SQL Injection "
-curl -s "http://localhost/ar?id=' OR 1='1" | grep -q "403 Forbidden"
-echo "OK"
+#echo -n "Checking SQL Injection "
+#curl -s "http://localhost/ar?id=' OR 1='1" | grep -q "403 Forbidden"
+#echo "OK"
 
 rm /var/www/html/index.html
 

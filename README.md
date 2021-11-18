@@ -110,6 +110,14 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_SERVER_ROOT`                                  | `/var/www/html`             |                                     |
 | `NGINX_SERVER_TOKENS`                                | `off`                       |                                     |
 | `NGINX_SET_REAL_IP_FROM`                             |                             |                                     |
+| `NGINX_SET_REAL_IP_FROM_2`                           |                             |                                     |
+| `NGINX_SET_REAL_IP_FROM_3`                           |                             |                                     |
+| `NGINX_SET_REAL_IP_FROM_4`                           |                             |                                     |
+| `NGINX_SET_REAL_IP_FROM_5`                           |                             |                                     |
+| `NGINX_SET_REAL_IP_FROM_6`                           |                             |                                     |
+| `NGINX_SET_REAL_IP_FROM_7`                           |                             |                                     |
+| `NGINX_SET_REAL_IP_FROM_8`                           |                             |                                     |
+| `NGINX_SET_REAL_IP_FROM_9`                           |                             |                                     |
 | `NGINX_STATIC_404_TRY_INDEX`                         |                             |                                     |
 | `NGINX_STATIC_ACCESS_LOG`                            | `off`                       |                                     |
 | `NGINX_STATIC_EXPIRES`                               | `1y`                        |                                     |

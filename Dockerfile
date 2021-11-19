@@ -4,6 +4,9 @@ FROM wodby/alpine:${BASE_IMAGE_TAG}
 
 ARG NGINX_VER
 
+ARG WODBY_USER_ID=1000
+ARG WODBY_GROUP_ID=1000
+
 ENV NGINX_VER="${NGINX_VER}" \
     APP_ROOT="/var/www/html" \
     FILES_DIR="/mnt/files" \
@@ -19,8 +22,8 @@ RUN set -ex; \
     addgroup -S nginx; \
     adduser -S -D -H -h /var/cache/nginx -s /sbin/nologin -G nginx nginx; \
     \
-	addgroup -g 1000 -S wodby; \
-	adduser -u 1000 -D -S -s /bin/bash -G wodby wodby; \
+	addgroup -g "${WODBY_GROUP_ID}" -S wodby; \
+	adduser -u "${WODBY_USER_ID}" -D -S -s /bin/bash -G wodby wodby; \
 	sed -i '/^wodby/s/!/*/' /etc/shadow; \
 	echo "PS1='\w\$ '" >> /home/wodby/.bashrc; \
     \

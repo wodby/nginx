@@ -4,6 +4,12 @@ inputs:
   version:
     description: version
     required: true
+  user_id:
+    description: user id
+    required: false
+  group_id:
+    description: group id
+    required: false
   tags:
     description: image tags
     required: true
@@ -17,6 +23,8 @@ runs:
   - name: Build and push image to docker.io
     env:
       NGINX_VER: ${{ inputs.version }}
+      WODBY_USER_ID: ${{ inputs.user_id }}
+      WODBY_GROUP_ID: ${{ inputs.group_id }}
       TAGS: ${{ inputs.tags }}
       PLATFORM: ${{ inputs.platform }}
       DOCKER_REGISTRY: docker.io

@@ -9,6 +9,14 @@ ALPINE_VER ?= 3.13
 
 PLATFORM ?= linux/amd64
 
+ifeq ($(WODBY_USER_ID),)
+    WODBY_USER_ID := 1000
+endif
+
+ifeq ($(WODBY_GROUP_ID),)
+    WODBY_GROUP_ID := 1000
+endif
+
 ifeq ($(BASE_IMAGE_STABILITY_TAG),)
     BASE_IMAGE_TAG := $(ALPINE_VER)
 else
@@ -32,7 +40,9 @@ default: build
 build:
 	docker build -t $(REPO):$(TAG) \
         --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
-	    --build-arg NGINX_VER=$(NGINX_VER) ./
+	    --build-arg NGINX_VER=$(NGINX_VER) \
+		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
+		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) ./
 
 # --load  doesn't work with multiple platforms https://github.com/docker/buildx/issues/59
 # we need to save cache to run tests first.
@@ -40,6 +50,8 @@ buildx-build-amd64:
 	docker buildx build --platform linux/amd64 \
 		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 		--build-arg NGINX_VER=$(NGINX_VER) \
+		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
+		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) \
 		--load \
 		-t $(REPO):$(TAG) ./
 
@@ -47,12 +59,16 @@ buildx-build:
 	docker buildx build --platform $(PLATFORM) \
 		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 		--build-arg NGINX_VER=$(NGINX_VER) \
+		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
+		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) \
 		-t $(REPO):$(TAG) ./
 
 buildx-push:
 	docker buildx build --platform $(PLATFORM) \
 		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 		--build-arg NGINX_VER=$(NGINX_VER) \
+		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
+		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) \
 		--push -t $(REPO):$(TAG) ./
 
 test:

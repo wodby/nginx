@@ -7,6 +7,7 @@
 
 - [Docker images](#docker-images)
 - [Environment variables](#environment-variables)
+- [Build arguments](#build-arguments)
 - [Nginx modules](#nginx-modules)
     - [ModSecurity]
 - [Default behaviour](#default-behavior)    
@@ -141,6 +142,13 @@ css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv
 ```
 
 Some environment variables can be overridden or added per [preset](#virtual-hosts-presets). 
+
+## Build arguments
+
+| Argument         | Default value |
+| ---------------- | ------------- |
+| `WODBY_GROUP_ID` | `1000`        |
+| `WODBY_USER_ID`  | `1000`        |
 
 ## Nginx modules
 

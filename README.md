@@ -178,10 +178,10 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_v2]             |                   |         |
 | [http_xslt]           |                   | ✓       |
 | [mail_ssl]            |                   |         |
-| [nginx_vts]           |                   |         |
 | [stream_realip]       |                   |         |
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
+| [vts]                 |                   |         |
 
 ### ModSecurity
 
@@ -359,9 +359,9 @@ default params values:
 [ModSecurity Library]: https://modsecurity.org/
 [ModSecurity Nginx module]: https://github.com/SpiderLabs/ModSecurity-nginx
 [ModSecurity]: #modsecurity
-[nginx_vts]: https://github.com/vozlt/nginx-module-vts
 [OWASP CRS]: https://modsecurity.org/crs/
 [WordPress]: #wordpress
 [stream_realip]: http://nginx.org/en/docs/stream/ngx_stream_realip_module.html
 [stream_ssl]: http://nginx.org/en/docs/stream/ngx_stream_ssl_module.html
 [stream_ssl_preread]: http://nginx.org/en/docs/stream/ngx_stream_ssl_preread_module.html
+[vts]: https://github.com/vozlt/nginx-module-vts

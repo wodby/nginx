@@ -12,6 +12,10 @@ events {
 }
 
 http {
+    {{ if getenv "NGINX_METRICS_ENABLED" }}
+    vhost_traffic_status_zone;
+    {{ end }}
+
     include                     /etc/nginx/mime.types;
     default_type                application/octet-stream;
 

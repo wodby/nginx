@@ -60,6 +60,18 @@ location = /.statusz {
 }
 {{ end }}
 
+{{ if getenv "NGINX_METRICS_ENABLED" }}
+location = /.metricsz {
+    vhost_traffic_status_display;
+    vhost_traffic_status_display_format {{ getenv "NGINX_METRICS_FORMAT" "html" }};
+    allow 127.0.0.1;
+    {{ if getenv "NGINX_METRICS_ALLOW_FROM" }}
+    allow {{ getenv "NGINX_METRICS_ALLOW_FROM" }};
+    {{ end }}
+    deny all;
+}
+{{ end }}
+
 location ^~ /.well-known/ {
     allow all;
 }

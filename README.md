@@ -93,6 +93,9 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_KEEPALIVE_TIMEOUT`                            | `75s`                       |                                     |
 | `NGINX_LARGE_CLIENT_HEADER_BUFFERS`                  | `8 16k`                     |                                     |
 | `NGINX_LOG_FORMAT_OVERRIDE`                          |                             |                                     |
+| `NGINX_METRICS_ENABLED`                              | `off`                       |                                     |
+| `NGINX_METRICS_FORMAT`                               | `html`                      | <json|html|jsonp|prometheus>        |
+| `NGINX_METRICS_ALLOW_FROM`                           |                             |                                     |
 | `NGINX_MODSECURITY_ENABLED`                          |                             | See [ModSecurity]                   |
 | `NGINX_MODSECURITY_INBOUND_ANOMALY_SCORE_THRESHOLD`  | `7`                         |                                     |
 | `NGINX_MODSECURITY_OUTBOUND_ANOMALY_SCORE_THRESHOLD` | `7`                         |                                     |
@@ -175,6 +178,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_v2]             |                   |         |
 | [http_xslt]           |                   | ✓       |
 | [mail_ssl]            |                   |         |
+| [nginx_vts]           |                   |         |
 | [stream_realip]       |                   |         |
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
@@ -199,7 +203,7 @@ Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS
 - `/humans.txt` allowed
 - `/favicon.ico` allowed
 - `.flv`, `.m4a`, `.mp4`, `.mov` locations supported and handled with appropriate modules
--  `/.healthz` location supported, requests not shown in access log
+- `/.healthz` location supported, requests not shown in access log
 
 ## Customization
 
@@ -213,6 +217,9 @@ Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS
 - Add extra locations via `$NGINX_SERVER_EXTRA_CONF_FILEPATH=/filepath/to/nginx-locations.conf`, the file will be included at the end of default rules (`server` context)
 - Completely override include of the virtual host config by overriding `NGINX_CONF_INCLUDE`, it will be included in `nginx.conf`
 - Define [custom preset](#custom-preset)
+- Status page `/.statusz` can be enabled via `$NGINX_STATUS_ENABLED`, requests not shown in access log
+- Metrics page `/.metricsz` can be enabled via `$NGINX_METRICS_ENABLED`, requests not shown in access log
+- Metrics page format can be customized via `$NGINX_METRICS_FORMAT`, supports json, html, jsonp and prometheus
 
 ## Virtual hosts presets
 
@@ -352,9 +359,9 @@ default params values:
 [ModSecurity Library]: https://modsecurity.org/
 [ModSecurity Nginx module]: https://github.com/SpiderLabs/ModSecurity-nginx
 [ModSecurity]: #modsecurity
+[nginx_vts]: https://github.com/vozlt/nginx-module-vts
 [OWASP CRS]: https://modsecurity.org/crs/
 [WordPress]: #wordpress
 [stream_realip]: http://nginx.org/en/docs/stream/ngx_stream_realip_module.html
 [stream_ssl]: http://nginx.org/en/docs/stream/ngx_stream_ssl_module.html
 [stream_ssl_preread]: http://nginx.org/en/docs/stream/ngx_stream_ssl_preread_module.html
-

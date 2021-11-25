@@ -158,7 +158,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 
 | Name                  | Version           | Dynamic |
 | --------------------- | ----------------  | ------- |
-| [brotli]              | git id 9aec15e    |         |
+| [brotli]              | [9aec15e](https://github.com/google/ngx_brotli/commit/9aec15e2aa6feea2113119ba06460af70ab3ea62) ||
 | [http_addition]       |                   |         |
 | [http_auth_request]   |                   |         |
 | [http_dav]            |                   |         |
@@ -182,7 +182,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [stream_realip]       |                   |         |
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
-| [vts]                 | git id 3c6cf41    |         |
+| [vts]                 | [3c6cf41](https://github.com/vozlt/nginx-module-vts/commit/3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac)||
 
 ### ModSecurity
 

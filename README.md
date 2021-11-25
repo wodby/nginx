@@ -94,7 +94,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_LARGE_CLIENT_HEADER_BUFFERS`                  | `8 16k`                     |                                     |
 | `NGINX_LOG_FORMAT_OVERRIDE`                          |                             |                                     |
 | `NGINX_METRICS_ENABLED`                              | `off`                       |                                     |
-| `NGINX_METRICS_FORMAT`                               | `html`                      | <json|html|jsonp|prometheus>        |
+| `NGINX_METRICS_FORMAT`                               | `html`                      | html, json, jsonp, prometheus       |
 | `NGINX_METRICS_ALLOW_FROM`                           |                             |                                     |
 | `NGINX_MODSECURITY_ENABLED`                          |                             | See [ModSecurity]                   |
 | `NGINX_MODSECURITY_INBOUND_ANOMALY_SCORE_THRESHOLD`  | `7`                         |                                     |

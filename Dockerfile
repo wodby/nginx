@@ -109,6 +109,9 @@ RUN set -ex; \
     url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
     wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
     \
+    # Get VTS module \
+    git clone https://github.com/vozlt/nginx-module-vts.git /tmp/nginx_module_vts; \
+    \
     # Download nginx.
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -o /tmp/nginx.tar.gz; \
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz.asc"  -o /tmp/nginx.tar.gz.asc; \
@@ -161,6 +164,7 @@ RUN set -ex; \
         --with-threads \
         --add-module=/tmp/ngx_http_uploadprogress_module \
         --add-module=/tmp/ngx_brotli \
+        --add-module=/tmp/nginx_module_vts \
         --add-dynamic-module=/tmp/ngx_http_modsecurity_module; \
     \
     make -j$(getconf _NPROCESSORS_ONLN); \

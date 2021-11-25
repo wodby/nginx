@@ -12,6 +12,14 @@ echo -n "Checking Nginx response... "
 curl -s localhost | grep -q "It works!"
 echo "OK"
 
+echo -n "Checking Status response... "
+curl -s "localhost/.statusz" | grep -q "Active connections"
+echo "OK"
+
+echo -n "Checking Metrics response... "
+curl -s "localhost/.metricsz" | grep -q "<title>nginx vhost traffic status monitor</title>"
+echo "OK"
+
 echo -n "Checking Modsecurity XSS... "
 curl -s "localhost?test=<script>alert(42)</script>" | grep -q "403 Forbidden"
 echo "OK"

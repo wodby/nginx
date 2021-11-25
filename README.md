@@ -157,7 +157,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 
 | Name                  | Version           | Dynamic |
 | --------------------- | ----------------  | ------- |
-| [brotli]              | Latest            |         |
+| [brotli]              | Latest commit id  |         |
 | [http_addition]       |                   |         |
 | [http_auth_request]   |                   |         |
 | [http_dav]            |                   |         |
@@ -181,7 +181,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [stream_realip]       |                   |         |
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
-| [vts]                 |                   |         |
+| [vts]                 | Latest commit id  |         |
 
 ### ModSecurity
 

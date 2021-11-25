@@ -18,6 +18,8 @@ RUN set -ex; \
     ngx_modsecurity_ver="1.0.0"; \
     modsecurity_ver="3.0.4"; \
     owasp_crs_ver="3.1.0"; \
+    brotli_commit='9aec15e2aa6feea2113119ba06460af70ab3ea62'; \
+    vts_commit='3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac'; \
     \
     addgroup -S nginx; \
     adduser -S -D -H -h /var/cache/nginx -s /sbin/nologin -G nginx nginx; \
@@ -89,6 +91,8 @@ RUN set -ex; \
     # Brotli.
     cd /tmp; \
     git clone --depth 1 --single-branch https://github.com/google/ngx_brotli; \
+    cd /tmp/ngx_brotli; \
+    git checkout ${brotli_commit}; \
     \
     # Get ngx modsecurity module.
     mkdir -p /tmp/ngx_http_modsecurity_module; \
@@ -111,6 +115,8 @@ RUN set -ex; \
     \
     # Get VTS module \
     git clone https://github.com/vozlt/nginx-module-vts.git /tmp/nginx_module_vts; \
+    cd /tmp/nginx_module_vts; \
+    git checkout ${vts_commit}; \
     \
     # Download nginx.
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -o /tmp/nginx.tar.gz; \

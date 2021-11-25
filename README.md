@@ -114,6 +114,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_SERVER_ROOT`                                  | `/var/www/html`             |                                     |
 | `NGINX_SERVER_TOKENS`                                | `off`                       |                                     |
 | `NGINX_SET_REAL_IP_FROM`                             |                             |                                     |
+| `NGINX_SET_REAL_IPS_FROM`                            |                             | json array as string                |
 | `NGINX_STATIC_404_TRY_INDEX`                         |                             |                                     |
 | `NGINX_STATIC_ACCESS_LOG`                            | `off`                       |                                     |
 | `NGINX_STATIC_EXPIRES`                               | `1y`                        |                                     |
@@ -208,6 +209,16 @@ Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS
 ## Customization
 
 - Pass real IP from a reverse proxy via `$NGINX_SET_REAL_IP_FROM`, e.g. `172.17.0.0/16` for docker network 
+- Pass multiple real IP from reverse proxies via `$NGINX_SET_REAL_IPS_FROM`
+  In a docker-compose.yml this can be done like this:
+  ```
+  environment:
+    NGINX_SET_REAL_IPS_FROM: "[\"172.17.0.0/16\", \"192.168.0.10\"]"
+  
+  environment:
+    NGINX_SET_REAL_IPS_FROM: |-
+      ["172.17.0.0/16", "192.168.0.10"]
+  ```
 - Customize the header which value will be used to replace the client address via `$NGINX_REAL_IP_HEADER`
 - Default recommended headers can be disabled via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
 - Error page file can be customized for HTTP errors `403` (`$NGINX_ERROR_403_URI`) and `404` (`$NGINX_ERROR_404_URI`)

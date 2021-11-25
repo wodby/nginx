@@ -182,7 +182,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [stream_realip]       |                   |         |
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
-| [vts]                 |                   |         |
+| [vts]                 | Latest            |         |
 
 ### ModSecurity
 

@@ -7,7 +7,7 @@ if [[ -n "${DEBUG}" ]]; then
 fi
 
 check_endpoint() {
-    docker-compose exec -T nginx curl -s -I "localhost/${1}" | grep -q "${2}"
+    docker-compose exec -T nginx curl -s -S -I "localhost/${1}" | grep -q "${2}"
     echo "OK"
 }
 

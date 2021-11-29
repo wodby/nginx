@@ -10,6 +10,11 @@ nginx_exec() {
     docker-compose exec -T nginx "${@}"
 }
 
+clean_exit() {
+  docker-compose down
+}
+trap clean_exit EXIT
+
 docker-compose up -d
 
 nginx_exec make check-ready -f /usr/local/bin/actions.mk
@@ -50,5 +55,3 @@ echo -n "Checking user-defined internal permanent redirect... "
 nginx_exec curl -I "localhost/redirect-internal-permanent" | grep '301 Moved Permanently'
 echo -n "Checking user-defined external redirect... "
 nginx_exec curl -I "localhost/redirect-external" | grep '302 Moved Temporarily'
-
-docker-compose down

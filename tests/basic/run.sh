@@ -8,6 +8,11 @@ fi
 
 git_url=https://github.com/wodby/nginx.git
 
+clean_exit() {
+  docker-compose down
+}
+trap clean_exit EXIT
+
 docker-compose up -d
 
 run_action() {

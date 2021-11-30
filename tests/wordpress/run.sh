@@ -11,6 +11,11 @@ check_endpoint() {
     echo "OK"
 }
 
+clean_exit() {
+  docker-compose down
+}
+trap clean_exit EXIT
+
 docker-compose up -d
 
 docker-compose exec -T nginx make check-ready -f /usr/local/bin/actions.mk
@@ -45,5 +50,3 @@ check_endpoint "favicon.ico" "200 OK"
 
 echo -n "Checking non-existing php endpoint... "
 check_endpoint "non-existing.php" "404 Not Found"
-
-docker-compose down

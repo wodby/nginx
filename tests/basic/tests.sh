@@ -9,7 +9,7 @@ fi
 echo "It works!" > /var/www/html/index.html
 
 echo -n "Checking Nginx response... "
-curl -s localhost | grep -q "It works!"
+curl -s -S localhost | grep -q "It works!"
 echo "OK"
 
 echo -n "Checking Status response... "
@@ -21,15 +21,15 @@ curl -s "localhost/.metricsz" | grep -q "<title>nginx vhost traffic status monit
 echo "OK"
 
 echo -n "Checking Modsecurity XSS... "
-curl -s "localhost?test=<script>alert(42)</script>" | grep -q "403 Forbidden"
+curl -s -S "localhost?test=<script>alert(42)</script>" | grep -q "403 Forbidden"
 echo "OK"
 
 echo -n "Checking LFI .. "
-curl -s "localhost?template=../../etc/passwd" | grep -q "403 Forbidden"
+curl -s -S "localhost?template=../../etc/passwd" | grep -q "403 Forbidden"
 echo "OK"
 
 #echo -n "Checking SQL Injection "
-#curl -s "http://localhost/ar?id=' OR 1='1" | grep -q "403 Forbidden"
+#curl -s -S "http://localhost/ar?id=' OR 1='1" | grep -q "403 Forbidden"
 #echo "OK"
 
 rm /var/www/html/index.html

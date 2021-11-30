@@ -7,6 +7,8 @@ services:
       - ./tests.sh:/usr/local/bin/tests.sh
       - ./nginx_modules:/home/wodby/nginx_modules
     environment:
+      NGINX_METRICS_ENABLED: "1"
       NGINX_MODSECURITY_ENABLED: "1"
       NGINX_MODSECURITY_USE_OWASP_CRS: "1"
       NGINX_LOG_FORMAT_OVERRIDE: "$$http_x_real_ip - $$request - $$status"
+      NGINX_STATUS_ENABLED: "1"

@@ -93,6 +93,9 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_KEEPALIVE_TIMEOUT`                            | `75s`                       |                                     |
 | `NGINX_LARGE_CLIENT_HEADER_BUFFERS`                  | `8 16k`                     |                                     |
 | `NGINX_LOG_FORMAT_OVERRIDE`                          |                             |                                     |
+| `NGINX_METRICS_ENABLED`                              | `off`                       |                                     |
+| `NGINX_METRICS_FORMAT`                               | `html`                      | html, json, jsonp, prometheus       |
+| `NGINX_METRICS_ALLOW_FROM`                           |                             |                                     |
 | `NGINX_MODSECURITY_ENABLED`                          |                             | See [ModSecurity]                   |
 | `NGINX_MODSECURITY_INBOUND_ANOMALY_SCORE_THRESHOLD`  | `7`                         |                                     |
 | `NGINX_MODSECURITY_OUTBOUND_ANOMALY_SCORE_THRESHOLD` | `7`                         |                                     |
@@ -111,6 +114,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_SERVER_ROOT`                                  | `/var/www/html`             |                                     |
 | `NGINX_SERVER_TOKENS`                                | `off`                       |                                     |
 | `NGINX_SET_REAL_IP_FROM`                             |                             |                                     |
+| `NGINX_SET_REAL_IPS_FROM`                            |                             | json array as string                |
 | `NGINX_STATIC_404_TRY_INDEX`                         |                             |                                     |
 | `NGINX_STATIC_ACCESS_LOG`                            | `off`                       |                                     |
 | `NGINX_STATIC_EXPIRES`                               | `1y`                        |                                     |
@@ -154,7 +158,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 
 | Name                  | Version           | Dynamic |
 | --------------------- | ----------------  | ------- |
-| [brotli]              | Latest            |         |
+| [brotli]              | [9aec15e](https://github.com/google/ngx_brotli/commit/9aec15e2aa6feea2113119ba06460af70ab3ea62) ||
 | [http_addition]       |                   |         |
 | [http_auth_request]   |                   |         |
 | [http_dav]            |                   |         |
@@ -178,6 +182,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [stream_realip]       |                   |         |
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
+| [vts]                 | [3c6cf41](https://github.com/vozlt/nginx-module-vts/commit/3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac)||
 
 ### ModSecurity
 
@@ -199,11 +204,21 @@ Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS
 - `/humans.txt` allowed
 - `/favicon.ico` allowed
 - `.flv`, `.m4a`, `.mp4`, `.mov` locations supported and handled with appropriate modules
--  `/.healthz` location supported, requests not shown in access log
+- `/.healthz` location supported, requests not shown in access log
 
 ## Customization
 
 - Pass real IP from a reverse proxy via `$NGINX_SET_REAL_IP_FROM`, e.g. `172.17.0.0/16` for docker network 
+- Pass multiple real IP from reverse proxies via `$NGINX_SET_REAL_IPS_FROM`
+  In a docker-compose.yml this can be done like this:
+  ```
+  environment:
+    NGINX_SET_REAL_IPS_FROM: "[\"172.17.0.0/16\", \"192.168.0.10\"]"
+  
+  environment:
+    NGINX_SET_REAL_IPS_FROM: |-
+      ["172.17.0.0/16", "192.168.0.10"]
+  ```
 - Customize the header which value will be used to replace the client address via `$NGINX_REAL_IP_HEADER`
 - Default recommended headers can be disabled via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
 - Error page file can be customized for HTTP errors `403` (`$NGINX_ERROR_403_URI`) and `404` (`$NGINX_ERROR_404_URI`)
@@ -213,6 +228,9 @@ Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS
 - Add extra locations via `$NGINX_SERVER_EXTRA_CONF_FILEPATH=/filepath/to/nginx-locations.conf`, the file will be included at the end of default rules (`server` context)
 - Completely override include of the virtual host config by overriding `NGINX_CONF_INCLUDE`, it will be included in `nginx.conf`
 - Define [custom preset](#custom-preset)
+- Status page `/.statusz` can be enabled via `$NGINX_STATUS_ENABLED`, requests not shown in access log
+- Metrics page `/.metricsz` can be enabled via `$NGINX_METRICS_ENABLED`, requests not shown in access log
+- Metrics page format can be customized via `$NGINX_METRICS_FORMAT`, supports json, html, jsonp and prometheus
 
 ## Virtual hosts presets
 
@@ -357,4 +375,4 @@ default params values:
 [stream_realip]: http://nginx.org/en/docs/stream/ngx_stream_realip_module.html
 [stream_ssl]: http://nginx.org/en/docs/stream/ngx_stream_ssl_module.html
 [stream_ssl_preread]: http://nginx.org/en/docs/stream/ngx_stream_ssl_preread_module.html
-
+[vts]: https://github.com/vozlt/nginx-module-vts

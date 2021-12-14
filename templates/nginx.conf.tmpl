@@ -129,12 +129,6 @@ http {
     real_ip_header {{ getenv "NGINX_REAL_IP_HEADER" "X-Real-IP" }};
     real_ip_recursive {{ getenv "NGINX_REAL_IP_RECURSIVE" "off" }};
 
-    {{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
-    add_header                  X-XSS-Protection '1; mode=block';
-    add_header                  X-Frame-Options SAMEORIGIN;
-    add_header                  X-Content-Type-Options nosniff;
-    {{ end }}
-
     map $uri $no_slash_uri {
         ~^/(?<no_slash>.*)$ $no_slash;
     }

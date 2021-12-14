@@ -4,6 +4,12 @@ add_header Pragma "no-cache";
 add_header Cache-Control "no-store, no-cache, must-revalicate, post-check=0 pre-check=0";
 {{ end }}
 
+{{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
+add_header  X-XSS-Protection '1; mode=block';
+add_header  X-Frame-Options SAMEORIGIN;
+add_header  X-Content-Type-Options nosniff;
+{{ end }}
+
 location = /favicon.ico {
     expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
     try_files /favicon.ico @empty;

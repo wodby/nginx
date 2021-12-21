@@ -10,8 +10,8 @@
 - [Build arguments](#build-arguments)
 - [Nginx modules](#nginx-modules)
     - [ModSecurity]
-- [Default behaviour](#default-behavior)    
-- [Customization](#customization)      
+- [Default behaviour](#default-behavior)
+- [Customization](#customization)
 - [Virtual hosts presets](#virtual-hosts-presets)
     - [HTML](#html)
     - [HTTP proxy (application server)](#http-proxy-application-server)
@@ -26,13 +26,13 @@
 
 ## Docker Images
 
-❗For better reliability we release images with stability tags (`wodby/nginx:1.20-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags. 
+❗For better reliability we release images with stability tags (`wodby/nginx:1.20-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags.
 
 Overview:
 
 - All images based on Alpine Linux
 - Base image: [wodby/alpine](https://github.com/wodby/alpine)
-- [GitHub actions builds](https://github.com/wodby/nginx/actions) 
+- [GitHub actions builds](https://github.com/wodby/nginx/actions)
 - [Docker Hub](https://hub.docker.com/r/wodby/nginx)
 
 Supported tags and respective `Dockerfile` links:
@@ -60,6 +60,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_CLIENT_HEADER_TIMEOUT`                        | `60s`                       |                                     |
 | `NGINX_CLIENT_MAX_BODY_SIZE`                         | `32m`                       |                                     |
 | `NGINX_CONF_INCLUDE`                                 | `conf.d/*.conf`             |                                     |
+| `NGINX_CSP_FRAME_ANCESTORS` | `none` | |
 | `NGINX_DISABLE_CACHING`                              |                             |                                     |
 | `NGINX_DJANGO_MEDIA_ROOT`                            | `/var/www/html/media/`      |                                     |
 | `NGINX_DJANGO_MEDIA_URL`                             | `/media/`                   |                                     |
@@ -145,7 +146,7 @@ Static files extension defined via the regex and can be overridden via the env v
 css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map
 ```
 
-Some environment variables can be overridden or added per [preset](#virtual-hosts-presets). 
+Some environment variables can be overridden or added per [preset](#virtual-hosts-presets).
 
 ## Build arguments
 
@@ -208,19 +209,20 @@ Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS
 
 ## Customization
 
-- Pass real IP from a reverse proxy via `$NGINX_SET_REAL_IP_FROM`, e.g. `172.17.0.0/16` for docker network 
+- Pass real IP from a reverse proxy via `$NGINX_SET_REAL_IP_FROM`, e.g. `172.17.0.0/16` for docker network
 - Pass multiple real IP from reverse proxies via `$NGINX_SET_REAL_IPS_FROM`
   In a docker-compose.yml this can be done like this:
   ```
   environment:
     NGINX_SET_REAL_IPS_FROM: "[\"172.17.0.0/16\", \"192.168.0.10\"]"
-  
+
   environment:
     NGINX_SET_REAL_IPS_FROM: |-
       ["172.17.0.0/16", "192.168.0.10"]
   ```
 - Customize the header which value will be used to replace the client address via `$NGINX_REAL_IP_HEADER`
 - Default recommended headers can be disabled via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
+- The value for the Content-Security-Policy `frame-ancestors` header can be changed using `$NGINX_CSP_FRAME_ANCESTORS`, it's default value is `none`.  More information can be found [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors).
 - Error page file can be customized for HTTP errors `403` (`$NGINX_ERROR_403_URI`) and `404` (`$NGINX_ERROR_404_URI`)
 - Default error page for HTTP errors `500`, `502`, `503`, `504` can be disabled via `$NGINX_HIDE_50x_ERRORS`
 - Access to hidden files (starting with `.`) can be allowed via `$NGINX_ALLOW_ACCESS_HIDDEN_FILES`
@@ -250,7 +252,7 @@ Overridden default values:
 ### HTTP proxy (application server)
 
 - [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/http-proxy.conf.tmpl)
-- Usage: add `NGINX_VHOST_PRESET=http-proxy` and `NGINX_BACKEND_HOST=[HOST]` 
+- Usage: add `NGINX_VHOST_PRESET=http-proxy` and `NGINX_BACKEND_HOST=[HOST]`
 
 Overridden default values:
 
@@ -264,7 +266,7 @@ Overridden default values:
 Same as HTTP proxy but with additional media/static locations for Django.
 
 - [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/django.conf.tmpl)
-- Usage: add `NGINX_VHOST_PRESET=django` 
+- Usage: add `NGINX_VHOST_PRESET=django`
 
 Overridden default values:
 
@@ -296,7 +298,7 @@ Overridden default values:
 #### WordPress
 
 - [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/wordpress.conf.tmpl)
-- Usage: add `NGINX_VHOST_PRESET=wordpress`, optionally modify `NGINX_BACKEND_HOST`  
+- Usage: add `NGINX_VHOST_PRESET=wordpress`, optionally modify `NGINX_BACKEND_HOST`
 - Access to `*.txt` files allowed only if they are located in uploads directory
 - Access to `/wp-content/uploads/woocommerce_uploads` disallowed
 - Dynamic generated `/robots.txt` supported
@@ -310,7 +312,7 @@ Overridden default values:
 - Preset templates: [Drupal 9], [Drupal 8], [Drupal 7], [Drupal 6]
 - Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal9`, `drupal8`, `drupal7` or `drupal6`. Optionally modify `NGINX_BACKEND_HOST`
 - If you want to use [stage_file_proxy](https://www.drupal.org/project/stage_file_proxy) module, set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
-- Access to `*.txt` files allowed only if they are located in files directory 
+- Access to `*.txt` files allowed only if they are located in files directory
 
 [Drupal 9]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal9.conf.tmpl
 [Drupal 8]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl

@@ -60,7 +60,6 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_CLIENT_HEADER_TIMEOUT`                        | `60s`                       |                                     |
 | `NGINX_CLIENT_MAX_BODY_SIZE`                         | `32m`                       |                                     |
 | `NGINX_CONF_INCLUDE`                                 | `conf.d/*.conf`             |                                     |
-| `NGINX_CSP_FRAME_ANCESTORS` | `none` | |
 | `NGINX_DISABLE_CACHING`                              |                             |                                     |
 | `NGINX_DJANGO_MEDIA_ROOT`                            | `/var/www/html/media/`      |                                     |
 | `NGINX_DJANGO_MEDIA_URL`                             | `/media/`                   |                                     |
@@ -87,6 +86,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_GZIP_PROXIED`                                 | `any`                       |                                     |
 | `NGINX_GZIP_VARY`                                    | `on`                        |                                     |
 | `NGINX_GZIP`                                         | `on`                        |                                     |
+| `NGINX_HEADERS_CONTENT_SECURITY_POLICY` | `frame-ancestors: 'none'` | |
 | `NGINX_HIDE_50x_ERRORS`                              |                             |                                     |
 | `NGINX_HTTP2`                                        |                             |                                     |
 | `NGINX_INDEX_FILE`                                   | Varies with a preset        | Hard-coded for Drupal and WP        |
@@ -222,7 +222,7 @@ Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS
   ```
 - Customize the header which value will be used to replace the client address via `$NGINX_REAL_IP_HEADER`
 - Default recommended headers can be disabled via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
-- The value for the Content-Security-Policy `frame-ancestors` header can be changed using `$NGINX_CSP_FRAME_ANCESTORS`, it's default value is `none`.  More information can be found [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors).
+- The value for the Content-Security-Policy header can be changed using `$NGINX_HEADERS_CONTENT_SECURITY_POLICY`, it's default value is `frame-ancestors: 'none'`.  More information on this header can be found [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
 - Error page file can be customized for HTTP errors `403` (`$NGINX_ERROR_403_URI`) and `404` (`$NGINX_ERROR_404_URI`)
 - Default error page for HTTP errors `500`, `502`, `503`, `504` can be disabled via `$NGINX_HIDE_50x_ERRORS`
 - Access to hidden files (starting with `.`) can be allowed via `$NGINX_ALLOW_ACCESS_HIDDEN_FILES`

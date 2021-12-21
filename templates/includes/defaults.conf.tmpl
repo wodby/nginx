@@ -8,7 +8,7 @@ add_header Cache-Control "no-store, no-cache, must-revalicate, post-check=0 pre-
 add_header  X-XSS-Protection '1; mode=block';
 add_header  X-Frame-Options SAMEORIGIN;
 add_header  X-Content-Type-Options nosniff;
-add_header  Content-Security-Policy "frame-ancestors 'none'";
+add_header  Content-Security-Policy "frame-ancestors '{{ getenv "NGINX_CSP_FRAME_ANCESTORS" "none" }}'";
 {{ end }}
 
 location = /favicon.ico {

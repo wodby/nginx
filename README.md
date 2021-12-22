@@ -3,7 +3,6 @@
 [![Build Status](https://github.com/wodby/nginx/workflows/Build%20docker%20image/badge.svg)](https://github.com/wodby/nginx/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/nginx.svg)](https://hub.docker.com/r/wodby/nginx)
-[![Docker Layers](https://images.microbadger.com/badges/image/wodby/nginx.svg)](https://microbadger.com/images/wodby/nginx)
 
 - [Docker images](#docker-images)
 - [Environment variables](#environment-variables)
@@ -26,7 +25,7 @@
 
 ## Docker Images
 
-❗For better reliability we release images with stability tags (`wodby/nginx:1.20-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags.
+❗For better reliability we release images with stability tags (`wodby/nginx:1.21-X.X.X`) which correspond to [git tags](https://github.com/wodby/nginx/releases). We strongly recommend using images only with stability tags. 
 
 Overview:
 
@@ -141,9 +140,10 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_WP_GOOGLE_XML_SITEMAP`                        |                             | See [WordPress]                     |
 | `NGINX_WP_YOAST_XML_SITEMAP`                         |                             | See [WordPress]                     |
 
+
 Static files extension defined via the regex and can be overridden via the env var `NGINX_STATIC_EXT_REGEX`, default:
 ```
-css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map
+css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map|webp
 ```
 
 Some environment variables can be overridden or added per [preset](#virtual-hosts-presets).
@@ -151,44 +151,44 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 ## Build arguments
 
 | Argument         | Default value |
-| ---------------- | ------------- |
+|------------------|---------------|
 | `WODBY_GROUP_ID` | `1000`        |
 | `WODBY_USER_ID`  | `1000`        |
 
 ## Nginx modules
 
-| Name                  | Version           | Dynamic |
-| --------------------- | ----------------  | ------- |
-| [brotli]              | [9aec15e](https://github.com/google/ngx_brotli/commit/9aec15e2aa6feea2113119ba06460af70ab3ea62) ||
-| [http_addition]       |                   |         |
-| [http_auth_request]   |                   |         |
-| [http_dav]            |                   |         |
-| [http_flv]            |                   |         |
-| [http_gunzip]         |                   |         |
-| [http_gzip_static]    |                   |         |
-| [http_image_filter]   |                   | ✓       |
-| http_modsecurity      | See [ModSecurity] | ✓       |
-| [http_mp4]            |                   |         |
-| [http_random_index]   |                   |         |
-| [http_realip]         |                   |         |
-| [http_secure_link]    |                   |         |
-| [http_slice]          |                   |         |
-| [http_ssl]            |                   |         |
-| [http_stub_status]    |                   |         |
-| [http_sub]            |                   |         |
-| [http_uploadprogress] | 0.9.1             |         |
-| [http_v2]             |                   |         |
-| [http_xslt]           |                   | ✓       |
-| [mail_ssl]            |                   |         |
-| [stream_realip]       |                   |         |
-| [stream_ssl]          |                   |         |
-| [stream_ssl_preread]  |                   |         |
-| [vts]                 | [3c6cf41](https://github.com/vozlt/nginx-module-vts/commit/3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac)||
+| Name                  | Version                                                                                              | Dynamic |
+|-----------------------|------------------------------------------------------------------------------------------------------|---------|
+| [brotli]              | [9aec15e](https://github.com/google/ngx_brotli/commit/9aec15e2aa6feea2113119ba06460af70ab3ea62)      ||
+| [http_addition]       |                                                                                                      |         |
+| [http_auth_request]   |                                                                                                      |         |
+| [http_dav]            |                                                                                                      |         |
+| [http_flv]            |                                                                                                      |         |
+| [http_gunzip]         |                                                                                                      |         |
+| [http_gzip_static]    |                                                                                                      |         |
+| [http_image_filter]   |                                                                                                      | ✓       |
+| http_modsecurity      | See [ModSecurity]                                                                                    | ✓       |
+| [http_mp4]            |                                                                                                      |         |
+| [http_random_index]   |                                                                                                      |         |
+| [http_realip]         |                                                                                                      |         |
+| [http_secure_link]    |                                                                                                      |         |
+| [http_slice]          |                                                                                                      |         |
+| [http_ssl]            |                                                                                                      |         |
+| [http_stub_status]    |                                                                                                      |         |
+| [http_sub]            |                                                                                                      |         |
+| [http_uploadprogress] | 0.9.1                                                                                                |         |
+| [http_v2]             |                                                                                                      |         |
+| [http_xslt]           |                                                                                                      | ✓       |
+| [mail_ssl]            |                                                                                                      |         |
+| [stream_realip]       |                                                                                                      |         |
+| [stream_ssl]          |                                                                                                      |         |
+| [stream_ssl_preread]  |                                                                                                      |         |
+| [vts]                 | [3c6cf41](https://github.com/vozlt/nginx-module-vts/commit/3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac) ||
 
 ### ModSecurity
 
 | Component                  | Version |
-| -------------------------- | ------- |
+|----------------------------|---------|
 | [ModSecurity Nginx module] | 1.0.0   |
 | [ModSecurity Library]      | 3.0.3   |
 | [OWASP CRS]                | 3.1.0   |
@@ -245,9 +245,9 @@ By default will be used `html` virtual host preset, you can change it via env va
 
 Overridden default values:
 
-| Variable             | Default Value |
-| -------------------- | ------------- |
-| `NGINX_INDEX_FILE`   | `index.html`  |
+| Variable           | Default Value |
+|--------------------|---------------|
+| `NGINX_INDEX_FILE` | `index.html`  |
 
 ### HTTP proxy (application server)
 
@@ -257,7 +257,7 @@ Overridden default values:
 Overridden default values:
 
 | Variable             | Default Value |
-| -------------------- | ------------- |
+|----------------------|---------------|
 | `NGINX_BACKEND_HOST` |               |
 | `NGINX_BACKEND_PORT` | `8080`        |
 
@@ -271,7 +271,7 @@ Same as HTTP proxy but with additional media/static locations for Django.
 Overridden default values:
 
 | Variable             | Default Value |
-| -------------------- | ------------- |
+|----------------------|---------------|
 | `NGINX_BACKEND_HOST` | `python`      |
 | `NGINX_BACKEND_PORT` | `8080`        |
 
@@ -280,7 +280,7 @@ Overridden default values:
 Overridden default values:
 
 | Variable             | Default Value |
-| -------------------- | ------------- |
+|----------------------|---------------|
 | `NGINX_BACKEND_HOST` | `php`         |
 | `NGINX_BACKEND_PORT` | `9000`        |
 
@@ -292,7 +292,7 @@ Overridden default values:
 Overridden default values:
 
 | Variable           | Default Value          |
-| ------------------ | -------------          |
+|--------------------|------------------------|
 | `NGINX_INDEX_FILE` | `index.php index.html` |
 
 #### WordPress

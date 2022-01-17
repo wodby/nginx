@@ -64,6 +64,8 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_DJANGO_MEDIA_URL`                             | `/media/`                   |                                     |
 | `NGINX_DJANGO_STATIC_ROOT`                           | `/var/www/html/static/`     |                                     |
 | `NGINX_DJANGO_STATIC_URL`                            | `/static/`                  |                                     |
+| `NGINX_DRUPAL_ALLOW_ACCESS_TO_INSTALL`               | `1`                         |                                     |
+| `NGINX_DRUPAL_ALLOW_ACCESS_TO_UPDATE`                | `1`                         |                                     |
 | `NGINX_DRUPAL_ALLOW_XML_ENDPOINTS`                   |                             |                                     |
 | `NGINX_DRUPAL_FILE_PROXY_URL`                        |                             | e.g. `http://dev.example.com`       |
 | `NGINX_DRUPAL_HIDE_HEADERS`                          |                             |                                     |

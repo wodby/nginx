@@ -140,9 +140,11 @@ location = /index.php {
     fastcgi_pass php;
 }
 
+{{ if getenv "NGINX_DRUPAL_ALLOW_ACCESS_TO_INSTALL" }}
 location = /core/install.php {
     fastcgi_pass php;
 }
+{{ end }}
 
 location = /core/rebuild.php {
     fastcgi_pass php;
@@ -168,6 +170,7 @@ location = /cron {
     fastcgi_pass php;
 }
 
+{{ if getenv "NGINX_DRUPAL_ALLOW_ACCESS_TO_UPDATE" }}
 location ~* ^/update.php {
     include fastcgi.conf;
     fastcgi_param QUERY_STRING $args;
@@ -175,6 +178,7 @@ location ~* ^/update.php {
     fastcgi_param SCRIPT_FILENAME $document_root/update.php;
     fastcgi_pass php;
 }
+{{ end }}
 
 location ^~ /patches {
     return 404;

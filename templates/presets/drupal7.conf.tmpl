@@ -1,5 +1,5 @@
 {{ $static := (getenv "NGINX_STATIC_EXT_REGEX" "css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map|webp") }}
-{{ $not_found_regex := (getenv "NGINX_DRUPAL_NOT_FOUND_REGEX" "\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)(~|\.sw[op]|\.bak|\.orig|\.save)?$|^(\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\.(json|lock)|web\.config)$|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save)$") }}
+{{ $not_found_regex := (getenv "NGINX_DRUPAL_NOT_FOUND_REGEX" "\\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$") }}
 
 index index.php index.html;
 

@@ -330,24 +330,24 @@ Overridden default values:
 - Access to `*.txt` files allowed only if they are located in files directory
 - Access to certs extensions gives 404 based on the value of `$NGINX_DRUPAL_NOT_FOUND_REGEX`
 
-Default value of `NGINX_DRUPAL_NOT_FOUND_REGEX` is taken from Drupal's `.htaccess` and depends on the Drupal version:
+Default value of `NGINX_DRUPAL_NOT_FOUND_REGEX` (backspaces must be escaped) is taken from Drupal's `.htaccess` and depends on the Drupal version:
 
 Drupal 9/8:
 
 ```
-\.(engine|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\.php)?|xtmpl|yml)(~|\.sw[op]|\.bak|\.orig|\.save)?$|^(\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\.(json|lock)|web\.config)$|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig|\.save)$
+\\.(engine|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
 ```
 
 Drupal 7:
 
 ```
-\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)(~|\.sw[op]|\.bak|\.orig|\.save)?$|^(\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\.(json|lock)|web\.config)$|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig\.save)$
+\\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$
 ```
 
 Drupal 6:
 
 ```
-\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl|svn-base)$|^(code-style\.pl|Entries.*|Repository|Root|Tag|Template|all-wcprops|entries|format)$
+\\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|svn-base)$|^(code-style\\.pl|Entries.*|Repository|Root|Tag|Template|all-wcprops|entries|format)$
 ```
 
 [Drupal 9]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal9.conf.tmpl

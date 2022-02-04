@@ -335,19 +335,19 @@ Default value of `NGINX_DRUPAL_NOT_FOUND_REGEX` (backspaces must be escaped) is 
 Drupal 9/8:
 
 ```
-\\.(engine|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
+\\.(engine|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
 ```
 
 Drupal 7:
 
 ```
-\\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$
+\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$
 ```
 
 Drupal 6:
 
 ```
-\\.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|svn-base)$|^(code-style\\.pl|Entries.*|Repository|Root|Tag|Template|all-wcprops|entries|format)$
+\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|svn-base)$|^(code-style\\.pl|Entries.*|Repository|Root|Tag|Template|all-wcprops|entries|format)$
 ```
 
 [Drupal 9]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal9.conf.tmpl

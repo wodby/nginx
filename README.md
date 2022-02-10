@@ -19,6 +19,7 @@
         - [PHP](#php)
         - [WordPress](#wordpress)
         - [Drupal](#drupal)
+        - [Matomo](#matomo)
     - [Custom preset](#custom-preset)
     - [No preset](#no-preset)
 - [Orchestration actions](#orchestration-actions)
@@ -357,6 +358,10 @@ Drupal 6:
 [Drupal 7]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl
 
 [Drupal 6]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal6.conf.tmpl
+
+#### Matomo
+
+Based on https://github.com/matomo-org/matomo-nginx
 
 #### Custom preset
 

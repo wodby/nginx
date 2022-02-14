@@ -11,8 +11,6 @@ fastcgi_hide_header 'X-Generator';
 fastcgi_hide_header 'X-Drupal-Dynamic-Cache';
 {{ end }}
 
-add_header  X-XSS-Protection '1; mode=block';
-
 location / {
     {{ if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
     location ~* /sites/.+/files {

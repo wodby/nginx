@@ -88,7 +88,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_GZIP_PROXIED`                                 | `any`                     |                                     |
 | `NGINX_GZIP_VARY`                                    | `on`                      |                                     |
 | `NGINX_GZIP`                                         | `on`                      |                                     |
-| `NGINX_HEADERS_CONTENT_SECURITY_POLICY`              | `frame-ancestors: 'none'` |                                     |
+| `NGINX_HEADERS_CONTENT_SECURITY_POLICY`              | `frame-ancestors: 'none'` | different for Drupal and WP presets |
 | `NGINX_HIDE_50x_ERRORS`                              |                           |                                     |
 | `NGINX_HTTP2`                                        |                           |                                     |
 | `NGINX_INDEX_FILE`                                   | Varies with a preset      | Hard-coded for Drupal and WP        |
@@ -320,6 +320,7 @@ Overridden default values:
     - For plugin [Google XML Sitemap](https://wordpress.org/plugins/google-sitemap-generator/)
       add `$NGINX_WP_GOOGLE_XML_SITEMAP=1`
     - For plugin [Yoast SEO](https://kb.yoast.com/kb/xml-sitemaps-nginx/) add `$NGINX_WP_YOAST_XML_SITEMAP=1`
+- Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors: 'self'`
 
 #### Drupal
 
@@ -330,8 +331,10 @@ Overridden default values:
   set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
 - Access to `*.txt` files allowed only if they are located in files directory
 - Access to certs extensions gives 404 based on the value of `$NGINX_DRUPAL_NOT_FOUND_REGEX`
+- Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors: 'self'`
 
-Default value of `NGINX_DRUPAL_NOT_FOUND_REGEX` (backspaces must be escaped) is taken from Drupal's `.htaccess` and depends on the Drupal version:
+Default value of `NGINX_DRUPAL_NOT_FOUND_REGEX` (backspaces must be escaped) is taken from Drupal's `.htaccess` and
+depends on the Drupal version:
 
 Drupal 9/8:
 

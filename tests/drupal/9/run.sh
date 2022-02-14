@@ -55,3 +55,5 @@ echo -n "Checking user-defined internal permanent redirect... "
 nginx_exec curl -s -S -I "localhost/redirect-internal-permanent" | grep '301 Moved Permanently'
 echo -n "Checking user-defined external redirect... "
 nginx_exec curl -s -S -I "localhost/redirect-external" | grep '302 Moved Temporarily'
+echo -n "Checking CSP header...   "
+nginx_exec curl -s -S -I "localhost" | grep "frame-ancestors 'self'"

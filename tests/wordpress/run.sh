@@ -52,4 +52,4 @@ echo -n "Checking non-existing php endpoint... "
 check_endpoint "non-existing.php" "404 Not Found"
 
 echo -n "Check CSP header...   "
-check_endpoint curl -s -S -I "localhost" | grep "frame-ancestors 'self'"
+check_endpoint "" "frame-ancestors 'self'"

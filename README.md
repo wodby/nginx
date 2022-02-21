@@ -161,33 +161,33 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 
 ## Nginx modules
 
-| Name                  | Version                                                                                              | Dynamic |
-|-----------------------|------------------------------------------------------------------------------------------------------|---------|
-| [brotli]              | [9aec15e](https://github.com/google/ngx_brotli/commit/9aec15e2aa6feea2113119ba06460af70ab3ea62)      ||
-| [http_addition]       |                                                                                                      |         |
-| [http_auth_request]   |                                                                                                      |         |
-| [http_dav]            |                                                                                                      |         |
-| [http_flv]            |                                                                                                      |         |
-| [http_gunzip]         |                                                                                                      |         |
-| [http_gzip_static]    |                                                                                                      |         |
-| [http_image_filter]   |                                                                                                      | ✓       |
-| http_modsecurity      | See [ModSecurity]                                                                                    | ✓       |
-| [http_mp4]            |                                                                                                      |         |
-| [http_random_index]   |                                                                                                      |         |
-| [http_realip]         |                                                                                                      |         |
-| [http_secure_link]    |                                                                                                      |         |
-| [http_slice]          |                                                                                                      |         |
-| [http_ssl]            |                                                                                                      |         |
-| [http_stub_status]    |                                                                                                      |         |
-| [http_sub]            |                                                                                                      |         |
-| [http_uploadprogress] | 0.9.1                                                                                                |         |
-| [http_v2]             |                                                                                                      |         |
-| [http_xslt]           |                                                                                                      | ✓       |
-| [mail_ssl]            |                                                                                                      |         |
-| [stream_realip]       |                                                                                                      |         |
-| [stream_ssl]          |                                                                                                      |         |
-| [stream_ssl_preread]  |                                                                                                      |         |
-| [vts]                 | [3c6cf41](https://github.com/vozlt/nginx-module-vts/commit/3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac) ||
+| Name                  | Version           | Dynamic |
+|-----------------------|-------------------|---------|
+| [brotli]              | [9aec15e]         |         |
+| [http_addition]       |                   |         |
+| [http_auth_request]   |                   |         |
+| [http_dav]            |                   |         |
+| [http_flv]            |                   |         |
+| [http_gunzip]         |                   |         |
+| [http_gzip_static]    |                   |         |
+| [http_image_filter]   |                   | ✓       |
+| http_modsecurity      | See [ModSecurity] | ✓       |
+| [http_mp4]            |                   |         |
+| [http_random_index]   |                   |         |
+| [http_realip]         |                   |         |
+| [http_secure_link]    |                   |         |
+| [http_slice]          |                   |         |
+| [http_ssl]            |                   |         |
+| [http_stub_status]    |                   |         |
+| [http_sub]            |                   |         |
+| [http_uploadprogress] | 0.9.1             |         |
+| [http_v2]             |                   |         |
+| [http_xslt]           |                   | ✓       |
+| [mail_ssl]            |                   |         |
+| [stream_realip]       |                   |         |
+| [stream_ssl]          |                   |         |
+| [stream_ssl_preread]  |                   |         |
+| [vts]                 | [3c6cf41]         |         |   
 
 ### ModSecurity
 
@@ -366,6 +366,12 @@ Drupal 6:
 
 Based on https://github.com/matomo-org/matomo-nginx
 
+The default value of `NGINX_STATIC_EXT_REGEX` overridden:
+
+```
+css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map|webp|json|html
+```
+
 #### Custom preset
 
 You can use a custom by preset by mounting your preset to `/etc/gotpl/presets/[my-preset-name].conf.tmpl` and
@@ -455,3 +461,6 @@ default params values:
 [stream_ssl_preread]: http://nginx.org/en/docs/stream/ngx_stream_ssl_preread_module.html
 
 [vts]: https://github.com/vozlt/nginx-module-vts
+
+[9aec15e]: https://github.com/google/ngx_brotli/commit/9aec15e2aa6feea2113119ba06460af70ab3ea62
+[3c6cf41]: https://github.com/vozlt/nginx-module-vts/commit/3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac

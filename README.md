@@ -71,6 +71,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_DRUPAL_HIDE_HEADERS`                          |                           |                                     |
 | `NGINX_DRUPAL_XMLRPC_SERVER_NAME`                    |                           | Drupal 6/7 only                     |
 | `NGINX_DRUPAL_NOT_FOUND_REGEX`                       | (see [Drupal](#drupal))   |                                     |
+| `NGINX_WP_NOT_FOUND_REGEX`                       | (see [Wordpress](#wordpress))   |                                     |
 | `NGINX_ERROR_403_URI`                                |                           |                                     |
 | `NGINX_ERROR_404_URI`                                |                           |                                     |
 | `NGINX_ERROR_LOG_LEVEL`                              | `error`                   |                                     |
@@ -187,7 +188,7 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [stream_realip]       |                   |         |
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
-| [vts]                 | [3c6cf41]         |         |   
+| [vts]                 | [3c6cf41]         |         |
 
 ### ModSecurity
 
@@ -321,6 +322,8 @@ Overridden default values:
       add `$NGINX_WP_GOOGLE_XML_SITEMAP=1`
     - For plugin [Yoast SEO](https://kb.yoast.com/kb/xml-sitemaps-nginx/) add `$NGINX_WP_YOAST_XML_SITEMAP=1`
 - Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors: 'self'`
+
+Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\.(?:txt|pot|sh|.*sql?)|(?:composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$`
 
 #### Drupal
 

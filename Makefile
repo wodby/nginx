@@ -5,7 +5,7 @@ NGINX_MINOR_VER ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 TAG ?= $(NGINX_MINOR_VER)
 
-ALPINE_VER ?= 3.13
+ALPINE_VER ?= 3.15
 
 PLATFORM ?= linux/amd64
 

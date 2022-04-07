@@ -10,11 +10,11 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.10.6
-  ALPINE_VER: 3.13
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  WODBY1_REGISTRY_USERNAME: ${{ secrets.WODBY1_REGISTRY_USERNAME }}
-  WODBY1_REGISTRY_PASSWORD: ${{ secrets.WODBY1_REGISTRY_PASSWORD }}
+  NGINX121: '1.21.6'
+  NGINX120: '1.20.2'
+  NGINX119: '1.19.10'
 
 jobs:
   nginx-121:
@@ -27,9 +27,10 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: '1.21.6'
+        version: ${{ env.NGINX121 }}
         tags: 1.21,1,latest
         platform: linux/amd64,linux/arm64
+        alpine_ver: 3.15
   nginx-120:
     runs-on: ubuntu-latest
     steps:
@@ -40,9 +41,10 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: '1.20.2'
+        version: ${{ env.NGINX120 }}
         tags: '1.20'
         platform: linux/amd64,linux/arm64
+        alpine_ver: 3.15
   nginx-119:
     runs-on: ubuntu-latest
     steps:
@@ -53,6 +55,49 @@ jobs:
     - uses: docker/setup-buildx-action@v1
     - uses: ./.github/actions
       with:
-        version: 1.19.10
+        version: ${{ env.NGINX119 }}
         tags: 1.19
         platform: linux/amd64,linux/arm64
+        alpine_ver: 3.15
+  nginx-121-alpine313:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.NGINX121 }}
+        tags: 1.21-alpine3.13,1-alpine3.13,alpine3.13
+        platform: linux/amd64,linux/arm64
+        alpine_ver: 3.13
+  nginx-120-alpine313:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.NGINX120 }}
+        tags: 1.20-alpine3.13
+        platform: linux/amd64,linux/arm64
+        alpine_ver: 3.13
+  nginx-119-alpine313:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.NGINX119 }}
+        tags: 1.19-alpine3.13
+        platform: linux/amd64,linux/arm64
+        alpine_ver: 3.13

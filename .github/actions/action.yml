@@ -13,6 +13,9 @@ inputs:
   tags:
     description: image tags
     required: true
+  alpine_ver:
+    description: alpine version
+    required: true
   platform:
     description: docker platform
     required: false
@@ -28,6 +31,7 @@ runs:
       TAGS: ${{ inputs.tags }}
       PLATFORM: ${{ inputs.platform }}
       DOCKER_REGISTRY: docker.io
+      ALPINE_VER: ${{ inputs.alpine_ver }}
     run: |
       set -e
       make buildx-build-amd64
@@ -35,13 +39,13 @@ runs:
       make buildx-build
       . $GITHUB_ACTION_PATH/release.sh
     shell: bash
-  - name: Build and push amd64 image to wodby registry
-    env:
-      NGINX_VER: ${{ inputs.version }}
-      TAGS: ${{ inputs.tags }}
-      PLATFORM: linux/amd64
-      DOCKER_REGISTRY: registry.wodby.com
-    run: |
-      set -e
-      DOCKER_USERNAME="${WODBY1_REGISTRY_USERNAME}" DOCKER_PASSWORD="${WODBY1_REGISTRY_PASSWORD}" . $GITHUB_ACTION_PATH/release.sh
-    shell: bash
+#  - name: Build and push amd64 image to wodby registry
+#    env:
+#      NGINX_VER: ${{ inputs.version }}
+#      TAGS: ${{ inputs.tags }}
+#      PLATFORM: linux/amd64
+#      DOCKER_REGISTRY: registry.wodby.com
+#    run: |
+#      set -e
+#      DOCKER_USERNAME="${WODBY1_REGISTRY_USERNAME}" DOCKER_PASSWORD="${WODBY1_REGISTRY_PASSWORD}" . $GITHUB_ACTION_PATH/release.sh
+#    shell: bash

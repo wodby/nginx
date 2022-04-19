@@ -41,9 +41,6 @@ Supported tags and respective `Dockerfile` links:
 - `1.21`, `1`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 - `1.20` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 - `1.19` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-- `1.21-alpine3.13`, `1-alpine3.13`, `alpine3.13` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-- `1.20-alpine3.13` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-- `1.19-alpine3.13` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 
 All images built for `linux/amd64` and `linux/arm64`
 

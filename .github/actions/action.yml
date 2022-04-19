@@ -13,9 +13,6 @@ inputs:
   tags:
     description: image tags
     required: true
-  alpine_ver:
-    description: alpine version
-    required: true
   platform:
     description: docker platform
     required: false

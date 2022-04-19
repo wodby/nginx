@@ -28,7 +28,6 @@ runs:
       TAGS: ${{ inputs.tags }}
       PLATFORM: ${{ inputs.platform }}
       DOCKER_REGISTRY: docker.io
-      ALPINE_VER: ${{ inputs.alpine_ver }}
     run: |
       set -e
       make buildx-build-amd64

@@ -90,7 +90,7 @@ RUN set -ex; \
     \
     # Brotli.
     cd /tmp; \
-    git clone --depth 1 --single-branch https://github.com/google/ngx_brotli; \
+    git clone --depth 10 --single-branch https://github.com/google/ngx_brotli; \
     cd /tmp/ngx_brotli; \
     git checkout ${brotli_commit}; \
     \

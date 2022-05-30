@@ -1,5 +1,6 @@
 {{ $static := (getenv "NGINX_STATIC_EXT_REGEX" "css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map|webp") }}
-{{ $not_found_regex := (getenv "NGINX_DRUPAL_NOT_FOUND_REGEX" "\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$") }}
+{{ $not_found_regex := (getenv "NGINX_DRUPAL_NOT_FOUND_REGEX" "\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|yaml|yml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$") }}
+{{ $files_dir_static := (getenv "NGINX_DRUPAL_FILES_STATIC_EXT_REGEX" "txt") }}
 
 index index.php index.html;
 
@@ -36,7 +37,7 @@ location / {
         try_files $uri @drupal;
     }
 
-    location ~* /sites/.+/files/.+\.txt {
+    location ~* /sites/.+/files/.+\.(?:{{ $files_dir_static }}) {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
         expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
         tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};

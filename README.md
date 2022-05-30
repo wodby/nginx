@@ -68,6 +68,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_DJANGO_STATIC_URL`                            | `/static/`                    |                                     |
 | `NGINX_DRUPAL_ALLOW_XML_ENDPOINTS`                   |                               |                                     |
 | `NGINX_DRUPAL_FILE_PROXY_URL`                        |                               | e.g. `http://dev.example.com`       |
+| `NGINX_DRUPAL_FILES_STATIC_EXT_REGEX`                | `txt`                         |                                     |
 | `NGINX_DRUPAL_HIDE_HEADERS`                          |                               |                                     |
 | `NGINX_DRUPAL_XMLRPC_SERVER_NAME`                    |                               | Drupal 6/7 only                     |
 | `NGINX_DRUPAL_NOT_FOUND_REGEX`                       | (see [Drupal](#drupal))       |                                     |
@@ -332,7 +333,7 @@ Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\
   modify `NGINX_BACKEND_HOST`
 - If you want to use [stage_file_proxy](https://www.drupal.org/project/stage_file_proxy) module,
   set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
-- Access to `*.txt` files allowed only if they are located in files directory
+- Access to `.txt` (can be overridden via `NGINX_DRUPAL_FILES_STATIC_EXT_REGEX`) files allowed only if they are located in files directory
 - Access to certs extensions gives 404 based on the value of `$NGINX_DRUPAL_NOT_FOUND_REGEX`
 - Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors: 'self'`
 
@@ -342,19 +343,19 @@ depends on the Drupal version:
 Drupal 9/8:
 
 ```
-\\.(engine|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
+\\.(engine|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
 ```
 
 Drupal 7:
 
 ```
-\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$
+\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$
 ```
 
 Drupal 6:
 
 ```
-\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|svn-base)$|^(code-style\\.pl|Entries.*|Repository|Root|Tag|Template|all-wcprops|entries|format)$
+\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|svn-base|yaml|yml)$|^(code-style\\.pl|Entries.*|Repository|Root|Tag|Template|all-wcprops|entries|format)$
 ```
 
 [Drupal 9]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal9.conf.tmpl

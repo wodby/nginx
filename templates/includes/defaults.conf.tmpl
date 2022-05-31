@@ -5,10 +5,41 @@ add_header Cache-Control "no-store, no-cache, must-revalicate, post-check=0 pre-
 {{ end }}
 
 {{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
-add_header  X-XSS-Protection '1; mode=block';
-add_header  X-Frame-Options SAMEORIGIN;
-add_header  X-Content-Type-Options nosniff;
-add_header  Content-Security-Policy "{{ getenv "NGINX_HEADERS_CONTENT_SECURITY_POLICY" "frame-ancestors 'none'" }}";
+# DEFAULT HEADERS: https://owasp.org/www-project-secure-headers/#div-bestpractices
+{{ if not (eq (getenv "NGINX_HEADERS_XSS_PROTECTION" "on") "off") }}
+# XSS
+add_header X-XSS-Protection {{ getenv "NGINX_HEADERS_XSS_PROTECTION" "'1; mode=block'" }};
+{{ end }}
+{{ if not (eq (getenv "NGINX_HEADERS_FRAME_OPTIONS" "on") "off") }}
+# Clickjacking: only allow 'frames' if hosted from the same origin
+add_header X-Frame-Options {{ getenv "NGINX_HEADERS_FRAME_OPTIONS" "SAMEORIGIN" }};
+{{ end }}
+{{ if not (eq (getenv "NGINX_HEADERS_CONTENT_TYPE_OPTIONS" "on") "off") }}
+# MIME sniffing
+add_header X-Content-Type-Options {{ getenv "NGINX_HEADERS_CONTENT_TYPE_OPTIONS" "nosniff" }};
+{{ end }}
+{{ if not (eq (getenv "NGINX_HEADERS_CONTENT_SECURITY_POLICY" "on") "off") }}
+# CSP (Content Security Policy) https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+add_header Content-Security-Policy "{{ getenv "NGINX_HEADERS_CONTENT_SECURITY_POLICY" "frame-ancestors 'none'" }}";
+{{ end }}
+{{ if not (eq (getenv "NGINX_HEADERS_CSP_REPORT_ONLY" "off") "off") }}
+# CSP Report Only https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
+add_header Content-Security-Policy-Report-Only "{{ getenv "NGINX_HEADERS_CSP_REPORT_ONLY" }}";
+{{ end }}
+{{ if not (eq (getenv "NGINX_HEADERS_PERMISSIONS_POLICY" "off") "off") }}
+# Permissions API, https://github.com/w3c/webappsec-permissions-policy/blob/main/permissions-policy-explainer.md
+add_header Permissions-Policy "{{ getenv "NGINX_HEADERS_PERMISSIONS_POLICY" }}";
+{{ end }}
+{{ if not (eq (getenv "NGINX_HEADERS_REPORT_TO" "off") "off") }}
+add_header Report-To "{{ getenv "NGINX_HEADERS_REPORT_TO" }}";
+{{ end }}
+{{ if not (eq (getenv "NGINX_HEADERS_NEL" "off") "off") }}
+add_header NEL "{{ getenv "NGINX_HEADERS_NEL" }}";
+{{ end }}
+{{ if not (eq (getenv "NGINX_HEADERS_REFERRER_POLICY" "off") "off") }}
+# Referrer, https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
+add_header Referrer-Policy "{{ getenv "NGINX_HEADERS_REFERRER_POLICY" }}";
+{{ end }}
 {{ end }}
 
 location = /favicon.ico {

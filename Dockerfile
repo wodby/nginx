@@ -121,7 +121,7 @@ RUN set -ex; \
     # Download nginx.
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -o /tmp/nginx.tar.gz; \
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz.asc"  -o /tmp/nginx.tar.gz.asc; \
-    GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 gpg_verify /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; \
+    GPG_KEYS=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 gpg_verify /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; \
     tar zxf /tmp/nginx.tar.gz -C /tmp; \
     \
     cd "/tmp/nginx-${NGINX_VER}"; \

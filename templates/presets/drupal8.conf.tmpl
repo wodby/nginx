@@ -194,7 +194,9 @@ location ~ (?<upload_form_uri>.*)/x-progress-id:(?<upload_id>\d*) {
     rewrite ^ $upload_form_uri?X-Progress-ID=$upload_id;
 }
 
+{{- if not (getenv "NGINX_DISABLE_UPLOAD_PROGRESS") }}
 location ~ ^/progress$ {
     upload_progress_json_output;
     report_uploads uploads;
 }
+{{- end }}

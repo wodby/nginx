@@ -42,7 +42,9 @@ http {
     server_tokens               {{ getenv "NGINX_SERVER_TOKENS" "off" }};
     underscores_in_headers      {{ getenv "NGINX_UNDERSCORES_IN_HEADERS" "off" }};
 
+    {{ if not (getenv "NGINX_DISABLE_UPLOAD_PROGRESS") }}
     upload_progress             {{ getenv "NGINX_UPLOAD_PROGRESS" "uploads 1m" }};
+    {{ end }}
 
     brotli                      {{ getenv "NGINX_BROTLI" "on" }};
     brotli_static               {{ getenv "NGINX_BROTLI_STATIC" "on" }};

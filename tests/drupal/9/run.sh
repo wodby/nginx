@@ -23,7 +23,7 @@ nginx_exec make check-ready -f /usr/local/bin/actions.mk
 
 echo "Checking Drupal endpoints"
 echo -n "Checking / page... "
-nginx_exec curl -s -S -I "localhost" | grep '302 Found'
+nginx_exec curl -s -S -I "localhost" | grep '200 OK'
 echo -n "authorize.php...   "
 nginx_exec curl -s -S -I "localhost/core/authorize.php" | grep '500 Service unavailable'
 echo -n "install.php...     "
@@ -31,9 +31,9 @@ nginx_exec curl -s -S -I "localhost/core/install.php" | grep '200 OK'
 echo -n "statistics.php...  "
 nginx_exec curl -s -S -I "localhost/core/modules/statistics/statistics.php" | grep '500 Service unavailable'
 echo -n "cron...            "
-nginx_exec curl -s -S -I "localhost/cron" | grep '302 Found'
+nginx_exec curl -s -S -I "localhost/cron" | grep '200 OK'
 echo -n "index.php...       "
-nginx_exec curl -s -S -I "localhost/index.php" | grep '302 Found'
+nginx_exec curl -s -S -I "localhost/index.php" | grep '200 OK'
 echo -n "update.php...      "
 nginx_exec curl -s -S -I "localhost/update.php" | grep '500 Service unavailable'
 echo -n ".htaccess...       "

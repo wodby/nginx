@@ -2,9 +2,9 @@ user                            {{ getenv "NGINX_USER" "nginx" }};
 daemon                          off;
 worker_processes                {{ getenv "NGINX_WORKER_PROCESSES" "auto" }};
 error_log                       /proc/self/fd/2 {{ getenv "NGINX_ERROR_LOG_LEVEL" "error" }};
-{{ if getenv "NGINX_MODSECURITY_ENABLED" }}
+{{- if getenv "NGINX_MODSECURITY_ENABLED" }}
 load_module                     modules/ngx_http_modsecurity_module.so;
-{{ end }}
+{{- end }}
 
 events {
     worker_connections          {{ getenv "NGINX_WORKER_CONNECTIONS" "1024" }};
@@ -12,19 +12,19 @@ events {
 }
 
 http {
-    {{ if getenv "NGINX_METRICS_ENABLED" }}
+    {{- if getenv "NGINX_METRICS_ENABLED" }}
     vhost_traffic_status_zone;
-    {{ end }}
+    {{- end }}
 
     include                     /etc/nginx/mime.types;
     default_type                application/octet-stream;
 
-    {{ if getenv "NGINX_LOG_FORMAT_OVERRIDE" }}
+    {{- if getenv "NGINX_LOG_FORMAT_OVERRIDE" }}
     log_format                  custom '{{ getenv "NGINX_LOG_FORMAT_OVERRIDE" }}';
     access_log                  /proc/self/fd/1 custom;
-    {{ else}}
+    {{- else }}
     access_log                  /proc/self/fd/1 combined;
-    {{ end }}
+    {{- end }}
 
     send_timeout                {{ getenv "NGINX_SEND_TIMEOUT" "60s" }};
     sendfile                    {{ getenv "NGINX_SENDFILE" "on" }};
@@ -42,9 +42,9 @@ http {
     server_tokens               {{ getenv "NGINX_SERVER_TOKENS" "off" }};
     underscores_in_headers      {{ getenv "NGINX_UNDERSCORES_IN_HEADERS" "off" }};
 
-    {{ if not (getenv "NGINX_DISABLE_UPLOAD_PROGRESS") }}
+    {{- if not (getenv "NGINX_DISABLE_UPLOAD_PROGRESS") }}
     upload_progress             {{ getenv "NGINX_UPLOAD_PROGRESS" "uploads 1m" }};
-    {{ end }}
+    {{- end }}
 
     brotli                      {{ getenv "NGINX_BROTLI" "on" }};
     brotli_static               {{ getenv "NGINX_BROTLI_STATIC" "on" }};
@@ -120,13 +120,13 @@ http {
                                 text/x-component
                                 text/x-cross-domain-policy;
 
-    {{ if getenv "NGINX_SET_REAL_IP_FROM" }}
+    {{- if getenv "NGINX_SET_REAL_IP_FROM" }}
     set_real_ip_from {{ getenv "NGINX_SET_REAL_IP_FROM" }};
-    {{ end }}
+    {{- end }}
 
-    {{ if getenv "NGINX_SET_REAL_IPS_FROM" }}{{ range jsonArray (getenv "NGINX_SET_REAL_IPS_FROM") }}
+    {{- if getenv "NGINX_SET_REAL_IPS_FROM" }}{{- range jsonArray (getenv "NGINX_SET_REAL_IPS_FROM") }}
     set_real_ip_from {{ . }};
-    {{ end }}{{ end }}
+    {{- end }}{{- end }}
 
     real_ip_header {{ getenv "NGINX_REAL_IP_HEADER" "X-Real-IP" }};
     real_ip_recursive {{ getenv "NGINX_REAL_IP_RECURSIVE" "off" }};

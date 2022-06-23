@@ -6,18 +6,18 @@ index index.php index.html;
 
 include fastcgi.conf;
 
-{{ if getenv "NGINX_DRUPAL_HIDE_HEADERS" }}
+{{- if getenv "NGINX_DRUPAL_HIDE_HEADERS" }}
 fastcgi_hide_header 'X-Drupal-Cache';
 fastcgi_hide_header 'X-Generator';
 fastcgi_hide_header 'X-Drupal-Dynamic-Cache';
-{{ end }}
+{{- end }}
 
 location / {
-    {{ if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
+    {{- if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
     location ~* /sites/.+/files {
         try_files $uri @file_proxy;
     }
-    {{ end }}
+    {{- end }}
     location ~* /system/files/ {
         include fastcgi.conf;
         fastcgi_param QUERY_STRING $query_string;
@@ -74,7 +74,7 @@ location / {
     location ~* /admin/reports/hacked/.+/diff/ {
         try_files $uri @drupal;
     }
-    {{ if getenv "NGINX_DRUPAL_ALLOW_XML_ENDPOINTS" }}
+    {{- if getenv "NGINX_DRUPAL_ALLOW_XML_ENDPOINTS" }}
     location ~* ^.+\.xml {
         try_files $uri @drupal;
     }
@@ -86,7 +86,7 @@ location / {
     location ~* /sitemap.xml {
         try_files $uri @drupal;
     }
-    {{ end }}
+    {{- end }}
 
     location ~* {{ $not_found_regex }} {
         return 404;
@@ -105,19 +105,19 @@ location / {
         open_file_cache_min_uses {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES" "2" }};
         open_file_cache_errors {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_ERRORS" "off" }};
 
-        {{ if getenv "NGINX_STATIC_404_TRY_INDEX" }}
+        {{- if getenv "NGINX_STATIC_404_TRY_INDEX" }}
         try_files $uri @drupal;
-        {{ end }}
+        {{- end }}
     }
 
     try_files $uri @drupal;
 }
 
-{{ if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
+{{- if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
 location @file_proxy {
     rewrite ^ {{ getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}$request_uri? permanent;
 }
-{{ end }}
+{{- end }}
 
 location @drupal {
     include fastcgi.conf;
@@ -165,10 +165,10 @@ location ~* ^/update.php {
 }
 
 location = /xmlrpc.php {
-    {{ if getenv "NGINX_DRUPAL_XMLRPC_SERVER_NAME" }}
+    {{- if getenv "NGINX_DRUPAL_XMLRPC_SERVER_NAME" }}
     include fastcgi.conf;
     fastcgi_param  SERVER_NAME {{ getenv "NGINX_DRUPAL_XMLRPC_SERVER_NAME" }};
-    {{ end }}
+    {{- end }}
     fastcgi_pass php;
 }
 

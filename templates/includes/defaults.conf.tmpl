@@ -1,15 +1,15 @@
-{{ if getenv "NGINX_DISABLE_CACHING" }}
+{{- if getenv "NGINX_DISABLE_CACHING" }}
 expires -1;
 add_header Pragma "no-cache";
 add_header Cache-Control "no-store, no-cache, must-revalicate, post-check=0 pre-check=0";
-{{ end }}
+{{- end }}
 
-{{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
+{{- if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
 add_header  X-XSS-Protection '1; mode=block';
 add_header  X-Frame-Options SAMEORIGIN;
 add_header  X-Content-Type-Options nosniff;
 add_header  Content-Security-Policy "{{ getenv "NGINX_HEADERS_CONTENT_SECURITY_POLICY" "frame-ancestors 'none'" }}";
-{{ end }}
+{{- end }}
 
 location = /favicon.ico {
     expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
@@ -56,38 +56,38 @@ location ~ ^/\.healthz$ {
     return 204;
 }
 
-{{ if getenv "NGINX_STATUS_ENABLED" }}
+{{- if getenv "NGINX_STATUS_ENABLED" }}
 location = /.statusz {
     stub_status;
     allow 127.0.0.1;
-    {{ if getenv "NGINX_STATUS_ALLOW_FROM" }}
+    {{- if getenv "NGINX_STATUS_ALLOW_FROM" }}
     allow {{ getenv "NGINX_STATUS_ALLOW_FROM" }};
-    {{ end }}
+    {{- end }}
     deny all;
 }
-{{ end }}
+{{- end }}
 
-{{ if getenv "NGINX_METRICS_ENABLED" }}
+{{- if getenv "NGINX_METRICS_ENABLED" }}
 location = /.metricsz {
     vhost_traffic_status_display;
     vhost_traffic_status_display_format {{ getenv "NGINX_METRICS_FORMAT" "html" }};
     allow 127.0.0.1;
-    {{ if getenv "NGINX_METRICS_ALLOW_FROM" }}
+    {{- if getenv "NGINX_METRICS_ALLOW_FROM" }}
     allow {{ getenv "NGINX_METRICS_ALLOW_FROM" }};
-    {{ end }}
+    {{- end }}
     deny all;
 }
-{{ end }}
+{{- end }}
 
 location ^~ /.well-known/ {
     allow all;
 }
 
-{{ if not (getenv "NGINX_ALLOW_ACCESS_HIDDEN_FILES") }}
+{{- if not (getenv "NGINX_ALLOW_ACCESS_HIDDEN_FILES") }}
 location ~ /\. {
     deny all;
 }
-{{ end }}
+{{- end }}
 
 location ~ /wodby\.yml {
     deny all;
@@ -97,17 +97,17 @@ location ~ /Makefile {
     deny all;
 }
 
-{{ if getenv "NGINX_HIDE_50x_ERRORS" }}
+{{- if getenv "NGINX_HIDE_50x_ERRORS" }}
 error_page 500 502 503 504 /50x.html;
 location = /50x.html {
     root   /usr/share/nginx/html;
 }
-{{ end }}
+{{- end }}
 
-{{ if getenv "NGINX_ERROR_403_URI" }}
+{{- if getenv "NGINX_ERROR_403_URI" }}
 error_page 403 {{ getenv "NGINX_ERROR_403_URI" }};
-{{ end }}
+{{- end }}
 
-{{ if getenv "NGINX_ERROR_404_URI" }}
+{{- if getenv "NGINX_ERROR_404_URI" }}
 error_page 404 {{ getenv "NGINX_ERROR_404_URI" }};
-{{ end }}
+{{- end }}

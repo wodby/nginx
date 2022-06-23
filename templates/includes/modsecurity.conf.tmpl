@@ -1,10 +1,10 @@
 Include /etc/nginx/modsecurity/recommended.conf
 
-{{ if getenv "NGINX_MODSECURITY_USE_OWASP_CRS" }}
+{{- if getenv "NGINX_MODSECURITY_USE_OWASP_CRS" }}
 Include /etc/nginx/modsecurity/crs/setup.conf
-{{ end }}
+{{- end }}
 
-{{ if or (eq (getenv "NGINX_VHOST_PRESET") "drupal9") (eq (getenv "NGINX_VHOST_PRESET") "drupal8") (eq (getenv "NGINX_VHOST_PRESET") "drupal7") (eq (getenv "NGINX_VHOST_PRESET") "drupal6") }}
+{{- if or (eq (getenv "NGINX_VHOST_PRESET") "drupal9") (eq (getenv "NGINX_VHOST_PRESET") "drupal8") (eq (getenv "NGINX_VHOST_PRESET") "drupal7") (eq (getenv "NGINX_VHOST_PRESET") "drupal6") }}
 SecAction \
  "id:900130,\
   phase:1,\
@@ -16,9 +16,9 @@ SecAction \
   setvar:tx.crs_exclusions_nextcloud=0,\
   setvar:tx.crs_exclusions_dokuwiki=0,\
   setvar:tx.crs_exclusions_cpanel=0"
-{{ end }}
+{{- end }}
 
-{{ if (eq (getenv "NGINX_VHOST_PRESET") "wordpress") }}
+{{- if (eq (getenv "NGINX_VHOST_PRESET") "wordpress") }}
 SecAction \
  "id:900130,\
   phase:1,\
@@ -30,7 +30,7 @@ SecAction \
   setvar:tx.crs_exclusions_nextcloud=0,\
   setvar:tx.crs_exclusions_dokuwiki=0,\
   setvar:tx.crs_exclusions_cpanel=0"
-{{ end }}
+{{- end }}
 
 SecAction \
  "id:900110,\
@@ -41,15 +41,15 @@ SecAction \
   setvar:tx.inbound_anomaly_score_threshold={{ getenv "NGINX_MODSECURITY_INBOUND_ANOMALY_SCORE_THRESHOLD" "7" }},\
   setvar:tx.outbound_anomaly_score_threshold={{ getenv "NGINX_MODSECURITY_OUTBOUND_ANOMALY_SCORE_THRESHOLD" "7" }}"
 
-{{ if getenv "NGINX_MODSECURITY_PRE_CORE_RULES" }}
+{{- if getenv "NGINX_MODSECURITY_PRE_CORE_RULES" }}
 Include {{ getenv "NGINX_MODSECURITY_PRE_CORE_RULES" }}
-{{ end }}
+{{- end }}
 
-{{ if getenv "NGINX_MODSECURITY_USE_OWASP_CRS" }}
+{{- if getenv "NGINX_MODSECURITY_USE_OWASP_CRS" }}
 Include /etc/nginx/modsecurity/crs/rules/*.conf
-{{ end }}
+{{- end }}
 
-{{ if getenv "NGINX_MODSECURITY_POST_CORE_RULES" }}
+{{- if getenv "NGINX_MODSECURITY_POST_CORE_RULES" }}
 Include {{ getenv "NGINX_MODSECURITY_POST_CORE_RULES" }}
-{{ end }}
+{{- end }}
 

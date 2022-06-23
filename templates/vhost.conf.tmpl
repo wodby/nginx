@@ -1,25 +1,25 @@
 include upstream.conf;
 
 server {
-    listen       80 default_server{{ if getenv "NGINX_HTTP2" }} http2{{ end }};
+    listen       80 default_server{{- if getenv "NGINX_HTTP2" }} http2{{- end }};
     server_name  {{ getenv "NGINX_SERVER_NAME" "default" }};
 
-    {{ if getenv "NGINX_MODSECURITY_ENABLED" }}
+    {{- if getenv "NGINX_MODSECURITY_ENABLED" }}
 	modsecurity on;
     modsecurity_rules_file /etc/nginx/modsecurity/main.conf;
-    {{ end }}
+    {{- end }}
 
     root {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }};
 
-    {{ if getenv "NGINX_VHOST_PRESET" }}
+    {{- if getenv "NGINX_VHOST_PRESET" }}
     include preset.conf;
-    {{ end }}
+    {{- end }}
 
-    {{ if not (getenv "NGINX_VHOST_NO_DEFAULTS") }}
+    {{- if not (getenv "NGINX_VHOST_NO_DEFAULTS") }}
     include defaults.conf;
-    {{ end }}
+    {{- end }}
 
-    {{ if getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }}
+    {{- if getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }}
     include {{ getenv "NGINX_SERVER_EXTRA_CONF_FILEPATH" }};
-    {{ end }}
+    {{- end }}
 }

@@ -5,19 +5,19 @@ index index.php index.html;
 
 include fastcgi.conf;
 
-{{ if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
+{{- if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
 add_header  X-XSS-Protection '1; mode=block';
 add_header  X-Frame-Options SAMEORIGIN;
 add_header  X-Content-Type-Options nosniff;
 add_header  Cache-Control "store, must-revalidate, post-check=0, pre-check=0";
-{{ end }}
+{{- end }}
 
-{{ if getenv "NGINX_WP_GOOGLE_XML_SITEMAP" }}
+{{- if getenv "NGINX_WP_GOOGLE_XML_SITEMAP" }}
 rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml$ "/index.php?xml_sitemap=params=$2" last;
 rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml\.gz$ "/index.php?xml_sitemap=params=$2;zip=true" last;
 rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html$ "/index.php?xml_sitemap=params=$2;html=true" last;
 rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
-{{ end }}
+{{- end }}
 
 location = /robots.txt {
     try_files $uri $uri/ /index.php?$args;
@@ -26,11 +26,11 @@ location = /robots.txt {
 }
 
 location / {
-    {{ if getenv "NGINX_WP_FILE_PROXY_URL" }}
+    {{- if getenv "NGINX_WP_FILE_PROXY_URL" }}
     location ~* /wp-content/uploads {
         try_files $uri @file_proxy;
     }
-    {{ end }}
+    {{- end }}
 
     location = /readme.html {
         return 404;
@@ -62,7 +62,7 @@ location / {
         deny all;
     }
 
-    {{ if getenv "NGINX_WP_YOAST_XML_SITEMAP" }}
+    {{- if getenv "NGINX_WP_YOAST_XML_SITEMAP" }}
     location ~ ([^/]*)sitemap(.*).x(m|s)l$ {
         rewrite ^/sitemap.xml$ /sitemap_index.xml permanent;
         rewrite ^/([a-z]+)?-?sitemap.xsl$ /index.php?yoast-sitemap-xsl=$1 last;
@@ -73,7 +73,7 @@ location / {
         rewrite ^/geo-sitemap.xml$ /index.php?sitemap=wpseo_local last;
         rewrite ^/video-sitemap.xsl$ /index.php?yoast-sitemap-xsl=video last;
     }
-    {{ end }}
+    {{- end }}
 
     location ~* ^.+\.(?:{{ $static }})$ {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
@@ -88,19 +88,19 @@ location / {
         open_file_cache_min_uses {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES" "2" }};
         open_file_cache_errors {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_ERRORS" "off" }};
 
-        {{ if getenv "NGINX_STATIC_404_TRY_INDEX" }}
+        {{- if getenv "NGINX_STATIC_404_TRY_INDEX" }}
         try_files $uri $uri/ /index.php?$args;
-        {{ end }}
+        {{- end }}
     }
 
     try_files $uri $uri/ /index.php?$args;
 }
 
-{{ if getenv "NGINX_WP_FILE_PROXY_URL" }}
+{{- if getenv "NGINX_WP_FILE_PROXY_URL" }}
 location @file_proxy {
     rewrite ^ {{ getenv "NGINX_WP_FILE_PROXY_URL" }}$request_uri? permanent;
 }
-{{ end }}
+{{- end }}
 
 # Admin for subdir multisite.
 if (!-e $request_filename) {

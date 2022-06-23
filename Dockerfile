@@ -108,10 +108,14 @@ RUN set -ex; \
     mv crs-setup.conf.example /etc/nginx/modsecurity/crs/setup.conf; \
     mv rules /etc/nginx/modsecurity/crs; \
     \
-    # Get ngx uploadprogress module.
-    mkdir -p /tmp/ngx_http_uploadprogress_module; \
-    url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
-    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
+    EXTRA_ARGS=''; \
+    if [[ "${NGINX_VER}" != 1.23* ]]; then \
+        # Get ngx uploadprogress module. \
+        EXTRA_ARGS='--add-module=/tmp/ngx_http_uploadprogress_module'; \
+        mkdir -p /tmp/ngx_http_uploadprogress_module; \
+        url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
+        wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
+    fi; \
     \
     # Get VTS module \
     git clone https://github.com/vozlt/nginx-module-vts.git /tmp/nginx_module_vts; \
@@ -168,10 +172,10 @@ RUN set -ex; \
 		--with-stream_ssl_preread_module \
 		--with-stream_realip_module \
         --with-threads \
-        --add-module=/tmp/ngx_http_uploadprogress_module \
         --add-module=/tmp/ngx_brotli \
         --add-module=/tmp/nginx_module_vts \
-        --add-dynamic-module=/tmp/ngx_http_modsecurity_module; \
+        --add-dynamic-module=/tmp/ngx_http_modsecurity_module \
+        ${EXTRA_ARGS:-}; \
     \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install; \

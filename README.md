@@ -165,33 +165,35 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 
 ## Nginx modules
 
-| Name                  | Version           | Dynamic |
-|-----------------------|-------------------|---------|
-| [brotli]              | [9aec15e]         |         |
-| [http_addition]       |                   |         |
-| [http_auth_request]   |                   |         |
-| [http_dav]            |                   |         |
-| [http_flv]            |                   |         |
-| [http_gunzip]         |                   |         |
-| [http_gzip_static]    |                   |         |
-| [http_image_filter]   |                   | ✓       |
-| http_modsecurity      | See [ModSecurity] | ✓       |
-| [http_mp4]            |                   |         |
-| [http_random_index]   |                   |         |
-| [http_realip]         |                   |         |
-| [http_secure_link]    |                   |         |
-| [http_slice]          |                   |         |
-| [http_ssl]            |                   |         |
-| [http_stub_status]    |                   |         |
-| [http_sub]            |                   |         |
-| [http_uploadprogress] | 0.9.1             |         |
-| [http_v2]             |                   |         |
-| [http_xslt]           |                   | ✓       |
-| [mail_ssl]            |                   |         |
-| [stream_realip]       |                   |         |
-| [stream_ssl]          |                   |         |
-| [stream_ssl_preread]  |                   |         |
-| [vts]                 | [3c6cf41]         |         |
+| Name                                 | Version           | Dynamic |
+|--------------------------------------|-------------------|---------|
+| [brotli]                             | [9aec15e]         |         |
+| [http_addition]                      |                   |         |
+| [http_auth_request]                  |                   |         |
+| [http_dav]                           |                   |         |
+| [http_flv]                           |                   |         |
+| [http_gunzip]                        |                   |         |
+| [http_gzip_static]                   |                   |         |
+| [http_image_filter]                  |                   | ✓       |
+| http_modsecurity                     | See [ModSecurity] | ✓       |
+| [http_mp4]                           |                   |         |
+| [http_random_index]                  |                   |         |
+| [http_realip]                        |                   |         |
+| [http_secure_link]                   |                   |         |
+| [http_slice]                         |                   |         |
+| [http_ssl]                           |                   |         |
+| [http_stub_status]                   |                   |         |
+| [http_sub]                           |                   |         |
+| [http_uploadprogress]* (except 1.23) | 0.9.1             |         |
+| [http_v2]                            |                   |         |
+| [http_xslt]                          |                   | ✓       |
+| [mail_ssl]                           |                   |         |
+| [stream_realip]                      |                   |         |
+| [stream_ssl]                         |                   |         |
+| [stream_ssl_preread]                 |                   |         |
+| [vts]                                | [3c6cf41]         |         |
+
+*uploadprogress compilation [fails](https://github.com/masterzen/nginx-upload-progress-module/issues/56) for Nginx 1.23 
 
 ### ModSecurity
 

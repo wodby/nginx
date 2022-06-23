@@ -46,10 +46,16 @@ echo "OK"
 
 2>&1 nginx -V | tr -- - '\n' | grep -E "_module|module=" | sed -E 's#ngx_|=dynamic|_module|module=/tmp/##g' | sed 's/[ \t]*$//' | sort > /tmp/nginx_modules
 
+if [[ "${NGINX_VER}" == 1.23* ]]; then
+  modules_file="/home/wodby/nginx_modules123"
+else
+  modules_file="/home/wodby/nginx_modules"
+fi
+
 echo -n "Checking Nginx modules... "
-if ! cmp -s /tmp/nginx_modules /home/wodby/nginx_modules; then
+if ! cmp -s /tmp/nginx_modules "${modules_file}"; then
     echo "Error. Nginx modules are not identical."
-    diff /tmp/nginx_modules /home/wodby/nginx_modules
+    diff /tmp/nginx_modules "${modules_file}"
     exit 1
 fi
 

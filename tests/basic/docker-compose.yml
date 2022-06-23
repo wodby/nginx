@@ -6,6 +6,7 @@ services:
     volumes:
       - ./tests.sh:/usr/local/bin/tests.sh
       - ./nginx_modules:/home/wodby/nginx_modules
+      - ./nginx_modules123:/home/wodby/nginx_modules123
     environment:
       NGINX_METRICS_ENABLED: "1"
       NGINX_MODSECURITY_ENABLED: "1"

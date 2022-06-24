@@ -115,6 +115,9 @@ RUN set -ex; \
         mkdir -p /tmp/ngx_http_uploadprogress_module; \
         url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
         wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
+        export GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8; \
+    else \
+        export GPG_KEYS=13C82A63B603576156E30A4EA0EA981B66B0D967; \
     fi; \
     \
     # Get VTS module \
@@ -125,7 +128,7 @@ RUN set -ex; \
     # Download nginx.
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -o /tmp/nginx.tar.gz; \
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz.asc"  -o /tmp/nginx.tar.gz.asc; \
-    GPG_KEYS=13C82A63B603576156E30A4EA0EA981B66B0D967 gpg_verify /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; \
+    gpg_verify /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; \
     tar zxf /tmp/nginx.tar.gz -C /tmp; \
     \
     cd "/tmp/nginx-${NGINX_VER}"; \

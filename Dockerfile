@@ -115,11 +115,14 @@ RUN set -ex; \
         mkdir -p /tmp/ngx_http_uploadprogress_module; \
         url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
         wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
+    fi; \
+    \
+    # Keys were changed since 1.22.
+    if [[ "${NGINX_VER}" != 1.22* && "${NGINX_VER}" != 1.23* ]]; then \
         export GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8; \
     else \
         export GPG_KEYS=13C82A63B603576156E30A4EA0EA981B66B0D967; \
     fi; \
-    \
     # Get VTS module \
     git clone https://github.com/vozlt/nginx-module-vts.git /tmp/nginx_module_vts; \
     cd /tmp/nginx_module_vts; \

@@ -12,6 +12,8 @@ ENV NGINX_VER="${NGINX_VER}" \
     FILES_DIR="/mnt/files" \
     NGINX_VHOST_PRESET="html"
 
+COPY patches /tmp/patches
+
 RUN set -ex; \
     \
     nginx_up_ver="0.9.1"; \
@@ -108,17 +110,17 @@ RUN set -ex; \
     mv crs-setup.conf.example /etc/nginx/modsecurity/crs/setup.conf; \
     mv rules /etc/nginx/modsecurity/crs; \
     \
-    EXTRA_ARGS=''; \
-    if [[ "${NGINX_VER}" != 1.23* ]]; then \
-        # Get ngx uploadprogress module. \
-        EXTRA_ARGS='--add-module=/tmp/ngx_http_uploadprogress_module'; \
-        mkdir -p /tmp/ngx_http_uploadprogress_module; \
-        url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
-        wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
+    # Get ngx upload progress module. \
+    mkdir -p /tmp/ngx_http_uploadprogress_module; \
+    url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
+    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
+    if [[ "${NGINX_VER}" == 1.23* ]]; then \
+        cd /tmp/ngx_http_uploadprogress_module; \
+        patch -p1 -i /tmp/patches/1.23/uploadprogress.patch; \
     fi; \
     \
     # Keys were changed since 1.22.
-    if [[ "${NGINX_VER}" != 1.22* && "${NGINX_VER}" != 1.23* ]]; then \
+    if [[ "${NGINX_VER}" == 1.19* || "${NGINX_VER}" == 1.20* || "${NGINX_VER}" == 1.21* ]]; then \
         export GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8; \
     else \
         export GPG_KEYS=13C82A63B603576156E30A4EA0EA981B66B0D967; \
@@ -178,10 +180,10 @@ RUN set -ex; \
 		--with-stream_ssl_preread_module \
 		--with-stream_realip_module \
         --with-threads \
+        --add-module=/tmp/ngx_http_uploadprogress_module \
         --add-module=/tmp/ngx_brotli \
         --add-module=/tmp/nginx_module_vts \
-        --add-dynamic-module=/tmp/ngx_http_modsecurity_module \
-        ${EXTRA_ARGS:-}; \
+        --add-dynamic-module=/tmp/ngx_http_modsecurity_module; \
     \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install; \

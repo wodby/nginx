@@ -8,9 +8,7 @@ index index.php;
 location ~ ^/(index|matomo|piwik|js/index|plugins/HeatmapSessionRecording/configs)\.php$ {
     fastcgi_split_path_info ^(.+?\.php)(/.*)$;
     fastcgi_pass php;
-    {{- if not (getenv "NGINX_DISABLE_UPLOAD_PROGRESS") }}
     track_uploads {{ getenv "NGINX_TRACK_UPLOADS" "uploads 60s" }};
-    {{- end }}
 }
 
 ## deny access to all other .php files

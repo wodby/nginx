@@ -119,7 +119,5 @@ location ~ [^/]\.php(/|$) {
     }
 
     fastcgi_pass php;
-    {{- if not (getenv "NGINX_DISABLE_UPLOAD_PROGRESS") }}
     track_uploads {{ getenv "NGINX_TRACK_UPLOADS" "uploads 60s" }};
-    {{- end }}
 }

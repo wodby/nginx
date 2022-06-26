@@ -36,10 +36,6 @@ _backwards_compatibility() {
 process_templates() {
     _backwards_compatibility
 
-    if [[ "${NGINX_VER}" == 1.23* ]]; then
-      export NGINX_DISABLE_UPLOAD_PROGRESS='1'
-    fi
-
     # Override default CSP header for Drupal and WP.
     if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal9|drupal8|drupal7|drupal6|wordpress$ ]]; then
       if [[ -z "${NGINX_HEADERS_CONTENT_SECURITY_POLICY}" ]]; then

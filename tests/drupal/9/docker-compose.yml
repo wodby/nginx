@@ -4,6 +4,7 @@ services:
   nginx:
     image: $IMAGE
     environment:
+      DEBUG: 1
       NGINX_BACKEND_HOST: drupal
       NGINX_VHOST_PRESET: drupal9
       NGINX_SERVER_EXTRA_CONF_FILEPATH: /var/www/html/server.conf

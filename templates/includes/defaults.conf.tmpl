@@ -24,13 +24,13 @@ location ^~ /robots.txt {
     access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
 }
 
-location = /humans.txt {
+location ^~ /humans.txt {
     allow all;
     log_not_found off;
     access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
 }
 
-location = /ads.txt {
+location ^~ /ads.txt {
     allow all;
     log_not_found off;
     access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};

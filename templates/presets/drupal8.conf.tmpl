@@ -12,25 +12,25 @@ fastcgi_hide_header 'X-Generator';
 fastcgi_hide_header 'X-Drupal-Dynamic-Cache';
 {{- end }}
 
+location = /robots.txt {
+    try_files $uri @drupal-no-args;
+    access_log off;
+    log_not_found off;
+}
+
+location = /humans.txt {
+    try_files $uri @drupal-no-args;
+    access_log off;
+    log_not_found off;
+}
+
+location = /ads.txt {
+    try_files $uri @drupal-no-args;
+    access_log off;
+    log_not_found off;
+}
+
 location / {
-    location = /robots.txt {
-        try_files $uri @drupal-no-args;
-        access_log off;
-        log_not_found off;
-    }
-
-    location = /humans.txt {
-        try_files $uri @drupal-no-args;
-        access_log off;
-        log_not_found off;
-    }
-
-    location = /ads.txt {
-        try_files $uri @drupal-no-args;
-        access_log off;
-        log_not_found off;
-    }
-
     {{- if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
     location ~* /sites/.+/files {
         try_files $uri @file_proxy;

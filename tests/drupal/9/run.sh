@@ -43,9 +43,9 @@ nginx_exec curl -s -S -I "localhost/favicon.ico" | grep '200 OK'
 echo -n "robots.txt...      "
 nginx_exec curl -s -S -I "localhost/robots.txt" | grep '200 OK'
 echo -n "humans.txt...      "
-nginx_exec curl -s -S -I "localhost/humans.txt" | grep '404 Not Found'
+nginx_exec curl -s -S -I "localhost/humans.txt" | grep '302 Found'
 echo -n "ads.txt...      "
-nginx_exec curl -s -S -I "localhost/ads.txt" | grep '404 Not Found'
+nginx_exec curl -s -S -I "localhost/ads.txt" | grep '302 Found'
 echo -n "drupal.js...       "
 nginx_exec curl -s -S -I "localhost/core/misc/drupal.js" | grep '200 OK'
 echo -n "druplicon.png...   "

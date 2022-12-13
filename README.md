@@ -72,7 +72,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_DRUPAL_FILE_PROXY_URL`                        |                               | e.g. `http://dev.example.com`       |
 | `NGINX_DRUPAL_FILES_STATIC_EXT_REGEX`                | `txt`                         |                                     |
 | `NGINX_DRUPAL_HIDE_HEADERS`                          |                               |                                     |
-| `NGINX_DRUPAL_XMLRPC_SERVER_NAME`                    |                               | Drupal 6/7 only                     |
+| `NGINX_DRUPAL_XMLRPC_SERVER_NAME`                    |                               | Drupal 7 only                       |
 | `NGINX_DRUPAL_NOT_FOUND_REGEX`                       | (see [Drupal](#drupal))       |                                     |
 | `NGINX_WP_NOT_FOUND_REGEX`                           | (see [Wordpress](#wordpress)) |                                     |
 | `NGINX_ERROR_403_URI`                                |                               |                                     |
@@ -330,8 +330,8 @@ Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\
 
 #### Drupal
 
-- Preset templates: [Drupal 9], [Drupal 8], [Drupal 7], [Drupal 6]
-- Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal9`, `drupal8`, `drupal7` or `drupal6`. Optionally
+- Preset templates: [Drupal 9], [Drupal 8], [Drupal 7]
+- Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal9`, `drupal8` or `drupal7`. Optionally
   modify `NGINX_BACKEND_HOST`
 - If you want to use [stage_file_proxy](https://www.drupal.org/project/stage_file_proxy) module,
   set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
@@ -345,19 +345,13 @@ depends on the Drupal version:
 Drupal 9/8:
 
 ```
-\\.(engine|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
+\\.(engine|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
 ```
 
 Drupal 7:
 
 ```
-\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock|web\\.config)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$
-```
-
-Drupal 6:
-
-```
-\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|svn-base|yaml|yml)$|^(code-style\\.pl|Entries.*|Repository|Root|Tag|Template|all-wcprops|entries|format)$
+\\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$
 ```
 
 [Drupal 9]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal9.conf.tmpl
@@ -365,8 +359,6 @@ Drupal 6:
 [Drupal 8]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal8.conf.tmpl
 
 [Drupal 7]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal7.conf.tmpl
-
-[Drupal 6]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal6.conf.tmpl
 
 #### Matomo
 

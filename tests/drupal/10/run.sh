@@ -13,7 +13,7 @@ nginx_exec() {
 clean_exit() {
   docker-compose down
 }
-trap clean_exit EXIT
+#trap clean_exit EXIT
 
 docker-compose up -d
 
@@ -42,16 +42,14 @@ echo -n "favicon.ico...     "
 nginx_exec curl -s -S -I "localhost/favicon.ico" | grep '200 OK'
 echo -n "robots.txt...      "
 nginx_exec curl -s -S -I "localhost/robots.txt" | grep '200 OK'
-echo -n "drupal.js...       "
-nginx_exec curl -s -S -I "localhost/core/misc/drupal.js" | grep '200 OK'
-echo -n "druplicon.png...   "
-nginx_exec curl -s -S -I "localhost/core/misc/druplicon.png" | grep '200 OK'
-echo -n "robots.txt...      "
-nginx_exec curl -s -S -I "localhost/robots.txt" | grep '200 OK'
 echo -n "humans.txt...      "
 nginx_exec curl -s -S -I "localhost/humans.txt" | grep '302 Found'
 echo -n "ads.txt...      "
 nginx_exec curl -s -S -I "localhost/ads.txt" | grep '302 Found'
+echo -n "drupal.js...       "
+nginx_exec curl -s -S -I "localhost/core/misc/drupal.js" | grep '200 OK'
+echo -n "druplicon.png...   "
+nginx_exec curl -s -S -I "localhost/core/misc/druplicon.png" | grep '200 OK'
 
 echo -n "Checking non existing php endpoint... "
 nginx_exec curl -s -S -I "localhost/non-existing.php" | grep '404 Not Found'
@@ -61,3 +59,5 @@ echo -n "Checking user-defined internal permanent redirect... "
 nginx_exec curl -s -S -I "localhost/redirect-internal-permanent" | grep '301 Moved Permanently'
 echo -n "Checking user-defined external redirect... "
 nginx_exec curl -s -S -I "localhost/redirect-external" | grep '302 Moved Temporarily'
+echo -n "Checking CSP header...   "
+nginx_exec curl -s -S -I "localhost" | grep "frame-ancestors 'none'"

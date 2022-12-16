@@ -4,8 +4,9 @@ services:
   nginx:
     image: $IMAGE
     environment:
+      DEBUG: 1
       NGINX_BACKEND_HOST: drupal
-      NGINX_VHOST_PRESET: drupal8
+      NGINX_VHOST_PRESET: drupal10
       NGINX_SERVER_EXTRA_CONF_FILEPATH: /var/www/html/server.conf
       NGINX_ALLOW_XML_ENDPOINTS: 1
       NGINX_LOG_FORMAT_OVERRIDE: '$$http_x_forwarded_for - $$remote_user [$$time_local] "$$request" $$status $$body_bytes_sent "$$http_referer" "$$http_user_agent"'
@@ -15,7 +16,7 @@ services:
       - codebase:/var/www/html
       - ./server.conf:/var/www/html/server.conf
   drupal:
-    image: drupal:8-fpm-alpine
+    image: drupal:10.0-rc-fpm-alpine
     volumes:
       - codebase:/var/www/html
 

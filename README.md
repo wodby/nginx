@@ -330,8 +330,8 @@ Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\
 
 #### Drupal
 
-- Preset templates: [Drupal 9], [Drupal 8], [Drupal 7]
-- Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal9`, `drupal8` or `drupal7`. Optionally
+- Preset templates: [Drupal 10], [Drupal 9], [Drupal 8], [Drupal 7]
+- Usage: add `NGINX_VHOST_PRESET=` with the value of `drupal10`, `drupal9`, `drupal8` or `drupal7`. Optionally
   modify `NGINX_BACKEND_HOST`
 - If you want to use [stage_file_proxy](https://www.drupal.org/project/stage_file_proxy) module,
   set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
@@ -342,7 +342,7 @@ Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\
 Default value of `NGINX_DRUPAL_NOT_FOUND_REGEX` (backspaces must be escaped) is taken from Drupal's `.htaccess` and
 depends on the Drupal version:
 
-Drupal 9/8:
+Drupal 10/9/8:
 
 ```
 \\.(engine|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
@@ -353,6 +353,8 @@ Drupal 7:
 ```
 \\.(engine|txt|inc|info|install|make|module|profile|test|po|sh|.*sql|theme|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig\\.save)$
 ```
+
+[Drupal 10]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal10.conf.tmpl
 
 [Drupal 9]: https://github.com/wodby/nginx/blob/master/templates/presets/drupal9.conf.tmpl
 

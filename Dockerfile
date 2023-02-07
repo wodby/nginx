@@ -35,6 +35,7 @@ RUN set -ex; \
         findutils \
         make \
         nghttp2 \
+        openssl \
         sudo; \
     \
     apk add --update --no-cache -t .nginx-build-deps \
@@ -49,10 +50,10 @@ RUN set -ex; \
         icu-dev \
         libjpeg-turbo-dev \
         libpng-dev \
-        libressl-dev \
         libtool \
         libxslt-dev \
         linux-headers \
+        openssl-dev \
         pcre-dev \
         zlib-dev; \
      \

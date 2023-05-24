@@ -38,7 +38,9 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-- `1.23`, `1`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.25`, `1`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.24` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
+- `1.23` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 - `1.22` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 - `1.21` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 - `1.20` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)

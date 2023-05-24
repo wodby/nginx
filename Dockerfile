@@ -115,9 +115,9 @@ RUN set -ex; \
     mkdir -p /tmp/ngx_http_uploadprogress_module; \
     url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
     wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
-    if [[ "${NGINX_VER}" == 1.23* ]]; then \
+    if [[ -d "/tmp/patches/${NGINX_VER}" ]]; then \
         cd /tmp/ngx_http_uploadprogress_module; \
-        patch -p1 -i /tmp/patches/1.23/uploadprogress.patch; \
+        patch -p1 -i "/tmp/patches/${NGINX_VER}/uploadprogress.patch"; \
     fi; \
     \
     # Keys were changed since 1.22.

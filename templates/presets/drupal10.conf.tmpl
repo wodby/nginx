@@ -49,7 +49,7 @@ location / {
         internal;
     }
 
-    location ~* /files/styles/ {
+    location ~* /files/(css|js|styles)/ {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
         expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
         try_files $uri @drupal;

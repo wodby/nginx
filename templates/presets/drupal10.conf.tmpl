@@ -65,24 +65,17 @@ location / {
         open_file_cache_errors {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_ERRORS" "off" }};
     }
 
-    location ~* /sites/.+/files/advagg_css/ {
+    location ~* /sites/.+/files/optimized/(css|js)/ {
         expires max;
         add_header ETag '';
         add_header Last-Modified 'Wed, 20 Jan 1988 04:20:42 GMT';
         add_header Accept-Ranges '';
-        location ~* /sites/.*/files/advagg_css/.+\.css$ {
+        location ~* /sites/.*/files/optimized/css/.+\.css$ {
             access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
             add_header Cache-Control "public, max-age=31536000, no-transform, immutable";
             try_files $uri @drupal;
         }
-    }
-
-    location ~* /sites/.+/files/advagg_js/ {
-        expires max;
-        add_header ETag '';
-        add_header Last-Modified 'Wed, 20 Jan 1988 04:20:42 GMT';
-        add_header Accept-Ranges '';
-        location ~* /sites/.*/files/advagg_js/.+\.js$ {
+        location ~* /sites/.*/files/optimized/js/.+\.js$ {
             access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
             add_header Cache-Control "public, max-age=31536000, no-transform, immutable";
             try_files $uri @drupal;

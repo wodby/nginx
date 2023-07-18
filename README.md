@@ -347,7 +347,7 @@ depends on the Drupal version:
 Drupal 10/9/8:
 
 ```
-\\.(engine|md|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|web\\.config)$|(composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
+\\.(engine|md|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template)$|(web\\.config|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
 ```
 
 Drupal 7:

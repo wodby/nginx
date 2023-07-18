@@ -1,5 +1,5 @@
 {{ $static := (getenv "NGINX_STATIC_EXT_REGEX" "css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map|webp") }}
-{{ $not_found_regex := (getenv "NGINX_DRUPAL_NOT_FOUND_REGEX" "\\.(engine|md|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|web\\.config)$|(composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$") }}
+{{ $not_found_regex := (getenv "NGINX_DRUPAL_NOT_FOUND_REGEX" "\\.(engine|md|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template)$|(web\\.config|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$") }}
 {{ $files_dir_static := (getenv "NGINX_DRUPAL_FILES_STATIC_EXT_REGEX" "txt") }}
 
 index index.php index.html;

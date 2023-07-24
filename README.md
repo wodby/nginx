@@ -328,7 +328,7 @@ Overridden default values:
     - For plugin [Yoast SEO](https://kb.yoast.com/kb/xml-sitemaps-nginx/) add `$NGINX_WP_YOAST_XML_SITEMAP=1`
 - Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors: 'self'`
 
-Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\.(?:txt|pot|sh|.*sql?)|(?:composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$`
+Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\.(?:txt|md|pot|sh|.*sql?)|(?:composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$`
 
 #### Drupal
 
@@ -347,7 +347,7 @@ depends on the Drupal version:
 Drupal 10/9/8:
 
 ```
-\\.(engine|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
+\\.(engine|md|txt|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\\.php)?|xtmpl|yml|yaml)(~|\\.sw[op]|\\.bak|\\.orig|\\.save)?$|^(\\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template)$|(web\\.config|composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$|^#.*#$|\\.php(~|\\.sw[op]|\\.bak|\\.orig|\\.save)$
 ```
 
 Drupal 7:

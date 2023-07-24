@@ -50,6 +50,12 @@ echo -n "drupal.js...       "
 nginx_exec curl -s -S -I "localhost/core/misc/drupal.js" | grep '200 OK'
 echo -n "druplicon.png...   "
 nginx_exec curl -s -S -I "localhost/core/misc/druplicon.png" | grep '200 OK'
+echo -n "Checking composer.json"
+nginx_exec curl -s -S -I "localhost/composer.json" | grep '404 Not Found'
+echo -n "Checking package.json"
+nginx_exec curl -s -S -I "localhost/core/package.json" | grep '404 Not Found'
+echo -n "Checking web.config"
+nginx_exec curl -s -S -I "localhost/web.config" | grep '404 Not Found'
 
 echo -n "Checking non existing php endpoint... "
 nginx_exec curl -s -S -I "localhost/non-existing.php" | grep '404 Not Found'

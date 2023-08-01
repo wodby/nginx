@@ -11,7 +11,7 @@ nginx_exec() {
 }
 
 clean_exit() {
-  docker-compose down
+  docker-compose down -v
 }
 trap clean_exit EXIT
 

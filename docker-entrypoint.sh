@@ -37,7 +37,7 @@ process_templates() {
     _backwards_compatibility
 
     # Override default CSP header for Drupal and WP.
-    if [[ "${NGINX_VHOST_PRESET}" =~ ^drupal9|drupal8|drupal7|drupal6|wordpress$ ]]; then
+    if [[ "${NGINX_VHOST_PRESET}" = drupal* || ${NGINX_VHOST_PRESET} = wordpress ]]; then
       if [[ -z "${NGINX_HEADERS_CONTENT_SECURITY_POLICY}" ]]; then
         export NGINX_HEADERS_CONTENT_SECURITY_POLICY="frame-ancestors 'self'"
       fi

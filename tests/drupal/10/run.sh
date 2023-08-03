@@ -66,4 +66,4 @@ nginx_exec curl -s -S -I "localhost/redirect-internal-permanent" | grep '301 Mov
 echo -n "Checking user-defined external redirect... "
 nginx_exec curl -s -S -I "localhost/redirect-external" | grep '302 Moved Temporarily'
 echo -n "Checking CSP header...   "
-nginx_exec curl -s -S -I "localhost" | grep "frame-ancestors 'none'"
+nginx_exec curl -s -S -I "localhost" | grep "frame-ancestors 'self'"

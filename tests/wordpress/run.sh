@@ -34,7 +34,7 @@ echo -n "Checking static endpoint (woff2)... "
 check_endpoint "wp-content/themes/twentytwentyfour/assets/fonts/jost/Jost-VariableFont_wght.woff2" "200 OK"
 
 echo -n "Checking static endpoint (css)... "
-check_endpoint "wp-content/themes/twentytwentyfour/assets/css/button-online.css" "200 OK"
+check_endpoint "wp-content/themes/twentytwentyfour/assets/css/button-outline.css" "200 OK"
 
 echo -n "Checking readme.html endpoint... "
 check_endpoint "readme.html" "404 Not Found"

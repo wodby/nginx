@@ -27,14 +27,14 @@ check_endpoint "" "302 Found"
 echo -n "Checking setup page endpoint... "
 check_endpoint "wp-admin/setup-config.php" "200 OK"
 
-echo -n "Checking static endpoint (jpg)... "
-check_endpoint "wp-content/themes/twentytwentyone/assets/images/Reading.jpg" "200 OK"
+echo -n "Checking static endpoint (webp)... "
+check_endpoint "wp-content/themes/twentytwentyfour/assets/images/windows.webp" "200 OK"
 
-echo -n "Checking static endpoint (js)... "
-check_endpoint "wp-content/themes/twentytwentyone/assets/js/editor.js" "200 OK"
+echo -n "Checking static endpoint (woff2)... "
+check_endpoint "wp-content/themes/twentytwentyfour/assets/fonts/jost/Jost-VariableFont_wght.woff2" "200 OK"
 
 echo -n "Checking static endpoint (css)... "
-check_endpoint "wp-content/themes/twentytwentyone/assets/css/print.css" "200 OK"
+check_endpoint "wp-content/themes/twentytwentyfour/assets/css/button-online.css" "200 OK"
 
 echo -n "Checking readme.html endpoint... "
 check_endpoint "readme.html" "404 Not Found"

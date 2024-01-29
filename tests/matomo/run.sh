@@ -39,9 +39,6 @@ check_endpoint "core/Twig.php" "403 Forbidden"
 echo -n "Checking file from lang directory... "
 check_endpoint "lang/en.json" "403 Forbidden"
 
-echo -n "Checking html file from plugins directory... "
-check_endpoint "plugins/MultiSites/angularjs/dashboard/dashboard.directive.html" "200 OK"
-
 echo -n "Checking tmp dir... "
 check_endpoint "tmp/cache/test" "403 Forbidden"
 

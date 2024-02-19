@@ -124,7 +124,7 @@ RUN set -ex; \
     if [[ "${NGINX_VER}" == 1.19* || "${NGINX_VER}" == 1.20* || "${NGINX_VER}" == 1.21* ]]; then \
         export GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8; \
     else \
-        export GPG_KEYS=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62; \
+        export GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A; \
     fi; \
     # Get VTS module \
     git clone https://github.com/vozlt/nginx-module-vts.git /tmp/nginx_module_vts; \

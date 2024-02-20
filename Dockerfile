@@ -123,7 +123,7 @@ RUN set -ex; \
     # Keys were changed since 1.22.
     if [[ "${NGINX_VER}" == 1.19* || "${NGINX_VER}" == 1.20* || "${NGINX_VER}" == 1.21* ]]; then \
         export GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8; \
-    else if [[ "${NGINX_VER}" == 1.22* || "${NGINX_VER}" == 1.23* || "${NGINX_VER}" == 1.24* ]]; then \
+    elif [[ "${NGINX_VER}" == 1.22* || "${NGINX_VER}" == 1.23* || "${NGINX_VER}" == 1.24* ]]; then \
         export GPG_KEYS=13C82A63B603576156E30A4EA0EA981B66B0D967; \
     else \
         export GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A; \

@@ -218,7 +218,7 @@ RUN set -ex; \
 	apk add --no-cache --virtual .nginx-rundeps $runDeps; \
     \
     # Script to fix volumes permissions via sudo.
-    echo "find ${APP_ROOT} ${FILES_DIR} -maxdepth 0 -uid 0 -type d -exec chown wodby:wodby {} +" > /usr/local/bin/init_volumes; \
+    echo "find ${APP_ROOT} ${FILES_DIR} -maxdepth 0 -uid 0 -type d -exec chown -f wodby:wodby {} +" > /usr/local/bin/init_volumes; \
     chmod +x /usr/local/bin/init_volumes; \
     \
     { \

@@ -12,11 +12,22 @@ add_header  X-Content-Type-Options nosniff;
 add_header  Cache-Control "store, must-revalidate, post-check=0, pre-check=0";
 {{- end }}
 
+# https://plugins.trac.wordpress.org/browser/google-sitemap-generator/trunk/class-googlesitemapgeneratorloader.php#L172
 {{- if getenv "NGINX_WP_GOOGLE_XML_SITEMAP" }}
-rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml$ "/index.php?xml_sitemap=params=$2" last;
-rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.xml\.gz$ "/index.php?xml_sitemap=params=$2;zip=true" last;
-rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html$ "/index.php?xml_sitemap=params=$2;html=true" last;
-rewrite ^/sitemap(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
+rewrite ^/.*-misc?\.xml$ "/index.php?xml_sitemap=params=$2" last;
+rewrite ^/.*-misc?\.xml\.gz$ "/index.php?xml_sitemap=params=$2;zip=true" last;
+rewrite ^/.*-misc?\.html$ "/index.php?xml_sitemap=params=$2;html=true" last;
+rewrite ^/.*-misc?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
+
+rewrite ^/.*sitemap.*(-+([a-zA-Z0-9_-]+))?\.xml$ "/index.php?xml_sitemap=params=$2" last;
+rewrite ^/.*sitemap.*(-+([a-zA-Z0-9_-]+))?\.xml\.gz$ "/index.php?xml_sitemap=params=$2;zip=true" last;
+rewrite ^/.*sitemap.*(-+([a-zA-Z0-9_-]+))?\.html$ "/index.php?xml_sitemap=params=$2;html=true" last;
+rewrite ^/.*sitemap.*(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
+
+rewrite ^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.xml$ "/index.php?xml_sitemap=params=$2" last;
+rewrite ^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.xml\.gz$ "/index.php?xml_sitemap=params=$2;zip=true" last;
+rewrite ^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.html$ "/index.php?xml_sitemap=params=$2;html=true" last;
+rewrite ^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
 {{- end }}
 
 location = /robots.txt {

@@ -14,6 +14,19 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
+  nginx-126:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: docker/setup-qemu-action@v3
+      with:
+        platforms: amd64,arm64
+    - uses: docker/setup-buildx-action@v3
+    - uses: ./.github/actions
+      with:
+        version: '1.26.0'
+        tags: 1.26,1,latest
+        platform: linux/amd64,linux/arm64
   nginx-125:
     runs-on: ubuntu-latest
     steps:
@@ -25,83 +38,5 @@ jobs:
     - uses: ./.github/actions
       with:
         version: '1.25.5'
-        tags: 1.25,1,latest
-        platform: linux/amd64,linux/arm64
-  nginx-124:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '1.24.0'
-        tags: 1.24
-        platform: linux/amd64,linux/arm64
-  nginx-123:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '1.23.4'
-        tags: 1.23
-        platform: linux/amd64,linux/arm64
-  nginx-122:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '1.22.1'
-        tags: '1.22'
-        platform: linux/amd64,linux/arm64
-  nginx-121:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '1.21.6'
-        tags: '1.21'
-        platform: linux/amd64,linux/arm64
-  nginx-120:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '1.20.2'
-        tags: '1.20'
-        platform: linux/amd64,linux/arm64
-  nginx-119:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '1.19.10'
-        tags: 1.19
+        tags: '1.25'
         platform: linux/amd64,linux/arm64

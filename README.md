@@ -40,7 +40,6 @@ Supported tags and respective `Dockerfile` links:
 
 - `1.27`, `1`, `latest` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 - `1.26` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
-- `1.25` [_(Dockerfile)_](https://github.com/wodby/nginx/tree/master/Dockerfile)
 
 All images built for `linux/amd64` and `linux/arm64`
 

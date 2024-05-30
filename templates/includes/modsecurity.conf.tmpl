@@ -4,7 +4,8 @@ Include /etc/nginx/modsecurity/recommended.conf
 Include /etc/nginx/modsecurity/crs/setup.conf
 {{- end }}
 
-{{- if or (eq (getenv "NGINX_VHOST_PRESET") "drupal11") (eq (getenv "NGINX_VHOST_PRESET") "drupal10") (eq (getenv "NGINX_VHOST_PRESET") "drupal9") (eq (getenv "NGINX_VHOST_PRESET") "drupal8") (eq (getenv "NGINX_VHOST_PRESET") "drupal7") (eq (getenv "NGINX_VHOST_PRESET") "drupal6") }}
+{{/* Pick up all Drupal-based presets that start with 'drupal'. */}}
+{{- if eq (printf "%.6s" (getenv "NGINX_VHOST_PRESET")) "drupal" }}
 SecAction \
  "id:900130,\
   phase:1,\

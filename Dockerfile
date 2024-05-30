@@ -12,8 +12,6 @@ ENV NGINX_VER="${NGINX_VER}" \
     FILES_DIR="/mnt/files" \
     NGINX_VHOST_PRESET="html"
 
-COPY patches /tmp/patches
-
 RUN set -ex; \
     \
     nginx_up_ver="0.9.1"; \
@@ -112,15 +110,12 @@ RUN set -ex; \
     mv rules /etc/nginx/modsecurity/crs; \
     \
     # Get ngx upload progress module. \
-    mkdir -p /tmp/ngx_http_uploadprogress_module; \
-    url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
-    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
-    if [[ -d "/tmp/patches/${NGINX_VER%.*}" ]]; then \
-        cd /tmp/ngx_http_uploadprogress_module; \
-        patch -p1 -i "/tmp/patches/${NGINX_VER%.*}/uploadprogress.patch"; \
-    fi; \
+    cd /tmp; \
+    git clone https://github.com/masterzen/nginx-upload-progress-module ngx_http_uploadprogress_module; \
+    cd ngx_http_uploadprogress_module; \
+    git reset --hard 85e1e8dcfbc7df73757603e3bda627ec93aff0a8; \
     \
-    export GPG_KEYS=43387825DDB1BB97EC36BA5D007C8D7C15D87369; \
+    export GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A; \
     # Get VTS module \
     git clone https://github.com/vozlt/nginx-module-vts.git /tmp/nginx_module_vts; \
     cd /tmp/nginx_module_vts; \

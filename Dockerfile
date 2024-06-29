@@ -14,7 +14,7 @@ ENV NGINX_VER="${NGINX_VER}" \
 
 RUN set -ex; \
     \
-    nginx_up_ver="0.9.1"; \
+    nginx_up_ver="0.9.3"; \
     ngx_modsecurity_ver="1.0.0"; \
     modsecurity_ver="3.0.4"; \
     owasp_crs_ver="3.1.0"; \
@@ -110,10 +110,9 @@ RUN set -ex; \
     mv rules /etc/nginx/modsecurity/crs; \
     \
     # Get ngx upload progress module. \
-    cd /tmp; \
-    git clone https://github.com/masterzen/nginx-upload-progress-module ngx_http_uploadprogress_module; \
-    cd ngx_http_uploadprogress_module; \
-    git reset --hard 85e1e8dcfbc7df73757603e3bda627ec93aff0a8; \
+    mkdir -p /tmp/ngx_http_uploadprogress_module; \
+    url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
+    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
     \
     export GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A; \
     # Get VTS module \

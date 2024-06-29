@@ -24,10 +24,10 @@ rewrite ^/.*sitemap.*(-+([a-zA-Z0-9_-]+))?\.xml\.gz$ "/index.php?xml_sitemap=par
 rewrite ^/.*sitemap.*(-+([a-zA-Z0-9_-]+))?\.html$ "/index.php?xml_sitemap=params=$2;html=true" last;
 rewrite ^/.*sitemap.*(-+([a-zA-Z0-9_-]+))?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
 
-rewrite ^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.xml$ "/index.php?xml_sitemap=params=$2" last;
-rewrite ^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.xml\.gz$ "/index.php?xml_sitemap=params=$2;zip=true" last;
-rewrite ^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.html$ "/index.php?xml_sitemap=params=$2;html=true" last;
-rewrite ^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.html.gz$ "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
+rewrite "^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.xml$" "/index.php?xml_sitemap=params=$2" last;
+rewrite "^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.xml\.gz$" "/index.php?xml_sitemap=params=$2;zip=true" last;
+rewrite "^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.html$" "/index.php?xml_sitemap=params=$2;html=true" last;
+rewrite "^/.*sitemap.*(?:\d{1,4}(?!-misc)|-misc)?\.html.gz$" "/index.php?xml_sitemap=params=$2;html=true;zip=true" last;
 {{- end }}
 
 location = /robots.txt {

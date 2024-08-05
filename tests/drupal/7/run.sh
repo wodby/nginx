@@ -7,15 +7,15 @@ if [[ -n "${DEBUG}" ]]; then
 fi
 
 nginx_exec() {
-    docker-compose exec -T nginx "${@}"
+    docker compose exec -T nginx "${@}"
 }
 
 clean_exit() {
-  docker-compose down -v
+  docker compose down -v
 }
 trap clean_exit EXIT
 
-docker-compose up -d
+docker compose up -d
 
 nginx_exec make check-ready -f /usr/local/bin/actions.mk
 

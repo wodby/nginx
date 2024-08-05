@@ -7,19 +7,19 @@ if [[ -n "${DEBUG}" ]]; then
 fi
 
 check_endpoint() {
-    docker-compose exec -T nginx curl -s -S -I "localhost/${1}" | grep -q "${2}"
+    docker compose exec -T nginx curl -s -S -I "localhost/${1}" | grep -q "${2}"
     echo "OK"
 }
 
 clean_exit() {
-  docker-compose down
+  docker compose down
 }
 trap clean_exit EXIT
 
-docker-compose up -d
+docker compose up -d
 
-docker-compose exec -T nginx make check-ready -f /usr/local/bin/actions.mk
-docker-compose exec -T matomo make init -f /usr/local/bin/actions.mk
+docker compose exec -T nginx make check-ready -f /usr/local/bin/actions.mk
+docker compose exec -T matomo make init -f /usr/local/bin/actions.mk
 
 echo -n "Checking homepage endpoint... "
 check_endpoint "" "200 OK"

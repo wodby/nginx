@@ -1,18 +1,15 @@
-version: "2"
-
 services:
   nginx:
     image: $IMAGE
     environment:
-      NGINX_BACKEND_HOST: matomo
-      NGINX_VHOST_PRESET: matomo
-      DEBUG: 1
+      NGINX_BACKEND_HOST: wordpress
+      NGINX_VHOST_PRESET: wordpress
     depends_on:
-      - matomo
+      - wordpress
     volumes:
       - codebase:/var/www/html
-  matomo:
-    image: wodby/matomo
+  wordpress:
+    image: wodby/wordpress
     environment:
       WODBY_APP_NAME: test
     volumes:

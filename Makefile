@@ -76,6 +76,7 @@ test:
 	cd ./tests/php && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/matomo && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/wordpress && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/drupal/11 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/10 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/9 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/7 && IMAGE=$(REPO):$(TAG) ./run.sh

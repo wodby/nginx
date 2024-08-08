@@ -168,10 +168,6 @@ location ~* ^/core/authorize.php {
     fastcgi_pass php;
 }
 
-location = /core/modules/statistics/statistics.php {
-    fastcgi_pass php;
-}
-
 location = /cron {
     include fastcgi.conf;
     fastcgi_param QUERY_STRING $args;

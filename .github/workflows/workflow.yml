@@ -37,6 +37,6 @@ jobs:
     - uses: docker/setup-buildx-action@v3
     - uses: ./.github/actions
       with:
-        version: '1.26.1'
+        version: '1.26.2'
         tags: '1.26'
         platform: linux/amd64,linux/arm64

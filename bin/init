@@ -26,4 +26,27 @@ if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
       exit 1
     fi
   fi
+
+  if [[ "${NGINX_VHOST_PRESET}" =~ ^wordpress$ ]]; then
+    echo "Running init for WordPress preset"
+
+    wp_root=""
+    if [[ -n "${DOCROOT_SUBDIR}" ]]; then
+      wp_root="${APP_ROOT}/${DOCROOT_SUBDIR}"
+    else
+      wp_root="${APP_ROOT}"
+    fi
+
+    wp_content="${wp_root}/wp-content"
+    mkdir -p "${wp_content}"
+    files_link "${wp_content}/uploads"
+  fi
+
+
+  if [[ "${NGINX_VHOST_PRESET}" =~ ^laravel ]]; then
+    echo "Running init for Laravel preset"
+
+    mkdir -p "${APP_ROOT}/storage/app"
+    files_link "${APP_ROOT}/storage/app/public"
+  fi    
 fi

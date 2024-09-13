@@ -17,6 +17,7 @@
     - [Django](#django)
     - [PHP-based (FastCGI)](#PHP-based-fastcgi)
         - [PHP](#php)
+        - [Laravel](#laravel)
         - [WordPress](#wordpress)
         - [Drupal](#drupal)
         - [Matomo](#matomo)
@@ -302,6 +303,17 @@ Overridden default values:
 
 * [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/php.conf.tmpl)
 * Usage: add `NGINX_VHOST_PRESET=php`, optionally modify `NGINX_BACKEND_HOST`
+
+Overridden default values:
+
+| Variable           | Default Value          |
+|--------------------|------------------------|
+| `NGINX_INDEX_FILE` | `index.php index.html` |
+
+#### Laravel
+
+* [Preset template](https://github.com/wodby/nginx/blob/master/templates/presets/laravel.conf.tmpl)
+* Usage: add `NGINX_VHOST_PRESET=laravel`, optionally modify `NGINX_BACKEND_HOST`
 
 Overridden default values:
 

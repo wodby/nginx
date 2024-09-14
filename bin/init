@@ -48,5 +48,6 @@ if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
 
     mkdir -p "${APP_ROOT}/storage/app"
     files_link "${APP_ROOT}/storage/app/public"
+    ln -sf "${APP_ROOT}/storage/app/public" "${APP_ROOT}/public/storage"
   fi    
 fi

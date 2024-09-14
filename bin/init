@@ -46,8 +46,10 @@ if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
   if [[ "${NGINX_VHOST_PRESET}" =~ ^laravel ]]; then
     echo "Running init for Laravel preset"
 
-    mkdir -p "${APP_ROOT}/storage/app"
+    mkdir -p "${APP_ROOT}/storage/app"    
     files_link "${APP_ROOT}/storage/app/public"
-    ln -sf "${APP_ROOT}/storage/app/public" "${APP_ROOT}/public/storage"
+    # public/storage dir is normally linked from the storage/app/public 
+    # but in our case they are both a symlink to shared storage 
+    files_link "${APP_ROOT}/public/storage"
   fi    
 fi

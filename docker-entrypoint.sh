@@ -55,7 +55,7 @@ process_templates() {
     if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
         _gotpl "presets/${NGINX_VHOST_PRESET}.conf.tmpl" "/etc/nginx/preset.conf"
 
-        if [[ "${NGINX_VHOST_PRESET}" = drupal* || "${NGINX_VHOST_PRESET}" =~ ^wordpress|matomo|php$ ]]; then
+        if [[ "${NGINX_VHOST_PRESET}" = drupal* || "${NGINX_VHOST_PRESET}" =~ ^wordpress|matomo|php|laravel$ ]]; then
             _gotpl "includes/upstream.php.conf.tmpl" "/etc/nginx/upstream.conf"
         elif [[ "${NGINX_VHOST_PRESET}" =~ ^http-proxy|django$ ]]; then
             if [[ -z "${NGINX_BACKEND_HOST}" && "${NGINX_VHOST_PRESET}" == "django" ]]; then

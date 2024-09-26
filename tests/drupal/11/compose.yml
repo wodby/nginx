@@ -14,7 +14,7 @@ services:
       - codebase:/var/www/html
       - ./server.conf:/var/www/html/server.conf
   drupal:
-    image: drupal:11-php8.3-fpm-alpine
+    image: drupal:11-fpm-alpine
     volumes:
       - codebase:/var/www/html
 

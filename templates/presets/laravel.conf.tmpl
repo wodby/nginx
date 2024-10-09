@@ -6,6 +6,11 @@ include fastcgi.conf;
 index {{ getenv "NGINX_INDEX_FILE" "index.php index.html" }};
 
 location / {
+    location ~* /livewire/livewire.js {
+        expires off;
+        try_files $uri /{{ $index }}?$args;
+    }
+
     location ~* ^.+\.(?:{{ $static }})$ {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
         tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};

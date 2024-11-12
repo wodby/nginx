@@ -6,6 +6,10 @@ include fastcgi.conf;
 index {{ getenv "NGINX_INDEX_FILE" "index.php index.html" }};
 
 location / {
+    location ~* /livewire/preview-file {
+        expires off;
+        try_files $uri /{{ $index }}?$args;
+    }
     location ~* /livewire/livewire.js {
         expires off;
         try_files $uri /{{ $index }}?$args;

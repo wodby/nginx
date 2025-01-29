@@ -3,7 +3,7 @@
 set -exo pipefail
 
 if [[ "${GITHUB_REF}" == refs/heads/master || "${GITHUB_REF}" == refs/tags/* ]]; then      
-  minor_ver="${VERSION%.*}"
+  minor_ver="${NGINX_VER%.*}"
   major_ver="${minor_ver%.*}"
 
   tags=("${minor_ver}")

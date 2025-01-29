@@ -15,7 +15,7 @@ runs:
   steps:
     - name: Build image
       env:
-        VERSION: ${{ inputs.version }}
+        NGINX_VER: ${{ inputs.version }}
         LATEST: ${{ inputs.latest }}
         LATEST_MAJOR: ${{ inputs.latest_major }}
       run: |

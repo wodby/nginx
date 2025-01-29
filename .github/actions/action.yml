@@ -1,47 +1,23 @@
-name: Build
-description: Build nginx image
+name: push
+description: combine multi-arch image and push
 inputs:
   version:
     description: version
     required: true
-  user_id:
-    description: user id
+  latest:
+    description: if tag latest
     required: false
-  group_id:
-    description: group id
+  latest_major:
+    description: if tag latest major version
     required: false
-  tags:
-    description: image tags
-    required: true
-  platform:
-    description: docker platform
-    required: false
-    default: linux/amd64
 runs:
   using: "composite"
   steps:
-  - name: Build and push image to docker.io
-    env:
-      NGINX_VER: ${{ inputs.version }}
-      WODBY_USER_ID: ${{ inputs.user_id }}
-      WODBY_GROUP_ID: ${{ inputs.group_id }}
-      TAGS: ${{ inputs.tags }}
-      PLATFORM: ${{ inputs.platform }}
-      DOCKER_REGISTRY: docker.io
-    run: |
-      set -e
-      make buildx-build-amd64
-      make test
-      make buildx-build
-      . $GITHUB_ACTION_PATH/release.sh
-    shell: bash
-#  - name: Build and push amd64 image to wodby registry
-#    env:
-#      NGINX_VER: ${{ inputs.version }}
-#      TAGS: ${{ inputs.tags }}
-#      PLATFORM: linux/amd64
-#      DOCKER_REGISTRY: registry.wodby.com
-#    run: |
-#      set -e
-#      DOCKER_USERNAME="${WODBY1_REGISTRY_USERNAME}" DOCKER_PASSWORD="${WODBY1_REGISTRY_PASSWORD}" . $GITHUB_ACTION_PATH/release.sh
-#    shell: bash
+    - name: Build image
+      env:
+        VERSION: ${{ inputs.version }}
+        LATEST: ${{ inputs.latest }}
+        LATEST_MAJOR: ${{ inputs.latest_major }}
+      run: |
+        . $GITHUB_ACTION_PATH/release.sh
+      shell: bash

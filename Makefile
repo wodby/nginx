@@ -1,9 +1,9 @@
 -include env_make
 
 NGINX_VER ?= 1.27.3
-NGINX_MINOR_VER ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
+NGINX_VER_MINOR ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
-TAG ?= $(NGINX_MINOR_VER)
+TAG ?= $(NGINX_VER_MINOR)
 
 ALPINE_VER ?= 3.20
 
@@ -25,12 +25,10 @@ endif
 
 REGISTRY ?= docker.io
 REPO = $(REGISTRY)/wodby/nginx
-NAME = nginx-$(NGINX_MINOR_VER)
+NAME = nginx-$(NGINX_VER_MINOR)
 
-ifneq ($(STABILITY_TAG),)
-    ifneq ($(TAG),latest)
-        override TAG := $(TAG)-$(STABILITY_TAG)
-    endif
+ifneq ($(ARCH),)
+	override TAG := $(TAG)-$(ARCH)
 endif
 
 .PHONY: build buildx-build buildx-push buildx-build-amd64 test push shell run start stop logs clean release
@@ -43,17 +41,6 @@ build:
 	    --build-arg NGINX_VER=$(NGINX_VER) \
 		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
 		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) ./
-
-# --load  doesn't work with multiple platforms https://github.com/docker/buildx/issues/59
-# we need to save cache to run tests first.
-buildx-build-amd64:
-	docker buildx build --platform linux/amd64 \
-		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
-		--build-arg NGINX_VER=$(NGINX_VER) \
-		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
-		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) \
-		--load \
-		-t $(REPO):$(TAG) ./
 
 buildx-build:
 	docker buildx build --platform $(PLATFORM) \
@@ -70,6 +57,12 @@ buildx-push:
 		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
 		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) \
 		--push -t $(REPO):$(TAG) ./
+
+buildx-imagetools-create:
+	docker buildx imagetools create -t $(REPO):$(TAG) \
+				$(REPO):$(NGINX_VER_MINOR)-amd64 \
+				$(REPO):$(NGINX_VER_MINOR)-arm64
+.PHONY: buildx-imagetools-create
 
 test:
 	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh

@@ -10,33 +10,96 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.16.3
+  NGINX127: '1.27.3'
+  NGINX126: '1.26.2'
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  nginx-127:
-    runs-on: ubuntu-latest
+  nginx127-build:
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+            arch: amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '1.27.3'
-        tags: 1.27,1,latest
-        platform: linux/amd64,linux/arm64
-  nginx-126:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/setup-buildx-action@v3
+      - name: build and push
+        env:
+          NGINX_VER: ${{ env.NGINX127 }}
+          ARCH: ${{ matrix.arch }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          make buildx-build
+          make buildx-push
+  nginx127-push:
     runs-on: ubuntu-latest
+    needs:
+      - nginx127-build
     steps:
-    - uses: actions/checkout@v4
-    - uses: docker/setup-qemu-action@v3
-      with:
-        platforms: amd64,arm64
-    - uses: docker/setup-buildx-action@v3
-    - uses: ./.github/actions
-      with:
-        version: '1.26.2'
-        tags: '1.26'
-        platform: linux/amd64,linux/arm64
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: ./.github/actions
+        with:
+          version: ${{ env.NGINX127 }}
+          latest: true
+          latest_major: true
+
+  nginx126-build:
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+            arch: amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/setup-buildx-action@v3
+      - name: build and push
+        env:
+          NGINX_VER: ${{ env.NGINX126 }}
+          ARCH: ${{ matrix.arch }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          make buildx-build
+          make buildx-push
+  nginx126-push:
+    runs-on: ubuntu-latest
+    needs:
+      - nginx126-build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: ./.github/actions
+        with:
+          version: ${{ env.NGINX126 }}

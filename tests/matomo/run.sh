@@ -16,6 +16,11 @@ clean_exit() {
 }
 trap clean_exit EXIT
 
+if [[ "${PLATFORM}" != "linux/amd64" ]]; then
+    echo "Skipping Matomo tests on ${PLATFORM}"
+    exit 0
+fi
+
 docker compose up -d
 
 docker compose exec -T nginx make check-ready -f /usr/local/bin/actions.mk

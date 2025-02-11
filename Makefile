@@ -7,7 +7,7 @@ TAG ?= $(NGINX_VER_MINOR)
 
 ALPINE_VER ?= 3.20
 
-PLATFORM ?= linux/amd64
+PLATFORM ?= linux/arm64
 
 ifeq ($(WODBY_USER_ID),)
     WODBY_USER_ID := 1000
@@ -68,12 +68,12 @@ buildx-imagetools-create:
 test:
 	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/php && IMAGE=$(REPO):$(TAG) ./run.sh
-	cd ./tests/matomo && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/wordpress && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/11 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/10 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/9 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/7 && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/matomo && PLATFORM=$(PLATFORM) IMAGE=$(REPO):$(TAG) ./run.sh
 
 push:
 	docker push $(REPO):$(TAG)

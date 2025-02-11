@@ -48,6 +48,7 @@ buildx-build:
 		--build-arg NGINX_VER=$(NGINX_VER) \
 		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
 		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) \
+		--load \
 		-t $(REPO):$(TAG) ./
 
 buildx-push:

@@ -44,6 +44,7 @@ jobs:
           PLATFORM: ${{ matrix.platform }}
         run: |
           make buildx-build
+          make test
           make buildx-push
   nginx127-push:
     runs-on: ubuntu-latest
@@ -89,6 +90,7 @@ jobs:
           PLATFORM: ${{ matrix.platform }}
         run: |
           make buildx-build
+          make test
           make buildx-push
   nginx126-push:
     runs-on: ubuntu-latest

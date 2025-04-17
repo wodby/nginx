@@ -10,7 +10,7 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.16.4
-  NGINX127: '1.27.4'
+  NGINX127: '1.27.5'
   NGINX126: '1.26.3'
 
 jobs:

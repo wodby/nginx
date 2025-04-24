@@ -15,8 +15,8 @@ ENV NGINX_VER="${NGINX_VER}" \
 RUN set -ex; \
     \
     nginx_up_ver="0.9.3"; \
-    ngx_modsecurity_ver="1.0.0"; \
-    modsecurity_ver="3.0.4"; \
+    ngx_modsecurity_ver="1.0.3"; \
+    modsecurity_ver="3.0.14"; \
     owasp_crs_ver="3.1.0"; \
     brotli_commit='9aec15e2aa6feea2113119ba06460af70ab3ea62'; \
     vts_commit='3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac'; \

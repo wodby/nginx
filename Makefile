@@ -1,11 +1,11 @@
 -include env_make
 
-NGINX_VER ?= 1.27.5
+NGINX_VER ?= 1.28.0
 NGINX_VER_MINOR ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 TAG ?= $(NGINX_VER_MINOR)
 
-ALPINE_VER ?= 3.20
+ALPINE_VER ?= 3.21
 
 PLATFORM ?= linux/arm64
 

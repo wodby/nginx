@@ -44,7 +44,7 @@ jobs:
   nginx128-push:
     runs-on: ubuntu-latest
     needs:
-      - nginx127-build
+      - nginx128-build
     steps:
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3

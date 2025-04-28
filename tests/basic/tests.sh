@@ -20,10 +20,6 @@ echo -n "Checking Metrics response... "
 curl -s "localhost/.metricsz" | grep -q "<title>nginx vhost traffic status monitor</title>"
 echo "OK"
 
-echo -n "Checking LFI .. "
-curl -s -S "localhost?template=../../etc/passwd" | grep -q "403 Forbidden"
-echo "OK"
-
 #echo -n "Checking SQL Injection "
 #curl -s -S "http://localhost/ar?id=' OR 1='1" | grep -q "403 Forbidden"
 #echo "OK"

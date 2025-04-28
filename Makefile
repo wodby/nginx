@@ -36,7 +36,7 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) \
+	docker build -t $(REPO):$(TAG) --progress=plain \
         --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
 	    --build-arg NGINX_VER=$(NGINX_VER) \
 		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
@@ -71,7 +71,6 @@ test:
 	cd ./tests/wordpress && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/11 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/10 && IMAGE=$(REPO):$(TAG) ./run.sh
-	cd ./tests/drupal/9 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/7 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/matomo && PLATFORM=$(PLATFORM) IMAGE=$(REPO):$(TAG) ./run.sh
 

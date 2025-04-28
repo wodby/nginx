@@ -15,9 +15,6 @@ ENV NGINX_VER="${NGINX_VER}" \
 RUN set -ex; \
     \
     nginx_up_ver="0.9.3"; \
-    ngx_modsecurity_ver="1.0.3"; \
-    modsecurity_ver="3.0.14"; \
-    owasp_crs_ver="3.1.0"; \
     brotli_commit='9aec15e2aa6feea2113119ba06460af70ab3ea62'; \
     vts_commit='3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac'; \
     \
@@ -55,59 +52,11 @@ RUN set -ex; \
         pcre-dev \
         zlib-dev; \
      \
-     apk add --no-cache -t .libmodsecurity-build-deps \
-        autoconf \
-        automake \
-        bison \
-        curl \
-        flex \
-        g++ \
-        git \
-        libmaxminddb-dev \
-        libstdc++ \
-        libtool \
-        libxml2-dev \
-        pcre-dev \
-        rsync \
-        sed \
-        yajl \
-        yajl-dev; \
-    \
-    # Modsecurity lib.
-    cd /tmp; \
-    git clone --depth 1 -b "v${modsecurity_ver}" --single-branch https://github.com/SpiderLabs/ModSecurity; \
-    cd ModSecurity; \
-    git submodule init;  \
-    git submodule update; \
-    ./build.sh; \
-    ./configure --disable-doxygen-doc --disable-doxygen-html; \
-    make -j$(getconf _NPROCESSORS_ONLN); \
-    make install;  \
-    mkdir -p /etc/nginx/modsecurity/; \
-    mv modsecurity.conf-recommended /etc/nginx/modsecurity/recommended.conf;  \
-    sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/nginx/modsecurity/recommended.conf; \
-    cp unicode.mapping /etc/nginx/modsecurity/; \
-    rsync -a --links /usr/local/modsecurity/lib/libmodsecurity.so* /usr/local/lib/; \
-    \
     # Brotli.
     cd /tmp; \
     git clone --depth 10 --single-branch https://github.com/google/ngx_brotli; \
     cd /tmp/ngx_brotli; \
     git checkout ${brotli_commit}; \
-    \
-    # Get ngx modsecurity module.
-    mkdir -p /tmp/ngx_http_modsecurity_module; \
-    ver="${ngx_modsecurity_ver}"; \
-    url="https://github.com/SpiderLabs/ModSecurity-nginx/releases/download/v${ver}/modsecurity-nginx-v${ver}.tar.gz"; \
-    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_modsecurity_module; \
-    \
-    # OWASP.
-    wget -qO- "https://github.com/SpiderLabs/owasp-modsecurity-crs/archive/v${owasp_crs_ver}.tar.gz" | tar xz -C /tmp; \
-    cd /tmp/owasp-modsecurity-crs-*; \
-    sed -i "s#SecRule REQUEST_COOKIES|#SecRule REQUEST_URI|REQUEST_COOKIES|#" rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf; \
-    mkdir -p /etc/nginx/modsecurity/crs/; \
-    mv crs-setup.conf.example /etc/nginx/modsecurity/crs/setup.conf; \
-    mv rules /etc/nginx/modsecurity/crs; \
     \
     # Get ngx upload progress module. \
     mkdir -p /tmp/ngx_http_uploadprogress_module; \
@@ -172,8 +121,7 @@ RUN set -ex; \
         --with-threads \
         --add-module=/tmp/ngx_http_uploadprogress_module \
         --add-module=/tmp/ngx_brotli \
-        --add-module=/tmp/nginx_module_vts \
-        --add-dynamic-module=/tmp/ngx_http_modsecurity_module; \
+        --add-module=/tmp/nginx_module_vts; \
     \
     make -j$(getconf _NPROCESSORS_ONLN); \
     make install; \
@@ -192,12 +140,11 @@ RUN set -ex; \
     install -m 400 -d /etc/nginx/pki; \
     strip /usr/sbin/nginx*; \
     strip /usr/lib/nginx/modules/*.so; \
-    strip /usr/local/lib/libmodsecurity.so*; \
     \
     for i in /usr/lib/nginx/modules/*.so; do ln -s "${i}" /usr/share/nginx/modules/; done; \
     \
 	runDeps="$( \
-		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/local/modsecurity/lib/*.so /usr/lib/nginx/modules/*.so /tmp/envsubst \
+		scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
 			| tr ',' '\n' \
 			| sort -u \
 			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
@@ -218,10 +165,9 @@ RUN set -ex; \
     \
     chown wodby:wodby /usr/share/nginx/html/50x.html; \
     \
-    apk del --purge .nginx-build-deps .libmodsecurity-build-deps; \
+    apk del --purge .nginx-build-deps; \
     rm -rf \
         /tmp/* \
-        /usr/local/modsecurity \
         /var/cache/apk/* ;
 
 USER wodby

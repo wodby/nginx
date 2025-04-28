@@ -48,10 +48,6 @@ process_templates() {
     _gotpl "includes/defaults.conf.tmpl" "/etc/nginx/defaults.conf"
     _gotpl "includes/fastcgi.conf.tmpl" "/etc/nginx/fastcgi.conf"
 
-    if [[ -n "${NGINX_MODSECURITY_ENABLED}" ]]; then
-        _gotpl "includes/modsecurity.conf.tmpl" "/etc/nginx/modsecurity/main.conf"
-    fi
-
     if [[ -n "${NGINX_VHOST_PRESET}" ]]; then
         _gotpl "presets/${NGINX_VHOST_PRESET}.conf.tmpl" "/etc/nginx/preset.conf"
 

@@ -8,7 +8,6 @@
 - [Environment variables](#environment-variables)
 - [Build arguments](#build-arguments)
 - [Nginx modules](#nginx-modules)
-    - [ModSecurity]
 - [Default behaviour](#default-behavior)
 - [Customization](#customization)
 - [Virtual hosts presets](#virtual-hosts-presets)
@@ -102,12 +101,6 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_METRICS_ENABLED`                              | `off`                         |                                     |
 | `NGINX_METRICS_FORMAT`                               | `html`                        | html, json, jsonp, prometheus       |
 | `NGINX_METRICS_ALLOW_FROM`                           |                               |                                     |
-| `NGINX_MODSECURITY_ENABLED`                          |                               | See [ModSecurity]                   |
-| `NGINX_MODSECURITY_INBOUND_ANOMALY_SCORE_THRESHOLD`  | `7`                           |                                     |
-| `NGINX_MODSECURITY_OUTBOUND_ANOMALY_SCORE_THRESHOLD` | `7`                           |                                     |
-| `NGINX_MODSECURITY_POST_CORE_RULES`                  |                               | Location to rules loaded after CRS  |
-| `NGINX_MODSECURITY_PRE_CORE_RULES`                   |                               | Location to rules loaded before CRS |
-| `NGINX_MODSECURITY_USE_OWASP_CRS`                    |                               | See [ModSecurity]                   |
 | `NGINX_MULTI_ACCEPT`                                 | `on`                          |                                     |
 | `NGINX_NO_DEFAULT_HEADERS`                           |                               |                                     |
 | `NGINX_REAL_IP_HEADER`                               | `X-Real-IP`                   |                                     |
@@ -174,7 +167,6 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_gunzip]         |                   |         |
 | [http_gzip_static]    |                   |         |
 | [http_image_filter]   |                   | ✓       |
-| http_modsecurity      | See [ModSecurity] | ✓       |
 | [http_mp4]            |                   |         |
 | [http_random_index]   |                   |         |
 | [http_realip]         |                   |         |
@@ -191,20 +183,6 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [stream_ssl]          |                   |         |
 | [stream_ssl_preread]  |                   |         |
 | [vts]                 | [3c6cf41]         |         |
-
-### ModSecurity
-
-| Component                  | Version |
-|----------------------------|---------|
-| [ModSecurity Nginx module] | 1.0.0   |
-| [ModSecurity Library]      | 3.0.3   |
-| [OWASP CRS]                | 3.1.0   |
-
-Compiled as a dynamic module, disabled by default. To enable set `$NGINX_MODSECURITY_ENABLED` to any value.
-Additionally, you can enable [OWASP Core Rule Set (CRS)](https://modsecurity.org/crs/) by
-setting `$NGINX_MODSECURITY_USE_OWASP_CRS` to any value, ️be wary since it
-may [block some requests](https://github.com/wodby/nginx/pull/14#issuecomment-447404035) with the default configuration.
-See env vars starting with `$NGINX_MODSECURITY_` for advanced configuration.
 
 ## Default behavior
 
@@ -455,14 +433,6 @@ default params values:
 [http_xslt]: http://nginx.org/en/docs/http/ngx_http_xslt_module.html
 
 [mail_ssl]: http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html
-
-[ModSecurity Library]: https://modsecurity.org/
-
-[ModSecurity Nginx module]: https://github.com/SpiderLabs/ModSecurity-nginx
-
-[ModSecurity]: #modsecurity
-
-[OWASP CRS]: https://modsecurity.org/crs/
 
 [WordPress]: #wordpress
 

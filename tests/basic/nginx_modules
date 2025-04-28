@@ -6,7 +6,6 @@ http_flv
 http_gunzip
 http_gzip_static
 http_image_filter
-http_modsecurity
 http_mp4
 http_random_index
 http_realip

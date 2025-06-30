@@ -1,5 +1,5 @@
 host ?= localhost
-max_try ?= 1
+max_try ?= 3
 wait_seconds ?= 1
 delay_seconds ?= 0
 command_http = curl -s -o /dev/null -I -w '%{http_code}' ${host}/.healthz | grep -q 204

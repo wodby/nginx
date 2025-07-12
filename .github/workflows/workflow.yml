@@ -9,7 +9,7 @@ on:
     - '*'
 
 env:
-  BASE_IMAGE_STABILITY_TAG: 2.18.0
+  BASE_IMAGE_STABILITY_TAG: 2.18.1
   NGINX129: '1.29.0'
   NGINX128: '1.28.0'
 

@@ -133,6 +133,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_UPLOAD_PROGRESS`                              | `uploads 1m`                  |                                     |
 | `NGINX_USER`                                         | `nginx`                       |                                     |
 | `NGINX_VHOST_NO_DEFAULTS`                            |                               |                                     |
+| `NGINX_VHOST_PORT  `                                 | `80`                          |                                     |
 | `NGINX_VHOST_PRESET`                                 | `html`                        |                                     |
 | `NGINX_WORKER_CONNECTIONS`                           | `1024`                        |                                     |
 | `NGINX_WORKER_PROCESSES`                             | `auto`                        |                                     |

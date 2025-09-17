@@ -1,7 +1,7 @@
 include upstream.conf;
 
 server {
-    listen       80 default_server{{- if getenv "NGINX_HTTP2" }} http2{{- end }};
+    listen {{ getenv "NGINX_VHOST_PORT" "80" }} default_server{{- if getenv "NGINX_HTTP2" }} http2{{- end }};
     server_name  {{ getenv "NGINX_SERVER_NAME" "default" }};
 
     root {{ getenv "NGINX_SERVER_ROOT" "/var/www/html" }};

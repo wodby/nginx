@@ -6,8 +6,11 @@ add_header Cache-Control "no-store, no-cache, must-revalicate, post-check=0 pre-
 
 {{- if not (getenv "NGINX_NO_DEFAULT_HEADERS") }}
 add_header  X-XSS-Protection '1; mode=block';
+{{/* the next two headers are being set by drupal already */}}
+{{- if ne (printf "%.6s" (getenv "NGINX_VHOST_PRESET")) "drupal" }}
 add_header  X-Frame-Options SAMEORIGIN;
 add_header  X-Content-Type-Options nosniff;
+{{- end }}
 add_header  Content-Security-Policy "{{ getenv "NGINX_HEADERS_CONTENT_SECURITY_POLICY" "frame-ancestors 'none'" }}";
 {{- end }}
 

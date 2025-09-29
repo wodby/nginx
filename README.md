@@ -112,6 +112,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_SERVER_NAME`                     | `default`                     |                                     |
 | `NGINX_SERVER_ROOT`                     | `/var/www/html`               |                                     |
 | `NGINX_SERVER_TOKENS`                   | `off`                         |                                     |
+| `NGINX_SERVER_PORT`                     | `80`                          |                                     |
 | `NGINX_SET_REAL_IP_FROM`                |                               |                                     |
 | `NGINX_SET_REAL_IPS_FROM`               |                               | json array as string                |
 | `NGINX_STATIC_404_TRY_INDEX`            |                               |                                     |
@@ -133,7 +134,6 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_UPLOAD_PROGRESS`                 | `uploads 1m`                  |                                     |
 | `NGINX_USER`                            | `nginx`                       |                                     |
 | `NGINX_VHOST_NO_DEFAULTS`               |                               |                                     |
-| `NGINX_VHOST_PORT`                      | `80`                          |                                     |
 | `NGINX_VHOST_PRESET`                    | `html`                        |                                     |
 | `NGINX_WORKER_CONNECTIONS`              | `1024`                        |                                     |
 | `NGINX_WORKER_PROCESSES`                | `auto`                        |                                     |

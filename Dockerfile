@@ -63,7 +63,7 @@ RUN set -ex; \
     url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
     wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
     \
-    export GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A; \
+    export GPG_KEYS=0AB1A7CA1283FF69D0E5F483E79FE70A6F23EB22; \
     # Get VTS module \
     git clone https://github.com/vozlt/nginx-module-vts.git /tmp/nginx_module_vts; \
     cd /tmp/nginx_module_vts; \

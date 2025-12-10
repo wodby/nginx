@@ -14,9 +14,9 @@ ENV NGINX_VER="${NGINX_VER}" \
 
 RUN set -ex; \
     \
-    nginx_up_ver="0.9.3"; \
-    brotli_commit='9aec15e2aa6feea2113119ba06460af70ab3ea62'; \
-    vts_commit='3c6cf41315bfcb48c35a3a0be81ddba6d0d01dac'; \
+    nginx_up_ver="0.9.4"; \
+    brotli_commit='a71f9312c2deb28875acc7bacfdd5695a111aa53'; \
+    nginx_vts_ver='0.2.4'; \
     \
     addgroup -S nginx; \
     adduser -S -D -H -h /var/cache/nginx -s /sbin/nologin -G nginx nginx; \
@@ -52,10 +52,11 @@ RUN set -ex; \
         pcre-dev \
         zlib-dev; \
      \
-    # Brotli.
+    # Brotli. \
     cd /tmp; \
     git clone --depth 10 --single-branch https://github.com/google/ngx_brotli; \
     cd /tmp/ngx_brotli; \
+    git submodule update --init; \
     git checkout ${brotli_commit}; \
     \
     # Get ngx upload progress module. \
@@ -63,20 +64,15 @@ RUN set -ex; \
     url="https://github.com/masterzen/nginx-upload-progress-module/archive/v${nginx_up_ver}.tar.gz"; \
     wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/ngx_http_uploadprogress_module; \
     \
-    if [[ "${NGINX_VER}" == "1.28"* ]]; then \
-      export GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A; \
-    else \
-      export GPG_KEYS=0AB1A7CA1283FF69D0E5F483E79FE70A6F23EB22; \
-    fi; \
     # Get VTS module \
-    git clone https://github.com/vozlt/nginx-module-vts.git /tmp/nginx_module_vts; \
-    cd /tmp/nginx_module_vts; \
-    git checkout ${vts_commit}; \
+    mkdir -p /tmp/nginx_module_vts; \
+    url="https://github.com/vozlt/nginx-module-vts/archive/refs/tags/v${nginx_vts_ver}.tar.gz"; \
+    wget -qO- "${url}" | tar xz --strip-components=1 -C /tmp/nginx_module_vts; \
     \
-    # Download nginx.
+    # Download nginx. \
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -o /tmp/nginx.tar.gz; \
-    curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz.asc"  -o /tmp/nginx.tar.gz.asc; \
-    gpg_verify /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; \
+    curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz.asc" -o /tmp/nginx.tar.gz.asc; \
+    GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A gpg_verify /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; \
     tar zxf /tmp/nginx.tar.gz -C /tmp; \
     \
     cd "/tmp/nginx-${NGINX_VER}"; \
@@ -155,7 +151,7 @@ RUN set -ex; \
 	)"; \
 	apk add --no-cache --virtual .nginx-rundeps $runDeps; \
     \
-    # Script to fix volumes permissions via sudo.
+    # Script to fix volumes permissions via sudo. \
     echo "find ${APP_ROOT} ${FILES_DIR} -maxdepth 0 -uid 0 -type d -exec chown -f wodby:wodby {} +" > /usr/local/bin/init_volumes; \
     chmod +x /usr/local/bin/init_volumes; \
     \

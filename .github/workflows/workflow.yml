@@ -10,7 +10,7 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.19.0
-  NGINX129: '1.29.3'
+  NGINX129: '1.29.4'
   NGINX128: '1.28.0'
 
 jobs:

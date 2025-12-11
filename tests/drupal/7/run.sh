@@ -30,10 +30,8 @@ echo -n "cron.php...        "
 nginx_exec curl -s -S -I "localhost/cron.php" | grep '302 Found'
 echo -n "index.php...       "
 nginx_exec curl -s -S -I "localhost/index.php" | grep '302 Found'
-echo -n "index.php?node...       "
-nginx_exec curl -s -S -I "localhost/index.php?node" | grep '302 Found'
-echo -n "index.php/?node..."
-nginx_exec curl -s -S -I "localhost/index.php/?node" | grep '302 Moved Temporarily'
+echo -n "index.php/node...       "
+nginx_exec curl -s -S -I "localhost/index.php/node" | grep '302 Found'
 echo -n "install.php...     "
 nginx_exec curl -s -S -I "localhost/install.php" | grep '200 OK'
 echo -n "update.php...      "

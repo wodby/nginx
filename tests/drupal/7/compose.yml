@@ -4,6 +4,7 @@ services:
     environment:
       NGINX_BACKEND_HOST: drupal
       NGINX_VHOST_PRESET: drupal7
+      NGINX_DRUPAL_REMOVE_INDEXPHP: 1
       NGINX_SERVER_EXTRA_CONF_FILEPATH: /var/www/html/server.conf
       NGINX_LOG_FORMAT_SHOW_REAL_IP: 1
     depends_on:

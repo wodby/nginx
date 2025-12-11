@@ -71,6 +71,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_DRUPAL_HIDE_HEADERS`             |                               |                                     |
 | `NGINX_DRUPAL_XMLRPC_SERVER_NAME`       |                               | Drupal 7 only                       |
 | `NGINX_DRUPAL_NOT_FOUND_REGEX`          | (see [Drupal](#drupal))       |                                     |
+| `NGINX_DRUPAL_REMOVE_INDEXPHP`          | (see [Drupal](#drupal))       |                                     |
 | `NGINX_WP_NOT_FOUND_REGEX`              | (see [Wordpress](#wordpress)) |                                     |
 | `NGINX_ERROR_403_URI`                   |                               |                                     |
 | `NGINX_ERROR_404_URI`                   |                               |                                     |
@@ -324,8 +325,9 @@ Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\
 - If you want to use [stage_file_proxy](https://www.drupal.org/project/stage_file_proxy) module,
   set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
 - Access to `.txt` (can be overridden via `NGINX_DRUPAL_FILES_STATIC_EXT_REGEX`) files allowed only if they are located in files directory
-- Access to certs extensions gives 404 based on the value of `$NGINX_DRUPAL_NOT_FOUND_REGEX`
+- Access to cert extensions gives 404 based on the value of `$NGINX_DRUPAL_NOT_FOUND_REGEX`
 - Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors: 'self'`
+- Set `NGINX_DRUPAL_REMOVE_INDEXPHP` to any value to remove `index.php` from the URL, e.g. `index.php/node/abc` will redirect to `/node/abc`
 
 Default value of `NGINX_DRUPAL_NOT_FOUND_REGEX` (backspaces must be escaped) is taken from Drupal's `.htaccess` and
 depends on the Drupal version:

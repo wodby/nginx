@@ -12,6 +12,12 @@ fastcgi_hide_header 'X-Generator';
 fastcgi_hide_header 'X-Drupal-Dynamic-Cache';
 {{- end }}
 
+{{- if getenv "NGINX_DRUPAL_REMOVE_INDEXPHP" }}
+location ~ ^/index\.php(/)?(.*) {
+    rewrite ^/index\.php(/)?(.*) /$2 last;
+}
+{{- end }}
+
 location = /robots.txt {
     try_files $uri @drupal-no-args;
     access_log off;

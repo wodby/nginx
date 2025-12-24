@@ -11,7 +11,7 @@ on:
 env:
   BASE_IMAGE_STABILITY_TAG: 2.19.2
   NGINX129: '1.29.4'
-  NGINX128: '1.28.0'
+  NGINX128: '1.28.1'
 
 jobs:
   nginx129-build:

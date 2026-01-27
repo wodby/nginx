@@ -192,6 +192,7 @@ Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS
 - `/.well-known/` location supported
 - `/ads.txt` allowed
 - `/robots.txt` allowed
+- `/llms.txt` allowed
 - `/humans.txt` allowed
 - `/favicon.ico` allowed
 - `.flv`, `.m4a`, `.mp4`, `.mov` locations supported and handled with appropriate modules

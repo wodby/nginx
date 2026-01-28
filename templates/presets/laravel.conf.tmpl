@@ -10,7 +10,13 @@ location / {
         expires off;
         try_files $uri /{{ $index }}?$args;
     }
+
     location ~* /livewire/livewire.js {
+        expires off;
+        try_files $uri /{{ $index }}?$args;
+    }
+
+    location ~ ^/livewire-[a-f0-9]+/ {
         expires off;
         try_files $uri /{{ $index }}?$args;
     }

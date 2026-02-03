@@ -10,6 +10,10 @@ nginx_exec() {
     docker compose exec -T nginx "${@}"
 }
 
+drupal_exec() {
+    docker compose exec -T drupal "${@}"
+}
+
 clean_exit() {
   docker compose down -v
 }
@@ -18,6 +22,15 @@ trap clean_exit EXIT
 docker compose up -d
 
 nginx_exec make check-ready -f /usr/local/bin/actions.mk
+
+drupal_exec mkdir -p web/sites/abc/modules/contrib/test
+drupal_exec mkdir -p web/modules/contrib/test
+drupal_exec touch web/sites/abc/modules/contrib/test/CHANGELOG.md
+drupal_exec touch web/sites/abc/modules/contrib/test/README.md
+drupal_exec touch web/sites/abc/modules/contrib/test/INSTALL.md
+drupal_exec touch web/modules/contrib/test/CHANGELOG.md
+drupal_exec touch web/modules/contrib/test/README.md
+drupal_exec touch web/modules/contrib/test/INSTALL.md
 
 # TODO: check endpoints of installed Drupal
 
@@ -67,3 +80,12 @@ echo -n "Checking user-defined external redirect... "
 nginx_exec curl -s -S -I "localhost/redirect-external" | grep '302 Moved Temporarily'
 echo -n "Checking CSP header...   "
 nginx_exec curl -s -S -I "localhost" | grep "frame-ancestors 'self'"
+
+echo -n "Checking modules md files...   "
+nginx_exec curl -s -S -I "localhost/modules/contrib/test/README.md" | grep "404 Not Found"
+nginx_exec curl -s -S -I "localhost/modules/contrib/test/INSTALL.md" | grep "404 Not Found"
+nginx_exec curl -s -S -I "localhost/modules/contrib/test/CHANGELOG.md" | grep "404 Not Found"
+
+nginx_exec curl -s -S -I "localhost/sites/abc/modules/contrib/test/README.md" | grep "404 Not Found"
+nginx_exec curl -s -S -I "localhost/sites/abc/modules/contrib/test/INSTALL.md" | grep "404 Not Found"
+nginx_exec curl -s -S -I "localhost/sites/abc/modules/contrib/test/CHANGELOG.md" | grep "404 Not Found"

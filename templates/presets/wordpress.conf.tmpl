@@ -1,5 +1,5 @@
 {{ $static := (getenv "NGINX_STATIC_EXT_REGEX" "css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map|webp") }}
-{{ $not_found_regex := (getenv "NGINX_WP_NOT_FOUND_REGEX" ".+\\.(?:txt|md|pot|sh|.*sql?)|(?:composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$") }}
+{{ $not_found_regex := (getenv "NGINX_WP_NOT_FOUND_REGEX" ".+\\.(?:txt|pot|sh|.*sql?)|(?:composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$") }}
 
 index index.php index.html;
 
@@ -66,6 +66,10 @@ location / {
     }
 
     location ~* {{ $not_found_regex }} {
+        return 404;
+    }
+
+    location ~* ^/wp-content/plugins/[a-z0-9_-]+/(CHANGELOG|README|INSTALL|LICENSE|FAQ)\.md$ {
         return 404;
     }
 

@@ -66,12 +66,11 @@ buildx-imagetools-create:
 .PHONY: buildx-imagetools-create
 
 test:
-#	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh
-#	cd ./tests/php && IMAGE=$(REPO):$(TAG) ./run.sh
-#	cd ./tests/wordpress && IMAGE=$(REPO):$(TAG) ./run.sh
-#	cd ./tests/drupal/11 && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/basic && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/php && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/wordpress && IMAGE=$(REPO):$(TAG) ./run.sh
+	cd ./tests/drupal/11 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/drupal/10 && IMAGE=$(REPO):$(TAG) ./run.sh
-	cd ./tests/drupal/7 && IMAGE=$(REPO):$(TAG) ./run.sh
 	cd ./tests/matomo && PLATFORM=$(PLATFORM) IMAGE=$(REPO):$(TAG) ./run.sh
 
 push:

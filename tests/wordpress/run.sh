@@ -21,6 +21,11 @@ docker compose up -d
 docker compose exec -T nginx make check-ready -f /usr/local/bin/actions.mk
 docker compose exec -T wordpress make init -f /usr/local/bin/actions.mk
 
+docker compose exec -T wordpress mkdir -p web/wp-content/plugins/test
+docker compose exec -T wordpress touch web/wp-content/plugins/test/CHANGELOG.md
+docker compose exec -T wordpress touch web/wp-content/plugins/test/README.md
+docker compose exec -T wordpress touch web/wp-content/plugins/test/INSTALL.md
+
 echo -n "Checking homepage endpoint... "
 check_endpoint "" "302 Found"
 
@@ -53,3 +58,8 @@ check_endpoint "non-existing.php" "404 Not Found"
 
 echo -n "Check CSP header...   "
 check_endpoint "" "frame-ancestors 'self'"
+
+echo -n "Checking modules md files...   "
+check_endpoint "wp-content/plugins/test/README.md" "404 Not Found"
+check_endpoint "wp-content/plugins/test/INSTALL.md" "404 Not Found"
+check_endpoint "wp-content/plugins/test/CHANGELOG.md" "404 Not Found"

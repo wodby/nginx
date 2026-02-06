@@ -72,7 +72,15 @@ RUN set -ex; \
     # Download nginx. \
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -o /tmp/nginx.tar.gz; \
     curl -fSL "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz.asc" -o /tmp/nginx.tar.gz.asc; \
-    GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A gpg_verify /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; \
+    ok=; \
+    for key in \
+      D6786CE303D9A9022998DC6CC8464D549AF75C0A \
+      43387825DDB1BB97EC36BA5D007C8D7C15D87369 \
+      13C82A63B603576156E30A4EA0EA981B66B0D967 \
+      7338973069ED3F443F4D37DFA64FD5B17ADB39A8; do \
+      if GPG_KEYS="$key" gpg_verify /tmp/nginx.tar.gz.asc /tmp/nginx.tar.gz; then ok=1; break; fi; \
+    done; \
+    test -n "$ok"; \
     tar zxf /tmp/nginx.tar.gz -C /tmp; \
     \
     cd "/tmp/nginx-${NGINX_VER}"; \

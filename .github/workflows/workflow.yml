@@ -10,11 +10,11 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.19.6
-  NGINX129: '1.29.8'
-  NGINX128: '1.28.3'
+  NGINX131: '1.31.0'
+  NGINX130: '1.30.1'
 
 jobs:
-  nginx129-build:
+  nginx131-build:
     strategy:
       matrix:
         arch:
@@ -28,35 +28,35 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v6
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: build and push
         env:
-          NGINX_VER: ${{ env.NGINX129 }}
+          NGINX_VER: ${{ env.NGINX131 }}
           ARCH: ${{ matrix.arch }}
         run: |
           make
           make test
           make push
-  nginx129-push:
+  nginx131-push:
     runs-on: ubuntu-latest
     needs:
-      - nginx129-build
+      - nginx131-build
     steps:
       - uses: actions/checkout@v6
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - uses: ./.github/actions
         with:
-          version: ${{ env.NGINX129 }}
+          version: ${{ env.NGINX131 }}
           latest: true
           latest_major: true
   
-  nginx128-build:
+  nginx130-build:
     strategy:
       matrix:
         arch:
@@ -70,28 +70,28 @@ jobs:
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v6
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: build and push
         env:
-          NGINX_VER: ${{ env.NGINX128 }}
+          NGINX_VER: ${{ env.NGINX130 }}
           ARCH: ${{ matrix.arch }}
         run: |
           make
           make test
           make push
-  nginx128-push:
+  nginx130-push:
     runs-on: ubuntu-latest
     needs:
-      - nginx128-build
+      - nginx130-build
     steps:
       - uses: actions/checkout@v6
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - uses: ./.github/actions
         with:
-          version: ${{ env.NGINX128 }}
+          version: ${{ env.NGINX130 }}

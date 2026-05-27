@@ -214,7 +214,7 @@ Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS
 - Customize the header which value will be used to replace the client address via `$NGINX_REAL_IP_HEADER`
 - Default recommended headers can be disabled via `$NGINX_NO_DEFAULT_HEADERS` (defined in `nginx.conf`)
 - The value for the Content-Security-Policy header can be changed using `$NGINX_HEADERS_CONTENT_SECURITY_POLICY`, it's
-  default value is `frame-ancestors: 'none'`. More information on this header can be
+  default value is `frame-ancestors 'none'`. More information on this header can be
   found [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
 - Error page file can be customized for HTTP errors `403` (`$NGINX_ERROR_403_URI`) and `404` (`$NGINX_ERROR_404_URI`)
 - Default error page for HTTP errors `500`, `502`, `503`, `504` can be disabled via `$NGINX_HIDE_50x_ERRORS`
@@ -314,7 +314,7 @@ Overridden default values:
     - For plugin [Google XML Sitemap](https://wordpress.org/plugins/google-sitemap-generator/)
       add `$NGINX_WP_GOOGLE_XML_SITEMAP=1`
     - For plugin [Yoast SEO](https://kb.yoast.com/kb/xml-sitemaps-nginx/) add `$NGINX_WP_YOAST_XML_SITEMAP=1`
-- Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors: 'self'`
+- Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors 'self'`
 - Files `INSTALL.md`, `README.md`, `LICENSE.md`, `FAQ.md` and `CHANGELOG.md` inside plugins directory return 404
 
 Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\.(?:txt|pot|sh|.*sql?)|(?:composer\\.(json|lock)|(package|package-lock)\\.json|yarn\\.lock)$`
@@ -328,7 +328,7 @@ Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\
   set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
 - Access to `.txt` (can be overridden via `NGINX_DRUPAL_FILES_STATIC_EXT_REGEX`) files allowed only if they are located in files directory
 - Access to cert extensions gives 404 based on the value of `$NGINX_DRUPAL_NOT_FOUND_REGEX`
-- Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors: 'self'`
+- Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors 'self'`
 - Set `NGINX_DRUPAL_REMOVE_INDEXPHP` to any value to remove `index.php` from the URL, e.g. `index.php/node/abc` will redirect to `/node/abc`
 - Files `INSTALL.md`, `README.md`, `LICENSE.md`, `FAQ.md` and `CHANGELOG.md` inside modules directory return 404
 

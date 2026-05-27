@@ -90,7 +90,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_GZIP_PROXIED`                    | `any`                         |                                     |
 | `NGINX_GZIP_VARY`                       | `on`                          |                                     |
 | `NGINX_GZIP`                            | `on`                          |                                     |
-| `NGINX_HEADERS_CONTENT_SECURITY_POLICY` | `frame-ancestors: 'none'`     | different for Drupal and WP presets |
+| `NGINX_HEADERS_CONTENT_SECURITY_POLICY` | `frame-ancestors 'none'`     | different for Drupal and WP presets |
 | `NGINX_HIDE_50x_ERRORS`                 |                               |                                     |
 | `NGINX_HTTP2`                           |                               |                                     |
 | `NGINX_INDEX_FILE`                      | Varies with a preset          | Hard-coded for Drupal and WP        |

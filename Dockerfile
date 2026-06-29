@@ -176,7 +176,8 @@ RUN set -ex; \
     apk del --purge .nginx-build-deps; \
     rm -rf \
         /tmp/* \
-        /var/cache/apk/* ;
+        /var/cache/apk/* \
+        2>/dev/null || true;
 
 USER wodby
 

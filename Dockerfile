@@ -182,6 +182,7 @@ RUN set -ex; \
 USER wodby
 
 COPY bin /usr/local/bin
+COPY init /docker-entrypoint-init.d/
 COPY templates /etc/gotpl/
 COPY docker-entrypoint.sh /
 

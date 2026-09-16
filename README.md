@@ -184,11 +184,6 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [stream_ssl_preread]  |            |         |
 | [vts]                 | 0.2.4      |         |
 
-The XSLT module is no longer included. Before upgrading, remove any custom
-`load_module` directive for `ngx_http_xslt_filter_module.so` and any `xslt_*`,
-`xml_entities`, or `xml_external_entities` directives. Configurations that transform
-XML responses using XSLT require an image that provides the module.
-
 ## Default behavior
 
 Applied to all presets by default, can be disabled via `$NGINX_VHOST_NO_DEFAULTS`:

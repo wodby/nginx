@@ -46,7 +46,6 @@ RUN set -ex; \
         libjpeg-turbo-dev \
         libpng-dev \
         libtool \
-        libxslt-dev \
         linux-headers \
         openssl-dev \
         pcre-dev \
@@ -116,7 +115,6 @@ RUN set -ex; \
         --with-http_stub_status_module \
         --with-http_sub_module \
         --with-http_v2_module \
-		--with-http_xslt_module=dynamic \
         --with-ipv6 \
         --with-ld-opt="-Wl,-z,relro,--start-group -lapr-1 -laprutil-1 -licudata -licuuc -lpng -lturbojpeg -ljpeg" \
         --with-mail \

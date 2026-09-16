@@ -178,12 +178,16 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_sub]            |            |         |
 | [http_uploadprogress] | 0.9.4      |         |
 | [http_v2]             |            |         |
-| [http_xslt]           |            | ✓       |
 | [mail_ssl]            |            |         |
 | [stream_realip]       |            |         |
 | [stream_ssl]          |            |         |
 | [stream_ssl_preread]  |            |         |
 | [vts]                 | 0.2.4      |         |
+
+The XSLT module is no longer included. Before upgrading, remove any custom
+`load_module` directive for `ngx_http_xslt_filter_module.so` and any `xslt_*`,
+`xml_entities`, or `xml_external_entities` directives. Configurations that transform
+XML responses using XSLT require an image that provides the module.
 
 ## Default behavior
 
@@ -434,8 +438,6 @@ default params values:
 [http_uploadprogress]: https://github.com/masterzen/nginx-upload-progress-module
 
 [http_v2]: http://nginx.org/en/docs/http/ngx_http_v2_module.html
-
-[http_xslt]: http://nginx.org/en/docs/http/ngx_http_xslt_module.html
 
 [mail_ssl]: http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html
 

@@ -178,7 +178,6 @@ Some environment variables can be overridden or added per [preset](#virtual-host
 | [http_sub]            |            |         |
 | [http_uploadprogress] | 0.9.4      |         |
 | [http_v2]             |            |         |
-| [http_xslt]           |            | ✓       |
 | [mail_ssl]            |            |         |
 | [stream_realip]       |            |         |
 | [stream_ssl]          |            |         |
@@ -434,8 +433,6 @@ default params values:
 [http_uploadprogress]: https://github.com/masterzen/nginx-upload-progress-module
 
 [http_v2]: http://nginx.org/en/docs/http/ngx_http_v2_module.html
-
-[http_xslt]: http://nginx.org/en/docs/http/ngx_http_xslt_module.html
 
 [mail_ssl]: http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html
 

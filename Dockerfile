@@ -12,7 +12,9 @@ ENV NGINX_VER="${NGINX_VER}" \
     FILES_DIR="/mnt/files" \
     NGINX_VHOST_PRESET="html"
 
+# Upgrade inherited packages even when their existing versions satisfy dependencies.
 RUN set -ex; \
+    apk upgrade --no-cache; \
     \
     nginx_up_ver="0.9.4"; \
     brotli_commit='a71f9312c2deb28875acc7bacfdd5695a111aa53'; \

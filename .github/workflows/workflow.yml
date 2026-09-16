@@ -16,6 +16,7 @@ env:
 jobs:
   nginx131-build:
     strategy:
+      fail-fast: false
       matrix:
         arch:
           - amd64
@@ -32,14 +33,28 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: build and push
+      - name: Build and test
+        id: build-image
         env:
           NGINX_VER: ${{ env.NGINX131 }}
           ARCH: ${{ matrix.arch }}
         run: |
           make
           make test
-          make push
+          echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Scan image
+        if: github.event_name == 'push'
+        uses: ./.github/actions/scout
+        with:
+          image: local://${{ steps.build-image.outputs.image }}
+          dockerhub-user: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push scanned architecture image
+        if: github.event_name == 'push'
+        env:
+          NGINX_VER: ${{ env.NGINX131 }}
+          ARCH: ${{ matrix.arch }}
+        run: make push
   nginx131-push:
     runs-on: ubuntu-latest
     needs:
@@ -58,6 +73,7 @@ jobs:
   
   nginx130-build:
     strategy:
+      fail-fast: false
       matrix:
         arch:
           - amd64
@@ -74,14 +90,28 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: build and push
+      - name: Build and test
+        id: build-image
         env:
           NGINX_VER: ${{ env.NGINX130 }}
           ARCH: ${{ matrix.arch }}
         run: |
           make
           make test
-          make push
+          echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
+      - name: Scan image
+        if: github.event_name == 'push'
+        uses: ./.github/actions/scout
+        with:
+          image: local://${{ steps.build-image.outputs.image }}
+          dockerhub-user: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push scanned architecture image
+        if: github.event_name == 'push'
+        env:
+          NGINX_VER: ${{ env.NGINX130 }}
+          ARCH: ${{ matrix.arch }}
+        run: make push
   nginx130-push:
     runs-on: ubuntu-latest
     needs:

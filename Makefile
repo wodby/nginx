@@ -95,3 +95,8 @@ clean:
 	-docker rm -f $(NAME)
 
 release: build push
+
+# Keep CI scans aligned with the version, variant and architecture built by make.
+.PHONY: image-ref
+image-ref:
+	@printf '%s\n' '$(REPO):$(TAG)'

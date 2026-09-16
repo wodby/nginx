@@ -11,7 +11,7 @@ on:
 env:
   BASE_IMAGE_STABILITY_TAG: 2.20.6
   NGINX131: '1.31.6'
-  NGINX130: '1.30.4'
+  NGINX130: '1.30.5'
 
 jobs:
   nginx131-build:

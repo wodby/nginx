@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "image": "wodby/nginx",
+  "versions": [
+    {
+      "version": {
+        "job": "nginx131-push"
+      },
+      "variants": [
+        {
+          "short": [
+            "{minor}",
+            "{major}"
+          ],
+          "full": "{version}"
+        }
+      ]
+    },
+    {
+      "version": {
+        "job": "nginx130-push"
+      },
+      "variants": [
+        {
+          "short": [
+            "{minor}"
+          ],
+          "full": "{version}"
+        }
+      ]
+    }
+  ]
+}

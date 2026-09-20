@@ -1,5 +1,8 @@
 -include env_make
 
+# Accept legacy build arguments during the image revision transition.
+BASE_IMAGE_REVISION ?= $(BASE_IMAGE_STABILITY_TAG)
+
 NGINX_VER ?= 1.31.6
 NGINX_VER_MINOR ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
@@ -17,10 +20,10 @@ ifeq ($(WODBY_GROUP_ID),)
     WODBY_GROUP_ID := 1000
 endif
 
-ifeq ($(BASE_IMAGE_STABILITY_TAG),)
+ifeq ($(BASE_IMAGE_REVISION),)
     BASE_IMAGE_TAG := $(ALPINE_VER)
 else
-    BASE_IMAGE_TAG := $(ALPINE_VER)-$(BASE_IMAGE_STABILITY_TAG)
+    BASE_IMAGE_TAG := $(ALPINE_VER)-$(BASE_IMAGE_REVISION)
 endif
 
 REGISTRY ?= docker.io

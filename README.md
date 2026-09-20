@@ -27,7 +27,10 @@
 ## Docker Images
 
 Use image revision tags such as `wodby/nginx:1.31-rN` to select a Wodby image revision.
-The `rN` suffix identifies the image revision separately from the upstream software version.
+Major and minor tags use the repository release number. Full-version tags such as
+`wodby/nginx:1.31.6-r0` start at `r0` for each exact upstream version.
+Every published versioned revision tag has a matching annotated Git tag pointing to its release commit.
+Existing tags remain available after support for their major or minor version ends.
 See [release tags](https://github.com/wodby/nginx/tags) for available revisions and the [image revision policy](https://github.com/wodby/images#image-revisions) for upgrade guidance.
 Existing SemVer image tags remain available.
 

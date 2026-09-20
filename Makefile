@@ -33,18 +33,20 @@ endif
 
 .PHONY: build buildx-build buildx-push buildx-build-amd64 test push shell run start stop logs clean release
 
+# Resolve the same pinned base image for every local and CI build target.
+include base-images.mk
+
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) --progress=plain \
-        --build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	docker build --build-arg BASE_IMAGE="$(BASE_IMAGE)" -t $(REPO):$(TAG) --progress=plain \
+        \
 	    --build-arg NGINX_VER=$(NGINX_VER) \
 		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
 		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) ./
 
 buildx-build:
-	docker buildx build --platform $(PLATFORM) \
-		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	docker buildx build --build-arg BASE_IMAGE="$(BASE_IMAGE)" --platform $(PLATFORM) \
 		--build-arg NGINX_VER=$(NGINX_VER) \
 		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
 		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) \
@@ -52,8 +54,7 @@ buildx-build:
 		-t $(REPO):$(TAG) ./
 
 buildx-push:
-	docker buildx build --platform $(PLATFORM) \
-		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+	docker buildx build --build-arg BASE_IMAGE="$(BASE_IMAGE)" --platform $(PLATFORM) \
 		--build-arg NGINX_VER=$(NGINX_VER) \
 		--build-arg WODBY_GROUP_ID=$(WODBY_GROUP_ID) \
 		--build-arg WODBY_USER_ID=$(WODBY_USER_ID) \

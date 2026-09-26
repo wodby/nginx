@@ -11,7 +11,7 @@ on:
     - '!*-r[0-9]*'
 
 env:
-  BASE_IMAGE_REVISION: r0
+  BASE_IMAGE_REVISION: r1
   NGINX131: '1.31.6'
   NGINX130: '1.30.5'
 

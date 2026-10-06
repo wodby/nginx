@@ -137,7 +137,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `NGINX_TRACK_UPLOADS`                   | `uploads 60s`                 |                                     |
 | `NGINX_UNDERSCORES_IN_HEADERS`          | `off`                         |                                     |
 | `NGINX_UPLOAD_PROGRESS`                 | `uploads 1m`                  |                                     |
-| `NGINX_USER`                            | `nginx`                       |                                     |
+| `NGINX_USER`                            | `nginx`                       | `wodby` when `WODBY_WORKSPACE=1`    |
 | `NGINX_VHOST_NO_DEFAULTS`               |                               |                                     |
 | `NGINX_VHOST_PRESET`                    | `html`                        |                                     |
 | `NGINX_WORKER_CONNECTIONS`              | `1024`                        |                                     |

@@ -69,6 +69,13 @@ process_templates() {
     _gotpl "50x.html.tmpl" "/usr/share/nginx/html/50x.html"
 }
 
+# A workspace checkout belongs to the developer's user. Workers run as that user,
+# so they can serve every file the developer can read, whatever its mode. An
+# explicitly configured user is kept.
+if [[ "${WODBY_WORKSPACE:-}" == 1 ]]; then
+    export NGINX_USER="${NGINX_USER:-wodby}"
+fi
+
 sudo init_volumes
 
 process_templates

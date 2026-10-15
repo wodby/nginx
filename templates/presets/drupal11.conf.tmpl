@@ -37,11 +37,6 @@ location = /ads.txt {
 }
 
 location / {
-    {{- if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
-    location ~* /sites/.+/files {
-        try_files $uri @file_proxy;
-    }
-    {{- end }}
     location ~* /system/files/ {
         include fastcgi.conf;
         fastcgi_param QUERY_STRING $query_string;
@@ -53,22 +48,6 @@ location / {
 
     location ~* /sites/.+/files/private/ {
         internal;
-    }
-
-    location ~* /files/(css|js|styles)/ {
-        access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
-        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
-        try_files $uri @drupal;
-    }
-
-    location ~* /sites/.+/files/.+\.(?:{{ $files_dir_static }}) {
-        access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
-        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
-        tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};
-        open_file_cache {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE" "max=1000 inactive=30s" }};
-        open_file_cache_valid {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_VALID" "30s" }};
-        open_file_cache_min_uses {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES" "2" }};
-        open_file_cache_errors {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_ERRORS" "off" }};
     }
 
     location ~* /sites/.+/files/optimized/(css|js)/ {
@@ -86,6 +65,30 @@ location / {
             add_header Cache-Control "public, max-age=31536000, no-transform, immutable";
             try_files $uri @drupal;
         }
+    }
+
+    {{- if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
+    # Checked after the private files and aggregate rules: a missing aggregate
+    # must reach Drupal to be generated, and private files must stay internal.
+    location ~* /sites/.+/files {
+        try_files $uri @file_proxy;
+    }
+    {{- end }}
+
+    location ~* /files/(css|js|styles)/ {
+        access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
+        try_files $uri @drupal;
+    }
+
+    location ~* /sites/.+/files/.+\.(?:{{ $files_dir_static }}) {
+        access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
+        tcp_nodelay {{ getenv "NGINX_STATIC_TCP_NODELAY" "off" }};
+        open_file_cache {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE" "max=1000 inactive=30s" }};
+        open_file_cache_valid {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_VALID" "30s" }};
+        open_file_cache_min_uses {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_MIN_USES" "2" }};
+        open_file_cache_errors {{ getenv "NGINX_STATIC_OPEN_FILE_CACHE_ERRORS" "off" }};
     }
 
     location ~* /admin/reports/hacked/.+/diff/ {

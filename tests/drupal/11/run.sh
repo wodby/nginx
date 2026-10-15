@@ -89,3 +89,20 @@ nginx_exec curl -s -S -I "localhost/modules/contrib/test/CHANGELOG.md" | grep "4
 nginx_exec curl -s -S -I "localhost/sites/abc/modules/contrib/test/README.md" | grep "404 Not Found"
 nginx_exec curl -s -S -I "localhost/sites/abc/modules/contrib/test/INSTALL.md" | grep "404 Not Found"
 nginx_exec curl -s -S -I "localhost/sites/abc/modules/contrib/test/CHANGELOG.md" | grep "404 Not Found"
+
+echo "Checking file proxy"
+drupal_exec mkdir -p web/sites/default/files/private
+drupal_exec sh -c 'echo public > web/sites/default/files/existing.txt'
+drupal_exec sh -c 'echo secret > web/sites/default/files/private/secret.txt'
+echo -n "existing public file...      "
+nginx_exec curl -s -S -I "localhost/sites/default/files/existing.txt" | grep '200 OK'
+echo -n "missing public file...       "
+nginx_exec curl -s -S -I "localhost/sites/default/files/missing.pdf" | grep 'Location: http://files.example.com/sites/default/files/missing.pdf'
+echo -n "missing image style...       "
+nginx_exec curl -s -S -I "localhost/sites/default/files/styles/thumbnail/public/missing.jpg" | grep 'Location: http://files.example.com/sites/default/files/styles/thumbnail/public/missing.jpg'
+echo -n "missing CSS aggregate...     "
+nginx_exec curl -s -S -I "localhost/sites/default/files/optimized/css/css_missing.css?delta=0" | grep '302 Found'
+echo -n "missing JS aggregate...      "
+nginx_exec curl -s -S -I "localhost/sites/default/files/optimized/js/js_missing.js?delta=0" | grep '302 Found'
+echo -n "private file...              "
+nginx_exec curl -s -S -I "localhost/sites/default/files/private/secret.txt" | grep '404 Not Found'

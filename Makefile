@@ -3,7 +3,7 @@
 # Accept legacy build arguments during the image revision transition.
 BASE_IMAGE_REVISION ?= $(BASE_IMAGE_STABILITY_TAG)
 
-NGINX_VER ?= 1.31.6
+NGINX_VER ?= 1.31.7
 NGINX_VER_MINOR ?= $(shell echo "${NGINX_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 TAG ?= $(NGINX_VER_MINOR)

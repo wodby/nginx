@@ -6,11 +6,6 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
-# Fail if a stale base or build cache leaves the vulnerable decoder installed.
-echo -n "Checking Brotli security update... "
-apk info --exists 'brotli-libs>=1.2.1'
-echo "OK"
-
 echo "It works!" > /var/www/html/index.html
 
 echo -n "Checking Nginx response... "

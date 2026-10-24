@@ -6,6 +6,11 @@ if [[ -n "${DEBUG}" ]]; then
     set -x
 fi
 
+# Fail if a stale base or build cache leaves the vulnerable decoder installed.
+echo -n "Checking Brotli security update... "
+apk info --exists 'brotli-libs>=1.2.1'
+echo "OK"
+
 echo "It works!" > /var/www/html/index.html
 
 echo -n "Checking Nginx response... "
@@ -23,6 +28,16 @@ echo "OK"
 #echo -n "Checking SQL Injection "
 #curl -s -S "http://localhost/ar?id=' OR 1='1" | grep -q "403 Forbidden"
 #echo "OK"
+
+# Exercise both nginx's encoder and curl's decoder with a compressible response.
+echo -n "Checking Brotli response round trip... "
+printf 'Brotli round trip %.0s' {1..128} > /var/www/html/brotli.txt
+curl --fail --silent --show-error --compressed -H 'Accept-Encoding: br' \
+    -D /tmp/brotli.headers localhost/brotli.txt -o /tmp/brotli.decoded
+grep -qi '^Content-Encoding: br' /tmp/brotli.headers
+cmp /var/www/html/brotli.txt /tmp/brotli.decoded
+rm /var/www/html/brotli.txt /tmp/brotli.headers /tmp/brotli.decoded
+echo "OK"
 
 rm /var/www/html/index.html
 

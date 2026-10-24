@@ -18,8 +18,8 @@ ENV NGINX_VER="${NGINX_VER}" \
 RUN set -ex; \
     \
     nginx_up_ver="0.9.4"; \
-    brotli_commit='a71f9312c2deb28875acc7bacfdd5695a111aa53'; \
-    nginx_vts_ver='0.2.4'; \
+    brotli_commit='53e0fb55f250f48fe80c0ddbf6c0f7103cdbaae1'; \
+    nginx_vts_ver='0.2.7'; \
     \
     addgroup -S nginx; \
     adduser -S -D -H -h /var/cache/nginx -s /sbin/nologin -G nginx nginx; \
@@ -29,9 +29,7 @@ RUN set -ex; \
 	sed -i '/^wodby/s/!/*/' /etc/shadow; \
 	echo "PS1='\w\$ '" >> /home/wodby/.bashrc; \
     \
-    # Require the CVE-2026-111497 fix, including the decoder used by curl.
     apk add --update --no-cache -t .tools \
-        "brotli-libs>=1.2.1" \
         findutils \
         make \
         nghttp2 \
@@ -42,7 +40,7 @@ RUN set -ex; \
         apr-dev \
         apr-util-dev \
         build-base \
-        "brotli-dev>=1.2.1" \
+        brotli-dev \
         gd-dev \
         git \
         gnupg \
@@ -58,10 +56,12 @@ RUN set -ex; \
      \
     # Brotli. \
     cd /tmp; \
-    git clone --depth 10 --single-branch https://github.com/google/ngx_brotli; \
+    git init /tmp/ngx_brotli; \
     cd /tmp/ngx_brotli; \
-    git submodule update --init; \
-    git checkout ${brotli_commit}; \
+    git remote add origin https://github.com/google/ngx_brotli; \
+    git fetch --depth 1 origin "${brotli_commit}"; \
+    git checkout --detach FETCH_HEAD; \
+    git submodule update --init --depth 1; \
     \
     # Get ngx upload progress module. \
     mkdir -p /tmp/ngx_http_uploadprogress_module; \

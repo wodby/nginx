@@ -29,7 +29,9 @@ RUN set -ex; \
 	sed -i '/^wodby/s/!/*/' /etc/shadow; \
 	echo "PS1='\w\$ '" >> /home/wodby/.bashrc; \
     \
+    # Require the CVE-2026-111497 fix, including the decoder used by curl.
     apk add --update --no-cache -t .tools \
+        "brotli-libs>=1.2.1" \
         findutils \
         make \
         nghttp2 \
@@ -40,7 +42,7 @@ RUN set -ex; \
         apr-dev \
         apr-util-dev \
         build-base \
-        brotli-dev \
+        "brotli-dev>=1.2.1" \
         gd-dev \
         git \
         gnupg \

@@ -82,11 +82,28 @@ echo -n "existing public file...      "
 nginx_exec curl -s -S -I "localhost/sites/default/files/existing.txt" | grep '200 OK'
 echo -n "missing public file...       "
 nginx_exec curl -s -S -I "localhost/sites/default/files/missing.pdf" | grep 'Location: http://files.example.com/sites/default/files/missing.pdf'
-echo -n "missing image style...       "
-nginx_exec curl -s -S -I "localhost/sites/default/files/styles/thumbnail/public/missing.jpg" | grep 'Location: http://files.example.com/sites/default/files/styles/thumbnail/public/missing.jpg'
 echo -n "missing CSS aggregate...     "
 nginx_exec curl -s -S -I "localhost/sites/default/files/optimized/css/css_missing.css?delta=0" | grep '302 Found'
 echo -n "missing JS aggregate...      "
 nginx_exec curl -s -S -I "localhost/sites/default/files/optimized/js/js_missing.js?delta=0" | grep '302 Found'
 echo -n "private file...              "
 nginx_exec curl -s -S -I "localhost/sites/default/files/private/secret.txt" | grep '404 Not Found'
+
+# Image styles need an installed Drupal, so these run last.
+echo "Checking image styles with file proxy"
+drupal_exec sh -c 'cd web && php core/scripts/drupal install standard' > /dev/null
+drupal_exec cp web/core/misc/druplicon.png web/sites/default/files/local.png
+drupal_exec chown -R www-data:www-data web/sites/default
+docker compose cp ../image-style-url.php drupal:/opt/drupal/image-style-url.php
+local_style=$(drupal_exec php /opt/drupal/image-style-url.php thumbnail public://local.png)
+missing_style=$(drupal_exec php /opt/drupal/image-style-url.php thumbnail public://missing.png)
+echo -n "local source, built by Drupal...   "
+drupal_exec test ! -e "web${local_style%%\?*}"
+nginx_exec curl -s -S -I "localhost${local_style}" | grep '200 OK'
+drupal_exec test -f "web${local_style%%\?*}"
+echo -n "existing image style...            "
+nginx_exec curl -s -S -I "localhost${local_style}" | grep '200 OK'
+echo -n "missing source...                  "
+nginx_exec curl -s -S -I "localhost${missing_style}" | grep -F "Location: http://files.example.com${missing_style}"
+echo -n "unknown image style...             "
+nginx_exec curl -s -S -I "localhost/sites/default/files/styles/unknown/public/local.png" | grep 'Location: http://files.example.com/sites/default/files/styles/unknown/public/local.png'

@@ -67,19 +67,24 @@ location / {
         }
     }
 
+    location ~* /files/styles/ {
+        access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
+        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
+        {{- if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
+        try_files $uri @drupal-file-proxy;
+        {{- else }}
+        try_files $uri @drupal;
+        {{- end }}
+    }
+
     {{- if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
-    # Checked after the private files and aggregate rules: a missing aggregate
-    # must reach Drupal to be generated, and private files must stay internal.
+    # Checked after the private files, aggregate and image style rules: a
+    # missing aggregate or image style must reach Drupal to be generated, and
+    # private files must stay internal.
     location ~* /sites/.+/files {
         try_files $uri @file_proxy;
     }
     {{- end }}
-
-    location ~* /files/styles/ {
-        access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
-        expires {{ getenv "NGINX_STATIC_EXPIRES" "1y" }};
-        try_files $uri @drupal;
-    }
 
     location ~* /sites/.+/files/.+\.(?:{{ $files_dir_static }}) {
         access_log {{ getenv "NGINX_STATIC_ACCESS_LOG" "off" }};
@@ -141,6 +146,22 @@ location / {
 {{- if getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}
 location @file_proxy {
     rewrite ^ {{ getenv "NGINX_DRUPAL_FILE_PROXY_URL" }}$request_uri? permanent;
+}
+
+# Lets Drupal build a missing image style from a local source image first.
+# Drupal answers 404 when the source image, the image style or a valid
+# token is missing; the request then goes to the file proxy.
+location @drupal-file-proxy {
+    include fastcgi.conf;
+    fastcgi_param QUERY_STRING $query_string;
+    fastcgi_param SCRIPT_NAME /index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+    fastcgi_pass php;
+    error_page 404 = @file_proxy;
+    # Defining error_page here drops the server-level ones; keep the 50x page.
+    {{- if getenv "NGINX_HIDE_50x_ERRORS" }}
+    error_page 500 502 503 504 /50x.html;
+    {{- end }}
 }
 {{- end }}
 

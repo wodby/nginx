@@ -330,6 +330,9 @@ Default value of NGINX_WP_NOT_FOUND_REGEX (backspaces must be escaped) is: `.+\\
   modify `NGINX_BACKEND_HOST`
 - If you want to use [stage_file_proxy](https://www.drupal.org/project/stage_file_proxy) module,
   set `$NGINX_STATIC_404_TRY_INDEX=1` to redirect 404 static files requests to Drupal
+- With `NGINX_DRUPAL_FILE_PROXY_URL` set, missing files in the files directory redirect to that URL. A missing image
+  style goes to Drupal first, so it is built when the source image exists locally; it redirects to the URL only when
+  Drupal answers 404 (or 403 on Drupal 7)
 - Access to `.txt` (can be overridden via `NGINX_DRUPAL_FILES_STATIC_EXT_REGEX`) files allowed only if they are located in files directory
 - Access to cert extensions gives 404 based on the value of `$NGINX_DRUPAL_NOT_FOUND_REGEX`
 - Default value of `NGINX_HEADERS_CONTENT_SECURITY_POLICY` overridden to `frame-ancestors 'self'`

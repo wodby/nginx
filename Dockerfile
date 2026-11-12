@@ -182,6 +182,16 @@ RUN set -ex; \
         /var/cache/apk/* \
         2>/dev/null || true;
 
+ARG TARGETPLATFORM
+ARG GOTPL_VERSION=0.6.12
+
+# gotpl renders the configuration templates in /etc/gotpl when the container starts.
+RUN set -ex; \
+    set -o pipefail; \
+    platform="${TARGETPLATFORM:-linux/amd64}"; \
+    url="https://github.com/wodby/gotpl/releases/download/${GOTPL_VERSION}/gotpl-${platform/\//-}.tar.gz"; \
+    wget -qO- "${url}" | tar xz --no-same-owner -C /usr/local/bin
+
 USER wodby
 
 COPY bin /usr/local/bin

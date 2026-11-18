@@ -10,10 +10,11 @@ on:
     - '*'
     - '!*-r[0-9]*'
 
-# Runs of one branch or tag never overlap, so an older master run cannot finish
-# last and move floating tags back; a newer pending run replaces an older one.
+# Runs of one event and branch or tag never overlap, so an older master run
+# cannot finish last and move floating tags back. A newer pending run of the
+# same event replaces an older one; other events never replace each other.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: false
 
 env:

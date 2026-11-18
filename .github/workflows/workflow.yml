@@ -13,7 +13,7 @@ on:
 env:
   BASE_IMAGE_REVISION: r17
   NGINX131: '1.31.9'
-  NGINX130: '1.30.6'
+  NGINX130: '1.30.7'
 
 jobs:
   nginx131-build:

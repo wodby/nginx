@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BASE_IMAGE_REVISION: r18
+  BASE_IMAGE_REVISION: r19
   NGINX131: '1.31.10'
   NGINX130: '1.30.8'
 

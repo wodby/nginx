@@ -20,7 +20,7 @@ concurrency:
 env:
   BASE_IMAGE_REVISION: r18
   NGINX131: '1.31.10'
-  NGINX130: '1.30.7'
+  NGINX130: '1.30.8'
 
 jobs:
   nginx131-build:
